@@ -4,6 +4,7 @@
 void Testing::enterSystem()
 {
 	admin.loadLoginPass();
+	//tested.loadBase();
 	system("cls");
 	cout << "ÂÎÉÒÈ Â ÑÈÑÒÅÌÓ:\n" << endl;
 	cout << "1. Âîéòè ïîä ñâîèìè äàííûìè\n"

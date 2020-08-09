@@ -36,7 +36,7 @@ void Tested::chekIn()
 			ad = checkSize(pas);
 		}
 		hash<string> cod;
-		int pass = cod(pas);
+		unsigned int pass = cod(pas);
 		user->setPass(pass);
 		char* n = new char;
 		cin.ignore();
@@ -56,6 +56,7 @@ void Tested::chekIn()
 		base_users.insert(make_pair(pass, base_tested));
 		cout << "ÏÎËÜÇÎÂÀÒÅËÜ ÄÎÁÀÂËÅÍ!!!" << endl;
 		Sleep(2500);
+		saveBase();
 		menuTested();
 	}
 	else
@@ -95,7 +96,7 @@ void Tested::chekIn()
 			ad = checkSize(pas);
 		}
 		hash<string> cod;
-		int pass = cod(pas);
+		unsigned int pass = cod(pas);
 		bool ps = true;
 		while (ps)
 		{
@@ -111,11 +112,10 @@ void Tested::chekIn()
 					ad = checkSize(pas);
 				}
 				hash<string> cod;
-				int pass = cod(pas);
+				unsigned int pass = cod(pas);
 			}
 			else
 				ps = false;
-
 		}
 		user->setPass(pass);
 		char* n = new char;
@@ -136,6 +136,7 @@ void Tested::chekIn()
 		base_users.insert(make_pair(pass, base_tested));
 		cout << "ÏÎËÜÇÎÂÀÒÅËÜ ÄÎÁÀÂËÅÍ!!!" << endl;
 		Sleep(2500);
+		saveBase();
 		menuTested();
 	}
 }
@@ -145,10 +146,10 @@ void Tested::menuTested()
 {
 	system("cls");
 	cout << "ÌÅÍŞ ÏÎËÜÇÎÂÀÒÅËß:\n" << endl;
-	cout << "1. Óïğàâëåíèå ÏÎËÜÇÎÀÂÀÒÅËßÌÈ\n"
-		<< "2. Óïğàâëåíèå ÑÒÀÒÈÑÒÈÊÎÉ\n"
-		<< "3. Óïğàâëåíèå ÒÅÑÒÀÌÈ\n"
-		<< "4. Óïğàâëåíèå äàííûìè ÀÄÌÈÍÈÑÒĞÀÒÎĞÀ\n"
+	cout << "1. Ñäàòü íîâîå ÒÅÑÒÈĞÎÂÀÍÈÅ\n"
+		<< "2. Ïğîñìîòîğ ğåçóëüòàòîâ ÒÅÑÒÈĞÎÂÀÍÈßÅ\n"
+		<< "3. Ñîõğàíèòü ïğîìåæóòî÷íîå ÒÅÑÒÈĞÎÂÀÍÈÅ\n"
+		<< "4. Çàãğóçèòü ïîñëåäíåå ñîõğàíåííîå ÒÅÑÒÈĞÎÂÀÍÈÅ\n"
 		<< "5. Âûõîä\n" << endl;
 	int var1;
 	cin >> var1;
@@ -185,4 +186,82 @@ void Tested::saveTesting()
 //çàãğóçèòü ïîñëåäíåå ñîõğàíåííîå òåñòèğîâàíèå
 void Tested::loadTesting()
 {
+}
+
+
+//ñîõğàíåíèå áàçû òåñòèğóåìûõ
+void Tested::saveBase()
+{
+	ofstream fout("BaseTasted.bin", ios::binary | ios::out);
+	int length = base_tested.size();
+	User* user = new User;
+	fout.write((char*)&length, sizeof(int));
+	fout.write((char*)&base_tested, sizeof(User));
+	for (size_t i = 0; i < length; i++)
+	{
+		user = base_tested.front();
+		unsigned int pas = user->getPass();
+		fout.write((char*)&pas, sizeof(unsigned int));
+		//string log = user->getLogin().c_str();
+		int l_log = user->getLogin().size() + 1;
+		fout.write((char*)&l_log, sizeof(int));
+		fout.write((char*)user->getLogin().c_str(), l_log);
+		//string n = user->getName().c_str();
+		int l_n = user->getName().size() + 1;
+		fout.write((char*)&l_n, sizeof(int));
+		fout.write((char*)user->getName().c_str(), l_n);
+		//string em = user->getEmail().c_str();
+		int l_em = user->getEmail().size() + 1;
+		fout.write((char*)&l_em, sizeof(int));
+		fout.write((char*)user->getEmail().c_str(), l_em);
+		//string ph = user->getPhone().c_str();
+		int l_ph = user->getPhone().size() + 1;
+		fout.write((char*)&l_ph, sizeof(int));
+		fout.write((char*)user->getPhone().c_str(), l_ph);
+	}
+	fout.close();
+
+}
+
+//çàãğóçêà áàçû òåñòèğóåìûõ
+void Tested::loadBase()
+{
+	ifstream fin("BaseTasted.bin", ios::binary | ios::in);
+	if (fin.is_open())
+	{
+		int length;
+		User* user = new User;
+		fin.read((char*)&length, sizeof(int));
+		fin.read((char*)&this->base_tested, sizeof(User));
+		for (size_t i = 0; i < length; i++)
+		{
+			unsigned int pas;
+			fin.read((char*)&pas, sizeof(unsigned int));
+			user->setPass(pas);
+			int l_log;
+			fin.read((char*)&l_log, sizeof(int));
+			char* buff = new char(l_log + 1);
+			fin.read(buff, l_log);
+			user->setLogin(buff);
+			int l_n;
+			fin.read((char*)&l_n, sizeof(int));
+			char* buff1 = new char(l_n + 1);
+			fin.read(buff1, l_n);
+			user->setName(buff1);
+			int l_em;
+			fin.read((char*)&l_em, sizeof(int));
+			char* buff2 = new char(l_em + 1);
+			fin.read(buff2, l_em);
+			user->setEmail(buff2);
+			int l_ph;
+			fin.read((char*)&l_ph, sizeof(int));
+			char* buff3 = new char(l_ph + 1);
+			fin.read(buff3, l_ph);
+			user->setPhone(buff3);
+
+			this->base_tested.push_back(user);
+			this->base_users.insert(make_pair(user->getPass(), base_tested));
+		}
+	}
+	fin.close();
 }
