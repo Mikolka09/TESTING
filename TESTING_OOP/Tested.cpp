@@ -14,6 +14,10 @@ bool checkSize(string p)
 		return false;
 }
 
+void Tested::newTesting()
+{
+}
+
 //регестрация пользователя
 void Tested::chekIn()
 {
@@ -145,37 +149,49 @@ void Tested::chekIn()
 void Tested::menuTested()
 {
 	system("cls");
-	cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
-	cout << "1. Сдать новое ТЕСТИРОВАНИЕ\n"
-		<< "2. Просмотор результатов ТЕСТИРОВАНИЯЕ\n"
-		<< "3. Сохранить промежуточное ТЕСТИРОВАНИЕ\n"
-		<< "4. Загрузить последнее сохраненное ТЕСТИРОВАНИЕ\n"
-		<< "5. Выход\n" << endl;
-	int var1;
-	cin >> var1;
-	switch (var1)
+	while (true)
 	{
-	case 1:
-		//controlUser();
-		break;
-	case 2:
-		//lookStatics();
-		break;
-	case 3:
-		//addTests();
-		break;
-	case 4:
-		//changeLogin();
-		break;
-	case 5:
-		exit(0);
-		break;
+		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+		cout << "1. Сдать новое ТЕСТИРОВАНИЕ\n"
+			<< "2. Просмотор результатов ТЕСТИРОВАНИЯЕ\n"
+			<< "3. Сохранить промежуточное ТЕСТИРОВАНИЕ\n"
+			<< "4. Загрузить последнее сохраненное ТЕСТИРОВАНИЕ\n"
+			<< "5. Выход\n" << endl;
+		int var1;
+		cin >> var1;
+		switch (var1)
+		{
+		case 1:
+			//controlUser();
+			break;
+		case 2:
+			//lookStatics();
+			break;
+		case 3:
+			//addTests();
+			break;
+		case 4:
+			//changeLogin();
+			break;
+		case 5:
+			exit(0);
+			break;
+		}
 	}
 }
 
 //просмотр результата тестирования
 void Tested::printResult()
 {
+}
+
+//печать списка тестируемых
+void Tested::print()
+{
+	for (auto& it : base_tested)
+	{
+		cout << it->getLogin() << " " << it->getName() << " " << it->getEmail() << " " << it->getPhone() << endl;
+	}
 }
 
 //сохранить промежуточное тестирование
@@ -196,28 +212,24 @@ void Tested::saveBase()
 	int length = base_tested.size();
 	User* user = new User;
 	fout.write((char*)&length, sizeof(int));
-	fout.write((char*)&base_tested, sizeof(User));
-	for (size_t i = 0; i < length; i++)
+	for (int i = 0; i < length; i++)
 	{
 		user = base_tested.front();
 		unsigned int pas = user->getPass();
 		fout.write((char*)&pas, sizeof(unsigned int));
-		//string log = user->getLogin().c_str();
 		int l_log = user->getLogin().size() + 1;
 		fout.write((char*)&l_log, sizeof(int));
 		fout.write((char*)user->getLogin().c_str(), l_log);
-		//string n = user->getName().c_str();
 		int l_n = user->getName().size() + 1;
 		fout.write((char*)&l_n, sizeof(int));
 		fout.write((char*)user->getName().c_str(), l_n);
-		//string em = user->getEmail().c_str();
 		int l_em = user->getEmail().size() + 1;
 		fout.write((char*)&l_em, sizeof(int));
 		fout.write((char*)user->getEmail().c_str(), l_em);
-		//string ph = user->getPhone().c_str();
 		int l_ph = user->getPhone().size() + 1;
 		fout.write((char*)&l_ph, sizeof(int));
 		fout.write((char*)user->getPhone().c_str(), l_ph);
+		base_tested.pop_front();
 	}
 	fout.close();
 
@@ -230,11 +242,10 @@ void Tested::loadBase()
 	if (fin.is_open())
 	{
 		int length;
-		User* user = new User;
 		fin.read((char*)&length, sizeof(int));
-		fin.read((char*)&this->base_tested, sizeof(User));
-		for (size_t i = 0; i < length; i++)
+		for (int i = 0; i < length; i++)
 		{
+			User* user = new User;
 			unsigned int pas;
 			fin.read((char*)&pas, sizeof(unsigned int));
 			user->setPass(pas);
@@ -259,9 +270,12 @@ void Tested::loadBase()
 			fin.read(buff3, l_ph);
 			user->setPhone(buff3);
 
+			
 			this->base_tested.push_back(user);
 			this->base_users.insert(make_pair(user->getPass(), base_tested));
+			
 		}
+
 	}
 	fin.close();
 }

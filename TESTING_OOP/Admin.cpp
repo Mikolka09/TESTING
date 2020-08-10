@@ -34,32 +34,35 @@ void Admin::chekInAdmin()
 //меню админитсратора
 void Admin::menuAdmin()
 {
-	system("cls");
-	cout << "МЕНЮ АДМИНИСТРАТОРА:\n" << endl;
-	cout << "1. Управление ПОЛЬЗОАВАТЕЛЯМИ\n"
-		<< "2. Управление СТАТИСТИКОЙ\n"
-		<< "3. Управление ТЕСТАМИ\n"
-		<< "4. Управление данными АДМИНИСТРАТОРА\n"
-		<< "5. Выход\n" << endl;
-	int var1;
-	cin >> var1;
-	switch (var1)
+	while (true)
 	{
-	case 1:
-		controlUser();
-		break;
-	case 2:
-		lookStatics();
-		break;
-	case 3:
-		addTests();
-		break;
-	case 4:
-		changeLogin();
-		break;
-	case 5:
-		exit(0);
-		break;
+		system("cls");
+		cout << "МЕНЮ АДМИНИСТРАТОРА:\n" << endl;
+		cout << "1. Управление ПОЛЬЗОАВАТЕЛЯМИ\n"
+			<< "2. Управление СТАТИСТИКОЙ\n"
+			<< "3. Управление ТЕСТАМИ\n"
+			<< "4. Управление данными АДМИНИСТРАТОРА\n"
+			<< "5. Выход\n" << endl;
+		int var1;
+		cin >> var1;
+		switch (var1)
+		{
+		case 1:
+			controlUser();
+			break;
+		case 2:
+			lookStatics();
+			break;
+		case 3:
+			addTests();
+			break;
+		case 4:
+			changeLogin();
+			break;
+		case 5:
+			exit(0);
+			break;
+		}
 	}
 }
 
@@ -81,6 +84,80 @@ void Admin::changeLogin()
 //изменение данных пользователя (тестируемого)
 void Admin::controlUser()
 {
+	system("cls");
+	while (true)
+	{
+		cout << "УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ:\n" << endl;
+		cout << "1. Создание ПОЛЬЗОАВАТЕЛЯ\n"
+			<< "2. Удаление ПОЛЬЗОАВАТЕЛЯ\n"
+			<< "3. Редактирование ПОЛЬЗОАВАТЕЛЯ\n"
+			<< "4. Печать ПОЛЬЗОАВАТЕЛЕЙ\n"
+			<< "5. Возврат в предыдущее меню\n" << endl;
+		int var;
+		cin >> var;
+		switch (var)
+		{
+		case 1:
+			user.chekIn();
+			break;
+		case 2:
+			dellUser();
+			break;
+		case 3:
+			editUser();
+			break;
+		case 4:
+			system("cls");
+			while (true)
+			{
+				cout << "ПЕЧАТЬ ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
+				cout << "1. Печать в файл ПОЛЬЗОАВАТЕЛЕЙ\n"
+					<< "2. Печать на экран ПОЛЬЗОАВАТЕЛЕЙ\n"
+					<< "3. Возврат в предыдущее меню\n" << endl;
+				int var1;
+				cin >> var1;
+				switch (var1)
+				{
+				case 1:
+					printUserFile();
+					break;
+				case 2:
+					printUser();
+					break;
+				case 3:
+					controlUser();
+					break;
+				}
+			}
+			break;
+		case 5:
+			menuAdmin();
+			break;
+		}
+	}
+}
+
+//удаление пользователя
+void Admin::dellUser()
+{
+}
+
+//редактирование пользователя
+void Admin::editUser()
+{
+}
+
+//печать пользователей в файл
+void Admin::printUserFile()
+{
+}
+
+//печать пользователей на экран
+void Admin::printUser()
+{
+	system("cls");
+	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
+	user.print();
 }
 
 //просмотр статистики
@@ -112,7 +189,7 @@ void Admin::loadLoginPass()
 		int len_log = 0;
 		int pass = 0;
 		fin.read((char*)&len_log, sizeof(int));
-		char*buff=new char(len_log+1);
+		char* buff = new char(len_log + 1);
 		fin.read(buff, len_log);
 		setLogAdmin(buff);
 		fin.read((char*)&pass, sizeof(int));

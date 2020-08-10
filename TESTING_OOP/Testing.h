@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include"Tests.h"
 #include"Admin.h"
 #include"Tested.h"

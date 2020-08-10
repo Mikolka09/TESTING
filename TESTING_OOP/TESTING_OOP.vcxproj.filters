@@ -67,8 +67,5 @@
     <None Include="BaseTasted.bin">
       <Filter>Файлы ресурсов</Filter>
     </None>
-    <None Include="..\..\..\Source\Repos\Lesson\Base.bin">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
   </ItemGroup>
 </Project>

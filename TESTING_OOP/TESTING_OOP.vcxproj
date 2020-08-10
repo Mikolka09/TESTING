@@ -158,7 +158,6 @@
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Source\Repos\Lesson\Base.bin" />
     <None Include="BaseTasted.bin" />
     <None Include="PassAdmin.bin" />
   </ItemGroup>

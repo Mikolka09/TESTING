@@ -15,12 +15,12 @@ class User
 {
 private:
 
-	string login = "";  //логин пользователя
+	string login;// = "";  //логин пользователя
 	unsigned int pass = 0;       //пароль пользователя
 
-	string name = "";   //ФИО пользователя
-	string email = "";  //электронный адресс пользователя
-	string phone = "";  //номер телефона пользователя
+	string name;// = "";   //ФИО пользователя
+	string email;// = "";  //электронный адресс пользователя
+	string phone;// = "";  //номер телефона пользователя
 
 public:
 	
