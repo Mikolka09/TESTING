@@ -1,18 +1,7 @@
 ﻿#include"Tested.h"
 
 
-//проверка пароля на размер
-bool checkSize(string p)
-{
-	if (p.size() < 8)
-	{
-		cout << "Пароль слишком короткий, попробуйте еще раз!!!" << endl;
-		Sleep(2500);
-		return true;
-	}
-	else
-		return false;
-}
+
 
 void Tested::newTesting()
 {
@@ -39,8 +28,7 @@ void Tested::chekIn()
 			cin >> pas;
 			ad = checkSize(pas);  //проверка на размер пароля
 		}
-		hash<string> cod;
-		unsigned int pass = cod(pas);  //шифрование пароля
+		unsigned int pass = hashing(pas);  //шифрование пароля
 		user->setPass(pass);
 		char* n = new char;
 		cin.ignore();
@@ -102,8 +90,8 @@ void Tested::chekIn()
 			cin >> pas;
 			ad = checkSize(pas);
 		}
-		hash<string> cod;                 //шифрование пароля
-		unsigned int pass = cod(pas);
+		//шифрование пароля
+		int pass = hashing(pas);
 		bool ps = true;
 		while (ps)
 		{
@@ -120,8 +108,7 @@ void Tested::chekIn()
 					cin >> pas;
 					d = checkSize(pas);
 				}
-				hash<string> cod;
-				unsigned int pass = cod(pas);
+				pass = hashing(pas);
 				if (base_users.count(pass) == 0)
 					ps = false;
 			}
@@ -278,12 +265,9 @@ void Tested::loadBase()
 			fin.read(buff3, l_ph);
 			user->setPhone(buff3);
 
-
 			this->base_tested.push_back(user);
 			this->base_users.insert(make_pair(user->getPass(), base_tested));
-
 		}
-
 	}
 	fin.close();
 }

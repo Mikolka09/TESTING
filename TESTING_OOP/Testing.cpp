@@ -12,9 +12,9 @@ void Testing::enterSystem()
 		cout << "1. Войти под своими данными\n"
 			<< "2. Регестрация пользователя\n"
 			<< "3. Выход\n" << endl;
-		int var1;
-		cin >> var1;
-		switch (var1)
+		int var;
+		cin >> var;
+		switch (var)
 		{
 		case 1:
 			system("cls");
@@ -32,14 +32,14 @@ void Testing::enterSystem()
 				else
 				{
 					system("cls");
+					cout << "ВХОД В СИСТЕМУ АДМИНИСТРАТОРА:\n" << endl;
 					string log;
-					cout << "ВВедите ЛОГИН: ";
+					cout << "Введите ЛОГИН: ";
 					cin >> log;
 					string pas;
 					cout << "Введите ПАРОЛЬ: ";
 					cin >> pas;
-					hash<string> cod;
-					int pass = cod(pas);
+					int pass = hashing(pas);
 					if (admin.getLogAdmin() == log && admin.getPassAdmin() == pass)
 						admin.menuAdmin(tested);
 					else
@@ -53,14 +53,14 @@ void Testing::enterSystem()
 			case 2:
 			{
 				system("cls");
+				cout << "ВХОД В СИСТЕМУ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 				cout << "Введите свой ЛОГИН: ";
 				string log;
 				cin >> log;
 				cout << "Введите свой ПАРОЛЬ: ";
 				string pas;
 				cin >> pas;
-				hash<string> cod;
-				int pass = cod(pas);
+				int pass = hashing(pas);
 				if (tested.getBaseUsers().count(pass) == 1 
 					&& (*tested.getBaseUsers().find(pass)).second.front()->getLogin() == log)
 					tested.menuTested();
@@ -75,6 +75,8 @@ void Testing::enterSystem()
 			case 3:
 				enterSystem();
 				break;
+			default:
+				break;
 			}
 			break;
 		case 2:
@@ -82,6 +84,7 @@ void Testing::enterSystem()
 			break;
 		case 3:
 			exit(0);
+		default:
 			break;
 		}
 	}

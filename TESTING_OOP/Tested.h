@@ -25,6 +25,8 @@ public:
 	void loadTesting();   //загрузить последнее сохраненное тестирование
 	void saveBase();      //сохранение базы тестируемых
 	void loadBase();      //загрузка базы тестируемых
+	
 
 	friend class Admin;
+	
 };

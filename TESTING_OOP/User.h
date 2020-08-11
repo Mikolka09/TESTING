@@ -1,15 +1,5 @@
 ﻿#pragma once
-#include<iostream>
-#include <string>
-#include<list>
-#include<map>
-#include<fstream>
-#include<functional>
-#include<Windows.h>
-#include<iomanip>
-#include<fstream>
-
-using namespace std;
+#include "Functions.h"
 
 class User
 {

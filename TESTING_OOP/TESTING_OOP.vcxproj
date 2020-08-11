@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Admin.h" />
     <ClInclude Include="Chemistry.h" />
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Tested.h" />

@@ -8,7 +8,7 @@ class Admin
 {
 private:
 	
-	string log_admin = "";  //логин администратора
+	string log_admin;  //логин администратора
 	int pass_admin = 0;     //пароль администратора
 	
 public:
