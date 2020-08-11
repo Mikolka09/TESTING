@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include<iostream>
 #include <string>
 #include<list>
@@ -11,16 +11,16 @@ class Tests
 {
 private:
 
-	string category = "";      //категория теста
-	string id = "";            //номер вопроса
-	string question = "";      //текст вопроса
-	string answers = "";       //варианты ответов
-	string rightAnswer = "";   //правельный ответ
-	string balls = "";         //количество балов за вопрос
+	string category = "";      //РєР°С‚РµРіРѕСЂРёСЏ С‚РµСЃС‚Р°
+	string id = "";            //РЅРѕРјРµСЂ РІРѕРїСЂРѕСЃР°
+	string question = "";      //С‚РµРєСЃС‚ РІРѕРїСЂРѕСЃР°
+	string answers = "";       //РІР°СЂРёР°РЅС‚С‹ РѕС‚РІРµС‚РѕРІ
+	string rightAnswer = "";   //РїСЂР°РІРµР»СЊРЅС‹Р№ РѕС‚РІРµС‚
+	string balls = "";         //РєРѕР»РёС‡РµСЃС‚РІРѕ Р±Р°Р»РѕРІ Р·Р° РІРѕРїСЂРѕСЃ
 
 public:
 
-	void printTest();  //вывод теста на экран
+	void printTest();  //РІС‹РІРѕРґ С‚РµСЃС‚Р° РЅР° СЌРєСЂР°РЅ
 
 };
 

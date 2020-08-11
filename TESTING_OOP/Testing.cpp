@@ -1,6 +1,6 @@
-#include "Testing.h"
+ï»¿#include "Testing.h"
 
-//àâòîğèçèğîâàííûé âõîä
+//Ğ°Ğ²Ñ‚Ğ¾Ñ€Ğ¸Ğ·Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ½Ñ‹Ğ¹ Ğ²Ñ…Ğ¾Ğ´
 void Testing::enterSystem()
 {
 	admin.loadLoginPass();
@@ -8,20 +8,20 @@ void Testing::enterSystem()
 	while (true)
 	{
 		system("cls");
-		cout << "ÂÎÉÒÈ Â ÑÈÑÒÅÌÓ:\n" << endl;
-		cout << "1. Âîéòè ïîä ñâîèìè äàííûìè\n"
-			<< "2. Ğåãåñòğàöèÿ ïîëüçîâàòåëÿ\n"
-			<< "3. Âûõîä\n" << endl;
+		cout << "Ğ’ĞĞ™Ğ¢Ğ˜ Ğ’ Ğ¡Ğ˜Ğ¡Ğ¢Ğ•ĞœĞ£:\n" << endl;
+		cout << "1. Ğ’Ğ¾Ğ¹Ñ‚Ğ¸ Ğ¿Ğ¾Ğ´ ÑĞ²Ğ¾Ğ¸Ğ¼Ğ¸ Ğ´Ğ°Ğ½Ğ½Ñ‹Ğ¼Ğ¸\n"
+			<< "2. Ğ ĞµĞ³ĞµÑÑ‚Ñ€Ğ°Ñ†Ğ¸Ñ Ğ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»Ñ\n"
+			<< "3. Ğ’Ñ‹Ñ…Ğ¾Ğ´\n" << endl;
 		int var1;
 		cin >> var1;
 		switch (var1)
 		{
 		case 1:
 			system("cls");
-			cout << "ÂÂÎÄ ÄÀÍÍÛÕ:\n" << endl;
-			cout << "1. Âõîä Àäìèíèñòğàòîğà\n"
-				<< "2. Âõîä Ïîëüçîûâàòåëÿ\n"
-				<< "3. Âîçâğàò â ïğåäûäóùåå ìåíş\n" << endl;
+			cout << "Ğ’Ğ’ĞĞ” Ğ”ĞĞĞĞ«Ğ¥:\n" << endl;
+			cout << "1. Ğ’Ñ…Ğ¾Ğ´ ĞĞ´Ğ¼Ğ¸Ğ½Ğ¸ÑÑ‚Ñ€Ğ°Ñ‚Ğ¾Ñ€Ğ°\n"
+				<< "2. Ğ’Ñ…Ğ¾Ğ´ ĞŸĞ¾Ğ»ÑŒĞ·Ğ¾Ñ‹Ğ²Ğ°Ñ‚ĞµĞ»Ñ\n"
+				<< "3. Ğ’Ğ¾Ğ·Ğ²Ñ€Ğ°Ñ‚ Ğ² Ğ¿Ñ€ĞµĞ´Ñ‹Ğ´ÑƒÑ‰ĞµĞµ Ğ¼ĞµĞ½Ñ\n" << endl;
 			int var2;
 			cin >> var2;
 			switch (var2)
@@ -33,10 +33,10 @@ void Testing::enterSystem()
 				{
 					system("cls");
 					string log;
-					cout << "ÂÂåäèòå ËÎÃÈÍ: ";
+					cout << "Ğ’Ğ’ĞµĞ´Ğ¸Ñ‚Ğµ Ğ›ĞĞ“Ğ˜Ğ: ";
 					cin >> log;
 					string pas;
-					cout << "Ââåäèòå ÏÀĞÎËÜ: ";
+					cout << "Ğ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ ĞŸĞĞ ĞĞ›Ğ¬: ";
 					cin >> pas;
 					hash<string> cod;
 					int pass = cod(pas);
@@ -44,7 +44,7 @@ void Testing::enterSystem()
 						admin.menuAdmin(tested);
 					else
 					{
-						cout << "ËÎÃÈÍ èëè ÏÀĞÎËÜ óêàçàíû íå âåğíî!!!" << endl;
+						cout << "Ğ›ĞĞ“Ğ˜Ğ Ğ¸Ğ»Ğ¸ ĞŸĞĞ ĞĞ›Ğ¬ ÑƒĞºĞ°Ğ·Ğ°Ğ½Ñ‹ Ğ½Ğµ Ğ²ĞµÑ€Ğ½Ğ¾!!!" << endl;
 						Sleep(2000);
 						enterSystem();
 					}
@@ -53,10 +53,10 @@ void Testing::enterSystem()
 			case 2:
 			{
 				system("cls");
-				cout << "Ââåäèòå ñâîé ËÎÃÈÍ: ";
+				cout << "Ğ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ ÑĞ²Ğ¾Ğ¹ Ğ›ĞĞ“Ğ˜Ğ: ";
 				string log;
 				cin >> log;
-				cout << "Ââåäèòå ñâîé ÏÀĞÎËÜ: ";
+				cout << "Ğ’Ğ²ĞµĞ´Ğ¸Ñ‚Ğµ ÑĞ²Ğ¾Ğ¹ ĞŸĞĞ ĞĞ›Ğ¬: ";
 				string pas;
 				cin >> pas;
 				hash<string> cod;
@@ -66,7 +66,7 @@ void Testing::enterSystem()
 					tested.menuTested();
 				else
 				{
-					cout << "ËÎÃÈÍ èëè ÏÀĞÎËÜ óêàçàíû íå âåğíî!!!" << endl;
+					cout << "Ğ›ĞĞ“Ğ˜Ğ Ğ¸Ğ»Ğ¸ ĞŸĞĞ ĞĞ›Ğ¬ ÑƒĞºĞ°Ğ·Ğ°Ğ½Ñ‹ Ğ½Ğµ Ğ²ĞµÑ€Ğ½Ğ¾!!!" << endl;
 					Sleep(2000);
 					enterSystem();
 				}
@@ -87,11 +87,11 @@ void Testing::enterSystem()
 	}
 }
 
-//ìåíş òåñòèğîâàíèÿ
+//Ğ¼ĞµĞ½Ñ Ñ‚ĞµÑÑ‚Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ¸Ñ
 void Testing::menu()
 {
 	system("cls");
-	cout << "ÄÎÁĞÎ ÏÎÆÀËÎÂÀÒÜ ÍÀ ÒÅÑÒÈĞÎÂÀÍÈÅ!!!" << endl;
-	cout << "ÌÅÍŞ:\n" << endl;
-	cout << "1. Âõîä â ñèñòåìó\n" << "2. Íà÷àò";
+	cout << "Ğ”ĞĞ‘Ğ Ğ ĞŸĞĞ–ĞĞ›ĞĞ’ĞĞ¢Ğ¬ ĞĞ Ğ¢Ğ•Ğ¡Ğ¢Ğ˜Ğ ĞĞ’ĞĞĞ˜Ğ•!!!" << endl;
+	cout << "ĞœĞ•ĞĞ®:\n" << endl;
+	cout << "1. Ğ’Ñ…Ğ¾Ğ´ Ğ² ÑĞ¸ÑÑ‚ĞµĞ¼Ñƒ\n" << "2. ĞĞ°Ñ‡Ğ°Ñ‚";
 }

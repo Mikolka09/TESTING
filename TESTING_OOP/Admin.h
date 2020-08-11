@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include"User.h"
 #include"Tested.h"
 
@@ -8,8 +8,8 @@ class Admin
 {
 private:
 	
-	string log_admin = "";  //логин администратора
-	int pass_admin = 0;     //пароль администратора
+	string log_admin = "";  //Р»РѕРіРёРЅ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°
+	int pass_admin = 0;     //РїР°СЂРѕР»СЊ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°
 	
 public:
 
@@ -20,19 +20,19 @@ public:
 	void setLogAdmin(string log) { this->log_admin = log; }
 	void setPassAdmin(int pas) { this->pass_admin = pas; }
 	
-	void chekInAdmin();                //регестрация администратора
-	void menuAdmin(Tested& tes);       //меню админитсратора
-	void addTests();                   //добавление тестов, категорий или вопросов
-	void loadTests();                  //загрузка тестов из файла
+	void chekInAdmin();                //СЂРµРіРµСЃС‚СЂР°С†РёСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°
+	void menuAdmin(Tested& tes);       //РјРµРЅСЋ Р°РґРјРёРЅРёС‚СЃСЂР°С‚РѕСЂР°
+	void addTests();                   //РґРѕР±Р°РІР»РµРЅРёРµ С‚РµСЃС‚РѕРІ, РєР°С‚РµРіРѕСЂРёР№ РёР»Рё РІРѕРїСЂРѕСЃРѕРІ
+	void loadTests();                  //Р·Р°РіСЂСѓР·РєР° С‚РµСЃС‚РѕРІ РёР· С„Р°Р№Р»Р°
 
-	void changeLogin();                //изменение логина и пароля администратора
-	void controlUser(Tested& tes);     //изменение данных пользователя (тестируемого)
-	void dellUser(Tested& tes);        //удаление пользователя
-	void editUser(Tested& tes);        //редактирование пользователя
-	void printUserFile(Tested& tes);   //печать пользователей в файл
-	void printUser(Tested& tes);       //печать пользователей на экран
-	void lookStatics();                //просмотр статистики
-	void saveStatics();                //сохранение статистики в файл
-	void saveLoginPass();              //сохранение логина и пароля администратора
-	void loadLoginPass();              //загрузка логина и пароля администратора
+	void changeLogin();                //РёР·РјРµРЅРµРЅРёРµ Р»РѕРіРёРЅР° Рё РїР°СЂРѕР»СЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°
+	void controlUser(Tested& tes);     //РёР·РјРµРЅРµРЅРёРµ РґР°РЅРЅС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (С‚РµСЃС‚РёСЂСѓРµРјРѕРіРѕ)
+	void dellUser(Tested& tes);        //СѓРґР°Р»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	void editUser(Tested& tes);        //СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	void printUserFile(Tested& tes);   //РїРµС‡Р°С‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РІ С„Р°Р№Р»
+	void printUser(Tested& tes);       //РїРµС‡Р°С‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РЅР° СЌРєСЂР°РЅ
+	void lookStatics();                //РїСЂРѕСЃРјРѕС‚СЂ СЃС‚Р°С‚РёСЃС‚РёРєРё
+	void saveStatics();                //СЃРѕС…СЂР°РЅРµРЅРёРµ СЃС‚Р°С‚РёСЃС‚РёРєРё РІ С„Р°Р№Р»
+	void saveLoginPass();              //СЃРѕС…СЂР°РЅРµРЅРёРµ Р»РѕРіРёРЅР° Рё РїР°СЂРѕР»СЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°
+	void loadLoginPass();              //Р·Р°РіСЂСѓР·РєР° Р»РѕРіРёРЅР° Рё РїР°СЂРѕР»СЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°
 };

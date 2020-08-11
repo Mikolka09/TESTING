@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include<iostream>
 #include <string>
 #include<list>
@@ -15,12 +15,12 @@ class User
 {
 private:
 
-	string login;// = "";  //логин пользователя
-	unsigned int pass = 0;       //пароль пользователя
+	string login;// = "";  //Р»РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	unsigned int pass = 0;       //РїР°СЂРѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
-	string name;// = "";   //ФИО пользователя
-	string email;// = "";  //электронный адресс пользователя
-	string phone;// = "";  //номер телефона пользователя
+	string name;// = "";   //Р¤РРћ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	string email;// = "";  //СЌР»РµРєС‚СЂРѕРЅРЅС‹Р№ Р°РґСЂРµСЃСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+	string phone;// = "";  //РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
 public:
 	

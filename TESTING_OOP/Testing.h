@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 #include"Tests.h"
 #include"Admin.h"
@@ -11,13 +11,13 @@ class Testing
 {
 private:
 
-	Admin admin;  //администратор
-	Tested tested;  //тестируемый
+	Admin admin;  //Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ
+	Tested tested;  //С‚РµСЃС‚РёСЂСѓРµРјС‹Р№
 	
 public:
 
 	
-	void enterSystem();  //авторизированный вход
-	void menu();         //меню тестирования
+	void enterSystem();  //Р°РІС‚РѕСЂРёР·РёСЂРѕРІР°РЅРЅС‹Р№ РІС…РѕРґ
+	void menu();         //РјРµРЅСЋ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
 
 };
