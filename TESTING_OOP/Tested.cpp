@@ -24,7 +24,7 @@ void Tested::chekIn()
 	system("cls");
 	cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 	User* user = new User;
-	if (base_users.empty())
+	if (base_users.empty())  //проверка на пустоту
 	{
 		string log;
 		cout << "Введите ЛОГИН: ";
@@ -37,10 +37,10 @@ void Tested::chekIn()
 		{
 			cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
 			cin >> pas;
-			ad = checkSize(pas);
+			ad = checkSize(pas);  //проверка на размер пароля
 		}
 		hash<string> cod;
-		unsigned int pass = cod(pas);
+		unsigned int pass = cod(pas);  //шифрование пароля
 		user->setPass(pass);
 		char* n = new char;
 		cin.ignore();
@@ -70,13 +70,16 @@ void Tested::chekIn()
 		//проверяем логин на повторение
 		while (lp)
 		{
+			system("cls");
+			cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 			cout << "Введите ЛОГИН: ";
 			cin >> log;
 			int count = 0;
-			auto it = base_users.begin();
-			for (it; it != base_users.end(); it++)
+			//поиск одинаковых логинов со счетчиком
+			auto it = base_tested.begin();
+			for (it; it != base_tested.end(); ++it)
 			{
-				if ((*it).second.front()->getLogin() == log)
+				if ((*it)->getLogin() == log)
 				{
 					count++;
 				}
@@ -99,24 +102,28 @@ void Tested::chekIn()
 			cin >> pas;
 			ad = checkSize(pas);
 		}
-		hash<string> cod;
+		hash<string> cod;                 //шифрование пароля
 		unsigned int pass = cod(pas);
 		bool ps = true;
 		while (ps)
 		{
-			if (base_users.count(pass) != 0)
+			if (base_users.count(pass) != 0)  //проверяем есть ли еще такой пароль в базе
 			{
 				cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
 				Sleep(2500);
 				system("cls");
-				while (ad)
+				bool d = true;
+				while (d)
 				{
+					cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 					cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
 					cin >> pas;
-					ad = checkSize(pas);
+					d = checkSize(pas);
 				}
 				hash<string> cod;
 				unsigned int pass = cod(pas);
+				if (base_users.count(pass) == 0)
+					ps = false;
 			}
 			else
 				ps = false;
@@ -148,9 +155,9 @@ void Tested::chekIn()
 //меню тестируемого
 void Tested::menuTested()
 {
-	system("cls");
 	while (true)
 	{
+		system("cls");
 		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 		cout << "1. Сдать новое ТЕСТИРОВАНИЕ\n"
 			<< "2. Просмотор результатов ТЕСТИРОВАНИЯЕ\n"
@@ -165,6 +172,7 @@ void Tested::menuTested()
 			//controlUser();
 			break;
 		case 2:
+			print();
 			//lookStatics();
 			break;
 		case 3:
@@ -188,10 +196,10 @@ void Tested::printResult()
 //печать списка тестируемых
 void Tested::print()
 {
-	for (auto& it : base_tested)
-	{
-		cout << it->getLogin() << " " << it->getName() << " " << it->getEmail() << " " << it->getPhone() << endl;
-	}
+	auto it = this->base_tested.begin();
+	for (it; it != this->base_tested.end(); ++it)
+		cout << *it << " ";
+	cout << endl;
 }
 
 //сохранить промежуточное тестирование
@@ -270,10 +278,10 @@ void Tested::loadBase()
 			fin.read(buff3, l_ph);
 			user->setPhone(buff3);
 
-			
+
 			this->base_tested.push_back(user);
 			this->base_users.insert(make_pair(user->getPass(), base_tested));
-			
+
 		}
 
 	}

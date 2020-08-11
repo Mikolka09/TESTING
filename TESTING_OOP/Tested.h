@@ -1,10 +1,11 @@
 #pragma once
 #include"User.h"
 
+
 class Tested :public User
 {
 private:
-
+	
 	list<string> result;
 	list<User*> base_tested; //список данных пользователей
 	map<unsigned int, list<User*>> base_users;  //база данных пользователей (тестируемых)
@@ -24,4 +25,6 @@ public:
 	void loadTesting();   //загрузить последнее сохраненное тестирование
 	void saveBase();      //сохранение базы тестируемых
 	void loadBase();      //загрузка базы тестируемых
+
+	friend class Admin;
 };

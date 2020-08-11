@@ -41,7 +41,7 @@ void Testing::enterSystem()
 					hash<string> cod;
 					int pass = cod(pas);
 					if (admin.getLogAdmin() == log && admin.getPassAdmin() == pass)
-						admin.menuAdmin();
+						admin.menuAdmin(tested);
 					else
 					{
 						cout << "ËÎÃÈÍ èëè ÏÀĞÎËÜ óêàçàíû íå âåğíî!!!" << endl;
@@ -61,7 +61,8 @@ void Testing::enterSystem()
 				cin >> pas;
 				hash<string> cod;
 				int pass = cod(pas);
-				if (tested.getBaseUsers().count(pass) == 1 && (*tested.getBaseUsers().find(pass)).second.front()->getLogin() == log)
+				if (tested.getBaseUsers().count(pass) == 1 
+					&& (*tested.getBaseUsers().find(pass)).second.front()->getLogin() == log)
 					tested.menuTested();
 				else
 				{

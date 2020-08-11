@@ -1,5 +1,6 @@
 #include"Admin.h"
 
+
 //регестрация администратора
 void Admin::chekInAdmin()
 {
@@ -32,7 +33,7 @@ void Admin::chekInAdmin()
 }
 
 //меню админитсратора
-void Admin::menuAdmin()
+void Admin::menuAdmin(Tested& tes)
 {
 	while (true)
 	{
@@ -48,7 +49,7 @@ void Admin::menuAdmin()
 		switch (var1)
 		{
 		case 1:
-			controlUser();
+			controlUser(tes);
 			break;
 		case 2:
 			lookStatics();
@@ -82,11 +83,11 @@ void Admin::changeLogin()
 }
 
 //изменение данных пользователя (тестируемого)
-void Admin::controlUser()
+void Admin::controlUser(Tested& tes)
 {
-	system("cls");
 	while (true)
 	{
+		system("cls");
 		cout << "УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ:\n" << endl;
 		cout << "1. Создание ПОЛЬЗОАВАТЕЛЯ\n"
 			<< "2. Удаление ПОЛЬЗОАВАТЕЛЯ\n"
@@ -98,18 +99,18 @@ void Admin::controlUser()
 		switch (var)
 		{
 		case 1:
-			user.chekIn();
+			tes.chekIn();
 			break;
 		case 2:
-			dellUser();
+			dellUser(tes);
 			break;
 		case 3:
-			editUser();
+			editUser(tes);
 			break;
 		case 4:
-			system("cls");
 			while (true)
 			{
+				system("cls");
 				cout << "ПЕЧАТЬ ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
 				cout << "1. Печать в файл ПОЛЬЗОАВАТЕЛЕЙ\n"
 					<< "2. Печать на экран ПОЛЬЗОАВАТЕЛЕЙ\n"
@@ -119,45 +120,50 @@ void Admin::controlUser()
 				switch (var1)
 				{
 				case 1:
-					printUserFile();
+					printUserFile(tes);
 					break;
 				case 2:
-					printUser();
+					printUser(tes);
 					break;
 				case 3:
-					controlUser();
+					controlUser(tes);
 					break;
 				}
 			}
 			break;
 		case 5:
-			menuAdmin();
+			menuAdmin(tes);
 			break;
 		}
 	}
 }
 
 //удаление пользователя
-void Admin::dellUser()
+void Admin::dellUser(Tested& tes)
 {
 }
 
 //редактирование пользователя
-void Admin::editUser()
+void Admin::editUser(Tested& tes)
 {
 }
 
 //печать пользователей в файл
-void Admin::printUserFile()
+void Admin::printUserFile(Tested& tes)
 {
 }
 
 //печать пользователей на экран
-void Admin::printUser()
+void Admin::printUser(Tested& tes)
 {
 	system("cls");
 	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
-	user.print();
+	auto it = tes.base_tested.begin();
+	for (it; it != tes.base_tested.end(); ++it)
+		cout << *it;
+	cout << endl;
+	system("pause");
+
 }
 
 //просмотр статистики
