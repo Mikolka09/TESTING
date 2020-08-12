@@ -10,13 +10,13 @@ class Testing
 {
 private:
 
-	Admin admin;  //администратор
-	Tested tested;  //тестируемый
+	Admin admin_;          //администратор
+	Tested tested_;        //тестируемый
 	
 public:
 
 	
-	void enterSystem();  //авторизированный вход
-	void menu();         //меню тестирования
-
+	void enter_system();   //авторизированный вход
+	
 };
+

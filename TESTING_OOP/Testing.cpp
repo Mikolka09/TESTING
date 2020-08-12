@@ -1,34 +1,41 @@
 ﻿#include "Testing.h"
 
 //авторизированный вход
-void Testing::enterSystem()
+void Testing::enter_system()
 {
-	admin.loadLoginPass();
-	tested.loadBase();
+	admin_.load_login_pass();
+	tested_.load_base();
 	while (true)
 	{
 		system("cls");
-		cout << "ВОЙТИ В СИСТЕМУ:\n" << endl;
-		cout << "1. Войти под своими данными\n"
-			<< "2. Регестрация пользователя\n"
-			<< "3. Выход\n" << endl;
+		cout << "ВОХОД В СИСТЕМУ:\n" << endl;
+		cout << "1. ВХОД для ЗАРЕГЕТРИРОВАННЫХ\n"
+			<< "2. Регестрация АДМИНИСТРАТОРА\n"
+			<< "3. Регестрация ПОЛЬЗОВАТЕЛЯ\n"
+			<< "4. Выход\n" << endl;
 		int var;
 		cin >> var;
+		cin.ignore();
 		switch (var)
 		{
 		case 1:
 			system("cls");
 			cout << "ВВОД ДАННЫХ:\n" << endl;
-			cout << "1. Вход Администратора\n"
-				<< "2. Вход Пользоывателя\n"
+			cout << "1. Вход АДМИНИСТРАТОРА\n"
+				<< "2. Вход ПОЛЬЗОВАТЕЛЯ\n"
 				<< "3. Возврат в предыдущее меню\n" << endl;
 			int var2;
 			cin >> var2;
+			cin.ignore();
 			switch (var2)
 			{
 			case 1:
-				if (admin.getLogAdmin().empty())
-					admin.chekInAdmin();
+				if (admin_.get_log_admin().empty())
+				{
+					cout << "АДМИНИСТРАТОР не ЗАРЕГЕСТРИРОВАН!!!" << endl;
+					Sleep(2500);
+					enter_system();
+				}
 				else
 				{
 					system("cls");
@@ -36,17 +43,18 @@ void Testing::enterSystem()
 					string log;
 					cout << "Введите ЛОГИН: ";
 					cin >> log;
+					uppercase(log);
 					string pas;
 					cout << "Введите ПАРОЛЬ: ";
 					cin >> pas;
 					int pass = hashing(pas);
-					if (admin.getLogAdmin() == log && admin.getPassAdmin() == pass)
-						admin.menuAdmin(tested);
+					if (admin_.get_log_admin() == log && admin_.get_pass_admin() == pass)
+						admin_.menu_admin(tested_);
 					else
 					{
 						cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
 						Sleep(2000);
-						enterSystem();
+						enter_system();
 					}
 				}
 				break;
@@ -57,32 +65,36 @@ void Testing::enterSystem()
 				cout << "Введите свой ЛОГИН: ";
 				string log;
 				cin >> log;
+				uppercase(log);
 				cout << "Введите свой ПАРОЛЬ: ";
 				string pas;
 				cin >> pas;
 				int pass = hashing(pas);
-				if (tested.getBaseUsers().count(pass) == 1 
-					&& (*tested.getBaseUsers().find(pass)).second.front()->getLogin() == log)
-					tested.menuTested();
+				if (tested_.get_base_users().count(pass) == 1
+					&& (*tested_.get_base_users().find(pass)).second.front()->get_login() == log)
+					tested_.menu_tested();
 				else
 				{
 					cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
 					Sleep(2000);
-					enterSystem();
+					enter_system();
 				}
 				break;
 			}
 			case 3:
-				enterSystem();
+				enter_system();
 				break;
 			default:
 				break;
 			}
 			break;
 		case 2:
-			tested.chekIn();
+			admin_.registry_in_admin();
 			break;
 		case 3:
+			tested_.registry_in();
+			break;
+		case 4:
 			exit(0);
 		default:
 			break;
@@ -90,11 +102,3 @@ void Testing::enterSystem()
 	}
 }
 
-//меню тестирования
-void Testing::menu()
-{
-	system("cls");
-	cout << "ДОБРО ПОЖАЛОВАТЬ НА ТЕСТИРОВАНИЕ!!!" << endl;
-	cout << "МЕНЮ:\n" << endl;
-	cout << "1. Вход в систему\n" << "2. Начат";
-}

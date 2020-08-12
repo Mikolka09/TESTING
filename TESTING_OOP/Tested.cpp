@@ -3,22 +3,23 @@
 
 
 
-void Tested::newTesting()
+void Tested::new_testing()
 {
 }
 
 //регестрация пользователя
-void Tested::chekIn()
+void Tested::registry_in()
 {
 	system("cls");
 	cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 	User* user = new User;
-	if (base_users.empty())  //проверка на пустоту
+	if (base_users_.empty())  //проверка на пустоту
 	{
 		string log;
 		cout << "Введите ЛОГИН: ";
 		cin >> log;
-		user->setLogin(log);
+		uppercase(log);
+		user->set_login(log);
 		string pas;
 		bool ad = true;
 		//проверка пороля на размер
@@ -26,30 +27,30 @@ void Tested::chekIn()
 		{
 			cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
 			cin >> pas;
-			ad = checkSize(pas);  //проверка на размер пароля
+			ad = check_size(pas);  //проверка на размер пароля
 		}
-		unsigned int pass = hashing(pas);  //шифрование пароля
-		user->setPass(pass);
+		int pass = hashing(pas);  //шифрование пароля
+		user->set_pass(pass);
 		char* n = new char;
 		cin.ignore();
 		cout << "Введите ФИО: ";
 		cin.getline(n, 100);
 		string name = n;
-		user->setName(name);
+		user->set_name(name);
 		string email;
 		cout << "Введите электронный адрес: ";
 		cin >> email;
-		user->setEmail(email);
+		user->set_email(email);
 		string phone;
 		cout << "Введите номер телефона: ";
 		cin >> phone;
-		user->setPhone(phone);
-		base_tested.push_back(user);
-		base_users.insert(make_pair(pass, base_tested));
+		user->set_phone(phone);
+		base_tested_.push_back(user);
+		base_users_.insert(make_pair(pass, base_tested_));
 		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
-		saveBase();
-		menuTested();
+		save_base();
+		menu_tested();
 	}
 	else
 	{
@@ -62,12 +63,13 @@ void Tested::chekIn()
 			cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 			cout << "Введите ЛОГИН: ";
 			cin >> log;
+			uppercase(log);
 			int count = 0;
 			//поиск одинаковых логинов со счетчиком
-			auto it = base_tested.begin();
-			for (it; it != base_tested.end(); ++it)
+			auto it = base_tested_.begin();
+			for (; it != base_tested_.end(); ++it)
 			{
-				if ((*it)->getLogin() == log)
+				if ((*it)->get_login() == log)
 				{
 					count++;
 				}
@@ -80,7 +82,7 @@ void Tested::chekIn()
 			else
 				lp = false;
 		}
-		user->setLogin(log);
+		user->set_login(log);
 		string pas;
 		bool ad = true;
 		//проверка пороля на размер
@@ -88,14 +90,14 @@ void Tested::chekIn()
 		{
 			cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
 			cin >> pas;
-			ad = checkSize(pas);
+			ad = check_size(pas);
 		}
 		//шифрование пароля
 		int pass = hashing(pas);
 		bool ps = true;
 		while (ps)
 		{
-			if (base_users.count(pass) != 0)  //проверяем есть ли еще такой пароль в базе
+			if (base_users_.count(pass) != 0)  //проверяем есть ли еще такой пароль в базе
 			{
 				cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
 				Sleep(2500);
@@ -106,41 +108,42 @@ void Tested::chekIn()
 					cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 					cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
 					cin >> pas;
-					d = checkSize(pas);
+					d = check_size(pas);
 				}
 				pass = hashing(pas);
-				if (base_users.count(pass) == 0)
+				if (base_users_.count(pass) == 0)
 					ps = false;
 			}
 			else
 				ps = false;
 		}
-		user->setPass(pass);
+		user->set_pass(pass);
 		char* n = new char;
 		cin.ignore();
 		cout << "Введите ФИО: ";
 		cin.getline(n, 100);
 		string name = n;
-		user->setName(name);
+		user->set_name(name);
 		string email;
 		cout << "Введите электронный адрес: ";
 		cin >> email;
-		user->setEmail(email);
+		user->set_email(email);
 		string phone;
 		cout << "Введите номер телефона: ";
 		cin >> phone;
-		user->setPhone(phone);
-		base_tested.push_back(user);
-		base_users.insert(make_pair(pass, base_tested));
+		user->set_phone(phone);
+		base_tested_.push_back(user);
+		base_users_.insert(make_pair(pass, base_tested_));
 		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
-		saveBase();
-		menuTested();
+		save_base();
+		menu_tested();
 	}
 }
 
+
 //меню тестируемого
-void Tested::menuTested()
+void Tested::menu_tested()
 {
 	while (true)
 	{
@@ -153,120 +156,112 @@ void Tested::menuTested()
 			<< "5. Выход\n" << endl;
 		int var1;
 		cin >> var1;
+		cin.ignore();
 		switch (var1)
 		{
 		case 1:
-			//controlUser();
+			new_testing();
 			break;
 		case 2:
-			print();
-			//lookStatics();
+			print_result();
 			break;
 		case 3:
-			//addTests();
+			save_testing();
 			break;
 		case 4:
-			//changeLogin();
+			load_testing();
 			break;
 		case 5:
 			exit(0);
-			break;
+		default: ;
 		}
 	}
 }
 
 //просмотр результата тестирования
-void Tested::printResult()
+void Tested::print_result() const
 {
 }
 
-//печать списка тестируемых
-void Tested::print()
-{
-	auto it = this->base_tested.begin();
-	for (it; it != this->base_tested.end(); ++it)
-		cout << *it << " ";
-	cout << endl;
-}
 
 //сохранить промежуточное тестирование
-void Tested::saveTesting()
+void Tested::save_testing()
 {
 }
 
 //загрузить последнее сохраненное тестирование
-void Tested::loadTesting()
+void Tested::load_testing()
 {
 }
 
 
 //сохранение базы тестируемых
-void Tested::saveBase()
+void Tested::save_base()
 {
-	ofstream fout("BaseTasted.bin", ios::binary | ios::out);
-	int length = base_tested.size();
-	User* user = new User;
-	fout.write((char*)&length, sizeof(int));
+	ofstream out("BaseTasted.bin", ios::binary | ios::out);
+	int length = base_tested_.size();
+	out.write(reinterpret_cast<char*>(&length), sizeof(int));
 	for (int i = 0; i < length; i++)
 	{
-		user = base_tested.front();
-		unsigned int pas = user->getPass();
-		fout.write((char*)&pas, sizeof(unsigned int));
-		int l_log = user->getLogin().size() + 1;
-		fout.write((char*)&l_log, sizeof(int));
-		fout.write((char*)user->getLogin().c_str(), l_log);
-		int l_n = user->getName().size() + 1;
-		fout.write((char*)&l_n, sizeof(int));
-		fout.write((char*)user->getName().c_str(), l_n);
-		int l_em = user->getEmail().size() + 1;
-		fout.write((char*)&l_em, sizeof(int));
-		fout.write((char*)user->getEmail().c_str(), l_em);
-		int l_ph = user->getPhone().size() + 1;
-		fout.write((char*)&l_ph, sizeof(int));
-		fout.write((char*)user->getPhone().c_str(), l_ph);
-		base_tested.pop_front();
+		User* user = base_tested_.front();
+		unsigned int pas = user->get_pass();
+		out.write(reinterpret_cast<char*>(&pas), sizeof(int));
+		int l_log = user->get_login().size() + 1;
+		out.write(reinterpret_cast<char*>(&l_log), sizeof(int));
+		out.write(const_cast<char*>(user->get_login().c_str()), l_log);
+		int l_n = user->get_name().size() + 1;
+		out.write(reinterpret_cast<char*>(&l_n), sizeof(int));
+		out.write(const_cast<char*>(user->get_name().c_str()), l_n);
+		int l_em = user->get_email().size() + 1;
+		out.write(reinterpret_cast<char*>(&l_em), sizeof(int));
+		out.write(const_cast<char*>(user->get_email().c_str()), l_em);
+		int l_ph = user->get_phone().size() + 1;
+		out.write(reinterpret_cast<char*>(&l_ph), sizeof(int));
+		out.write(const_cast<char*>(user->get_phone().c_str()), l_ph);
+		base_tested_.pop_front();
 	}
-	fout.close();
+	out.close();
 
 }
 
 //загрузка базы тестируемых
-void Tested::loadBase()
+void Tested::load_base()
 {
 	ifstream fin("BaseTasted.bin", ios::binary | ios::in);
 	if (fin.is_open())
 	{
 		int length;
-		fin.read((char*)&length, sizeof(int));
+		this->base_tested_.clear();
+		fin.read(reinterpret_cast<char*>(&length), sizeof(int));
 		for (int i = 0; i < length; i++)
 		{
 			User* user = new User;
-			unsigned int pas;
-			fin.read((char*)&pas, sizeof(unsigned int));
-			user->setPass(pas);
+			int pas;
+			fin.read(reinterpret_cast<char*>(&pas), sizeof(int));
+			user->set_pass(pas);
 			int l_log;
-			fin.read((char*)&l_log, sizeof(int));
+			fin.read(reinterpret_cast<char*>(&l_log), sizeof(int));
 			char* buff = new char(l_log + 1);
 			fin.read(buff, l_log);
-			user->setLogin(buff);
+			user->set_login(buff);
 			int l_n;
-			fin.read((char*)&l_n, sizeof(int));
+			fin.read(reinterpret_cast<char*>(&l_n), sizeof(int));
 			char* buff1 = new char(l_n + 1);
 			fin.read(buff1, l_n);
-			user->setName(buff1);
+			user->set_name(buff1);
 			int l_em;
-			fin.read((char*)&l_em, sizeof(int));
+			fin.read(reinterpret_cast<char*>(&l_em), sizeof(int));
 			char* buff2 = new char(l_em + 1);
 			fin.read(buff2, l_em);
-			user->setEmail(buff2);
+			user->set_email(buff2);
 			int l_ph;
-			fin.read((char*)&l_ph, sizeof(int));
+			fin.read(reinterpret_cast<char*>(&l_ph), sizeof(int));
 			char* buff3 = new char(l_ph + 1);
 			fin.read(buff3, l_ph);
-			user->setPhone(buff3);
+			user->set_phone(buff3);
 
-			this->base_tested.push_back(user);
-			this->base_users.insert(make_pair(user->getPass(), base_tested));
+			this->base_tested_.push_back(user);
+			this->base_users_.insert(make_pair(user->get_pass(), base_tested_));
 		}
 	}
 	fin.close();

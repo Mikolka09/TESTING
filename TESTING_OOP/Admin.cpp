@@ -2,62 +2,66 @@
 
 
 //регестрация администратора
-void Admin::chekInAdmin()
+void Admin::registry_in_admin()
 {
-	system("cls");
-	cout << "РЕГЕСТРАЦИЯ АДМИНИСТРАТОРА:\n" << endl;
-	string log;
-	cout << "Введите ЛОГИН: ";
-	cin >> log;
-	string pas;
-	bool ad = true;
-	while (ad)
+	if (log_admin_.empty())
 	{
-		cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
-		cin >> pas;
-		if (pas.size() < 8)
+		system("cls");
+		cout << "РЕГЕСТРАЦИЯ АДМИНИСТРАТОРА:\n" << endl;
+		string log;
+		cout << "Введите ЛОГИН: ";
+		cin >> log;
+		uppercase(log);
+		string pas;
+		bool ad = true;
+		while (ad)
 		{
-			cout << "Пароль слишком короткий, попробуйте еще раз!!!" << endl;
-			Sleep(2500);
+			cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+			cin >> pas;
+			ad = check_size(pas);
 		}
-		else
-			ad = false;
+		int pass = hashing(pas);
+		this->log_admin_ = log;
+		this->pass_admin_ = pass;
+		cout << "Данные АДМИНИСТРАТОРА сохранены!!!" << endl;
+		Sleep(2500);
+		save_login_pass();
 	}
-	int pass = hashing(pas);
-	this->log_admin = log;
-	this->pass_admin = pass;
-	cout << "Данные АДМИНИСТРАТОРА сохранены!!!" << endl;
-	Sleep(2000);
-	saveLoginPass();
+	else
+	{
+		system("cls");
+		cout << "ОШИБКА!!! АДМИНИСТРАТОР уже ЗАРЕГЕСТРИРОВАН!!!" << endl;
+		Sleep(2500);
+		
+	}
+		
 }
 
 //меню админитсратора
-void Admin::menuAdmin(Tested& tes)
+void Admin::menu_admin(Tested& tes)
 {
 	while (true)
 	{
 		system("cls");
 		cout << "МЕНЮ АДМИНИСТРАТОРА:\n" << endl;
-		cout << "1. Управление ПОЛЬЗОАВАТЕЛЯМИ\n"
-			<< "2. Управление СТАТИСТИКОЙ\n"
-			<< "3. Управление ТЕСТАМИ\n"
-			<< "4. Управление данными АДМИНИСТРАТОРА\n"
-			<< "5. Выход\n" << endl;
+		cout << "1. Управление ПОЛЬЗОАВАТЕЛЯМИ\n" << "2. Управление СТАТИСТИКОЙ\n" << "3. Управление ТЕСТАМИ\n"
+			<< "4. Управление данными АДМИНИСТРАТОРА\n" << "5. Выход\n" << endl;
 		int var1;
 		cin >> var1;
+		cin.ignore();
 		switch (var1)
 		{
 		case 1:
-			controlUser(tes);
+			control_user(tes);
 			break;
 		case 2:
-			lookStatics();
+			look_statics();
 			break;
 		case 3:
-			addTests();
+			add_tests();
 			break;
 		case 4:
-			changeLogin();
+			change_login();
 			break;
 		case 5:
 			exit(0);
@@ -67,17 +71,17 @@ void Admin::menuAdmin(Tested& tes)
 }
 
 //добавление тестов, категорий или вопросов
-void Admin::addTests()
+void Admin::add_tests()
 {
 }
 
 //загрузка тестов из файла
-void Admin::loadTests()
+void Admin::load_tests()
 {
 }
 
 //изменение логина и пароля администратора
-void Admin::changeLogin()
+void Admin::change_login()
 {
 	system("cls");
 	cout << "РЕДАКТИРОВАНИЕ ДАННЫХ АДМИНИСТРАТОРА:\n" << endl;
@@ -89,17 +93,18 @@ void Admin::changeLogin()
 		cout << "РЕДАКТИРОВАНИЕ ДАННЫХ АДМИНИСТРАТОРА:\n" << endl;
 		cout << "Введите новый ЛОГИН: ";
 		cin >> log;
-		if (getLogAdmin() == log)
+		uppercase(log);
+		if (get_log_admin() == log)
 		{
 			cout << "Такой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
-			Sleep(2000);
+			Sleep(2500);
 		}
 		else
 			l = false;
 	}
-	setLogAdmin(log);
+	set_log_admin(log);
 	cout << "ЛОГИН ИЗМЕНЕН!!" << endl;
-	Sleep(2000);
+	Sleep(2500);
 	bool ad = true;
 	string pas;
 	//проверка пороля на размер
@@ -109,39 +114,129 @@ void Admin::changeLogin()
 		cout << "РЕДАКТИРОВАНИЕ ДАННЫХ АДМИНИСТРАТОРА:\n" << endl;
 		cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
 		cin >> pas;
-		ad = checkSize(pas);
+		ad = check_size(pas);
 	}
 	int pass = hashing(pas);
 	bool p = true;
 	//проверка пароля на повторение
 	while (p)
 	{
-		if (getPassAdmin() == pass)
+		if (get_pass_admin() == pass)
 		{
 			cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
-			Sleep(2000);
+			Sleep(2500);
 			system("cls");
 			cout << "РЕДАКТИРОВАНИЕ ДАННЫХ АДМИНИСТРАТОРА:\n" << endl;
 			cout << "Введите новый ПАРОЛЬ: ";
 			cin >> pas;
 			pass = hashing(pas);
-			if (getLogAdmin() != log)
+			if (get_log_admin() != log)
 				p = false;
 		}
 		else
 			p = false;
 	}
-	setPassAdmin(pass);
+	set_pass_admin(pass);
 	cout << "ПАРОЛЬ ИЗМЕНЕН!!" << endl;
-	Sleep(2000);
-	saveLoginPass();
+	Sleep(2500);
+	save_login_pass();
+}
+
+void Admin::registry_user(Tested& tes)
+{
+	string log;
+	bool lp = true;
+	User* user = new User;
+	//проверяем логин на повторение
+	while (lp)
+	{
+		system("cls");
+		cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+		cout << "Введите ЛОГИН: ";
+		cin >> log;
+		uppercase(log);
+		int count = 0;
+		//поиск одинаковых логинов со счетчиком
+		auto it = tes.base_tested_.begin();
+		for (; it != tes.base_tested_.end(); ++it)
+		{
+			if ((*it)->get_login() == log)
+			{
+				count++;
+			}
+		}
+		if (count != 0)
+		{
+			cout << "Такой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+			Sleep(2500);
+		}
+		else
+			lp = false;
+	}
+	user->set_login(log);
+	string pas;
+	bool ad = true;
+	//проверка пороля на размер
+	while (ad)
+	{
+		cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+		cin >> pas;
+		ad = check_size(pas);
+	}
+	//шифрование пароля
+	int pass = hashing(pas);
+	bool ps = true;
+	while (ps)
+	{
+		if (tes.base_users_.count(pass) != 0)  //проверяем есть ли еще такой пароль в базе
+		{
+			cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+			Sleep(2500);
+			system("cls");
+			bool d = true;
+			while (d)
+			{
+				cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+				cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+				cin >> pas;
+				d = check_size(pas);
+			}
+			pass = hashing(pas);
+			if (tes.base_users_.count(pass) == 0)
+				ps = false;
+		}
+		else
+			ps = false;
+	}
+	user->set_pass(pass);
+	char* n = new char;
+	cin.ignore();
+	cout << "Введите ФИО: ";
+	cin.getline(n, 100);
+	string name = n;
+	user->set_name(name);
+	string email;
+	cout << "Введите электронный адрес: ";
+	cin >> email;
+	user->set_email(email);
+	string phone;
+	cout << "Введите номер телефона: ";
+	cin >> phone;
+	user->set_phone(phone);
+	tes.base_tested_.push_back(user);
+	tes.base_users_.insert(make_pair(pass, tes.base_tested_));
+	cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
+	Sleep(2500);
+	tes.save_base();
+	control_user(tes);
 }
 
 //изменение данных пользователя (тестируемого)
-void Admin::controlUser(Tested& tes)
+void Admin::control_user(Tested& tes)
 {
 	while (true)
 	{
+		tes.load_base();
 		system("cls");
 		cout << "УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ:\n" << endl;
 		cout << "1. Создание ПОЛЬЗОАВАТЕЛЯ\n"
@@ -151,16 +246,17 @@ void Admin::controlUser(Tested& tes)
 			<< "5. Возврат в предыдущее меню\n" << endl;
 		int var;
 		cin >> var;
+		cin.ignore();
 		switch (var)
 		{
 		case 1:
-			tes.chekIn();
+			registry_user(tes);
 			break;
 		case 2:
-			dellUser(tes);
+			dell_user(tes);
 			break;
 		case 3:
-			editUser(tes);
+			edit_user(tes);
 			break;
 		case 4:
 			while (true)
@@ -172,293 +268,330 @@ void Admin::controlUser(Tested& tes)
 					<< "3. Возврат в предыдущее меню\n" << endl;
 				int var1;
 				cin >> var1;
+				cin.ignore();
 				switch (var1)
 				{
 				case 1:
-					printUserFile(tes);
+					print_user_file(tes);
 					break;
 				case 2:
-					printUser(tes);
+					print_user(tes);
 					system(("pause"));
 					break;
 				case 3:
-					controlUser(tes);
+					control_user(tes);
 					break;
 				default:;
 				}
 			}
 		case 5:
-			menuAdmin(tes);
+			menu_admin(tes);
 			break;
-		default:
-			break;
+		default:;
 		}
 	}
 }
 
 //удаление пользователя
-void Admin::dellUser(Tested& tes)
+void Admin::dell_user(Tested& tes)
 {
 	system("cls");
 	cout << "УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
-	printUser(tes);
-	cout << "\n\n";
+	print_user(tes);
+	cout << "\n";
 	string ld;
 	cout << "Введите ЛОГИН ПОЛЬЗОВАТЕЛЯ для УДАЛЕНИЯ: ";
 	cin >> ld;
+	uppercase(ld);
 	bool set = false;
-	auto it = tes.base_tested.begin();
-	for(it; it!=tes.base_tested.end();++it)
+	auto it = tes.base_tested_.begin();
+	for (; it != tes.base_tested_.end(); ++it)
 	{
-		if((*it)->getLogin()==ld)
+		if ((*it)->get_login() == ld)
 		{
-			it = tes.base_tested.erase(it);
-			set = true;
-		}
-	}
-	if(set)
-	{
-		system("cls");
-		cout << "ПОЛЬЗОВАТЕЛЬ УДАЛЕН!!!" << endl;
-		Sleep(2000);
-		tes.saveBase();
-	}
-	else
-	{
-		system("cls");
-		cout << "ТАКОГО ПОЛЬЗОВАТЕЛЯ НЕТ!!!" << endl;
-		Sleep(2000);
-	}
-}
-
-//редактирование пользователя
-void Admin::editUser(Tested& tes)
-{
-	system("cls");
-	cout << "РЕДАКТИРОВАННИЕ ДАННЫХ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
-	printUser(tes);
-	cout << "\n\n";
-	string ld;
-	cout << "Введите ЛОГИН ПОЛЬЗОВАТЕЛЯ для РЕДАКТИРОВАНИЯ: ";
-	cin >> ld;
-	bool set = false;
-	auto it_r= tes.base_tested.end();
-	auto it = tes.base_tested.begin();
-	for (it; it != tes.base_tested.end(); ++it)
-	{
-		if ((*it)->getLogin() == ld)
-		{
-			it_r = it;
+			it = tes.base_tested_.erase(it);
 			set = true;
 		}
 	}
 	if (set)
 	{
+		system("cls");
+		cout << "ПОЛЬЗОВАТЕЛЬ УДАЛЕН!!!" << endl;
+		tes.save_base();
+		Sleep(2500);
+	}
+	else
+	{
+		system("cls");
+		cout << "ТАКОГО ПОЛЬЗОВАТЕЛЯ НЕТ!!!" << endl;
+		Sleep(2500);
+	}
+}
+
+//редактирование пользователя
+void Admin::edit_user(Tested& tes)
+{
+	system("cls");
+	cout << "РЕДАКТИРОВАННИЕ ДАННЫХ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+	print_user(tes);
+	cout << "\n";
+	string ld;
+	cout << "Введите ЛОГИН ПОЛЬЗОВАТЕЛЯ для РЕДАКТИРОВАНИЯ: ";
+	cin >> ld;
+	uppercase(ld);
+	bool set = false;
+	int pas_p = 0;
+	auto it = tes.base_tested_.begin();
+	for (; it != tes.base_tested_.end(); ++it)
+	{
+		if ((*it)->get_login() == ld)
+		{
+			set = true;
+			pas_p = (*it)->get_pass();
+		}
+
+	}
+	if (set)
+	{
 		while (true)
 		{
+			tes.load_base();
 			system("cls");
 			int var;
-				cout << "РЕДАКТИРОВАНИЕ ПРОФИЛЯ:\n" << endl;
-				cout << "1. Редактировать ЛОГИН\n" << "2. Редактировать ПАРОЛЬ\n" << "3. Редактировать ФИО\n"
-					<< "4. Редактировать EMAIL\n" << "5. Редактировать номер ТЕЛЕФОНА\n" << "6. Возврат в предыдущее меню\n" << endl;
-				cin >> var;
-				switch (var)
-				{
-				case 1:
+			cout << "РЕДАКТИРОВАНИЕ ПРОФИЛЯ:\n" << endl;
+			cout << "1. Редактировать ЛОГИН\n" << "2. Редактировать ПАРОЛЬ\n" << "3. Редактировать ФИО\n"
+				<< "4. Редактировать EMAIL\n" << "5. Редактировать номер ТЕЛЕФОНА\n" << "6. Возврат в предыдущее меню\n" << endl;
+			cin >> var;
+			cin.ignore();
+			switch (var)
+			{
+			case 1:
+			{
+				system("cls");
+				string log;
+				bool s = true;
+				while (s)
 				{
 					system("cls");
-					string log;
-					bool s = true;
-					while (s)
+					cout << "Редактирование ЛОГИНА:\n" << endl;
+					cout << "Введите новый ЛОГИН:";
+					cin >> log;
+					uppercase(log);
+					int count = 0;
+					//поиск одинаковых логинов со счетчиком
+					auto iterator = tes.base_tested_.begin();
+					for (; iterator != tes.base_tested_.end(); ++iterator)
 					{
-						system("cls");
-						cout << "Редактирование ЛОГИНА:\n" << endl;
-						cout << "Введите новый ЛОГИН:";
-						cin >> log;
-						int count = 0;
-						//поиск одинаковых логинов со счетчиком
-						auto it = tes.base_tested.begin();
-						for (it; it != tes.base_tested.end(); ++it)
+						if ((*iterator)->get_login() == log)
 						{
-							if ((*it)->getLogin() == log)
-							{
-								count++;
-							}
+							count++;
 						}
-						if (count != 0)
-						{
-							cout << "Такой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
-							Sleep(2500);
-						}
-						else
-							s = false;
 					}
-					(*it_r)->setLogin(log);
-					cout << "ЛОГИН ИЗМЕНЕН!!!" << endl;
-					Sleep(2000);
-					break;
+					if (count != 0)
+					{
+						cout << "Такой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+						Sleep(2500);
+					}
+					else
+						s = false;
 				}
-				case 2:
+				auto it = tes.base_tested_.begin();
+				for (; it != tes.base_tested_.end(); ++it)
 				{
-					string pas;
-					bool ad = true;
-					while (ad)
+					if ((*it)->get_login() == ld)
 					{
-						system("cls");
-						cout << "Редактирование ПАРОЛЯ:\n" << endl;
-						cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
-						cin >> pas;
-						ad = checkSize(pas);
+						(*it)->set_login(log);
 					}
-					int pp = hashing(pas);
-					bool ps = true;
-					while (ps)
+				}
+				ld = log;
+				cout << "ЛОГИН ИЗМЕНЕН!!!" << endl;
+				tes.save_base();
+				Sleep(2500);
+				break;
+			}
+			case 2:
+			{
+				string pas;
+				bool ad = true;
+				while (ad)
+				{
+					system("cls");
+					cout << "Редактирование ПАРОЛЯ:\n" << endl;
+					cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+					cin >> pas;
+					ad = check_size(pas);
+				}
+				int pp = hashing(pas);
+				bool ps = true;
+				while (ps)
+				{
+					if (tes.base_users_.count(pp) != 0)  //проверяем есть ли еще такой пароль в базе
 					{
-						if (tes.base_users.count(pp) != 0)  //проверяем есть ли еще такой пароль в базе
+						cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+						Sleep(2500);
+						bool d = true;
+						while (d)
 						{
-							cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
-							Sleep(2500);
-							bool d = true;
-							while (d)
-							{
-								system("cls");
-								cout << "Редактирование ПАРОЛЯ:\n" << endl;
-								cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
-								cin >> pas;
-								d = checkSize(pas);
-							}
-							pp = hashing(pas);
-							if (tes.base_users.count(pp) == 0)
-								ps = false;
+							system("cls");
+							cout << "Редактирование ПАРОЛЯ:\n" << endl;
+							cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+							cin >> pas;
+							d = check_size(pas);
 						}
-						else
+						pp = hashing(pas);
+						if (tes.base_users_.count(pp) == 0)
 							ps = false;
 					}
-					(*it_r)->setPass(pp);
-					cout << "ПАРОЛЬ ИЗМЕНЕН!!!" << endl;
-					Sleep(2000);
-					break;
+					else
+						ps = false;
 				}
-				case 3:
+				auto it = tes.base_tested_.begin();
+				for (; it != tes.base_tested_.end(); ++it)
 				{
-					system("cls");
-					char* n = new char;
-					cin.ignore();
-					cout << "Редактирование ФИО:\n" << endl;
-					cout << "Введите новые ФИО:";
-					cin.getline(n, 100);
-					string name = n;
-					(*it_r)->setName(name);
-					cout << "ФИО ИЗМЕНЕН!!!" << endl;
-					Sleep(2000);
-					break;
+					if ((*it)->get_login() == ld)
+						(*it)->set_pass(pp);
 				}
-				case 4:
+				cout << "ПАРОЛЬ ИЗМЕНЕН!!!" << endl;
+				tes.save_base();
+				Sleep(2500);
+				break;
+			}
+			case 3:
+			{
+				system("cls");
+				char* n = new char;
+				cout << "Редактирование ФИО:\n" << endl;
+				cout << "Введите новые ФИО: ";
+				cin.getline(n, 100);
+				string name = n;
+				auto it = tes.base_tested_.begin();
+				for (; it != tes.base_tested_.end(); ++it)
 				{
-					system("cls");
-					cout << "Редактирование EMAIL:\n" << endl;
-					cout << "Введите новый EMAIL:";
-					string em;
-					cin >> em;
-					(*it_r)->setEmail(em);
-					cout << "EMAIL ИЗМЕНЕН!!!" << endl;
-					Sleep(2000);
-					break;
+					if ((*it)->get_login() == ld)
+						(*it)->set_name(name);
 				}
-				case 5:
+				cout << "ФИО ИЗМЕНЕН!!!" << endl;
+				tes.save_base();
+				Sleep(2500);
+				break;
+			}
+			case 4:
+			{
+				system("cls");
+				cout << "Редактирование EMAIL:\n" << endl;
+				cout << "Введите новый EMAIL: ";
+				string em;
+				cin >> em;
+				auto it = tes.base_tested_.begin();
+				for (; it != tes.base_tested_.end(); ++it)
 				{
-					system("cls");
-					cout << "Редактирование номера ТЕЛЕФОНА:\n" << endl;
-					cout << "Введите новый номер ТЕЛЕФОНА:";
-					string ph;
-					cin >> ph;
-					(*it_r)->setPhone(ph);
-					cout << "ТЕЛЕФОН ИЗМЕНЕН!!!" << endl;
-					Sleep(2000);
-					break;
+					if ((*it)->get_login() == ld)
+						(*it)->set_email(em);
 				}
-				case 6:
-					controlUser(tes);
-					break;
-				default:
-					break;
+				cout << "EMAIL ИЗМЕНЕН!!!" << endl;
+				tes.save_base();
+				Sleep(2500);
+				break;
+			}
+			case 5:
+			{
+				system("cls");
+				cout << "Редактирование номера ТЕЛЕФОНА:\n" << endl;
+				cout << "Введите новый номер ТЕЛЕФОНА:";
+				string ph;
+				cin >> ph;
+				auto it = tes.base_tested_.begin();
+				for (; it != tes.base_tested_.end(); ++it)
+				{
+					if ((*it)->get_login() == ld)
+						(*it)->set_phone(ph);
 				}
-			tes.saveBase();
+				cout << "ТЕЛЕФОН ИЗМЕНЕН!!!" << endl;
+				tes.save_base();
+				Sleep(2500);
+				break;
+			}
+			case 6:
+				control_user(tes);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 	else
 	{
 		system("cls");
 		cout << "ТАКОГО ПОЛЬЗОВАТЕЛЯ НЕТ!!!" << endl;
-		Sleep(2000);
+		Sleep(2500);
 	}
 }
 
 //печать пользователей в файл
-void Admin::printUserFile(Tested& tes)
+void Admin::print_user_file(Tested& tes) const
 {
 	ofstream out("ListUsers.txt", ios::out);
 	out << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
 	int i = 1;
-	tes.base_tested.sort();
-	auto it = tes.base_tested.begin();
-	for (it; it != tes.base_tested.end(); ++it, i++)
+	tes.base_tested_.sort();
+	auto it = tes.base_tested_.begin();
+	for (; it != tes.base_tested_.end(); ++it, i++)
 		out << setw(4) << i << *it;
 	out << endl;
 	out.close();
 	system("cls");
 	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ НАПЕЧАТАН В ФАЙЛ!!!\n" << endl;
-	Sleep(2000);
-	
+	Sleep(2500);
+
 }
 
 //печать пользователей на экран
-void Admin::printUser(Tested& tes)
+void Admin::print_user(Tested& tes) const
 {
 	system("cls");
 	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
 	int i = 1;
-	tes.base_tested.sort();
-	auto it = tes.base_tested.begin();
-	for (it; it != tes.base_tested.end(); ++it, i++)
+	tes.base_tested_.sort();
+	auto it = tes.base_tested_.begin();
+	for (; it != tes.base_tested_.end(); ++it, i++)
 		cout << setw(4) << i << *it;
 	cout << endl;
 }
 
 //просмотр статистики
-void Admin::lookStatics()
+void Admin::look_statics() const
 {
 }
 
 //сохранение статистики в файл
-void Admin::saveStatics()
+void Admin::save_statics()
 {
 }
 
-void Admin::saveLoginPass()
+void Admin::save_login_pass()
 {
-	ofstream fout("PassAdmin.bin", ios::binary | ios::out);
-	int len_log = getLogAdmin().size() + 1;
-	fout.write((char*)&len_log, sizeof(int));
-	fout.write((char*)getLogAdmin().c_str(), len_log);
-	int pass = getPassAdmin();
-	fout.write((char*)&pass, sizeof(int));
-	fout.close();
+	ofstream out("PassAdmin.bin", ios::binary | ios::out);
+	int len_log = get_log_admin().size() + 1;
+	out.write(reinterpret_cast<char*>(&len_log), sizeof(int));
+	out.write(const_cast<char*>(get_log_admin().c_str()), len_log);
+	int pass = get_pass_admin();
+	out.write(reinterpret_cast<char*>(&pass), sizeof(int));
+	out.close();
 }
 
-void Admin::loadLoginPass()
+void Admin::load_login_pass()
 {
 	ifstream fin("PassAdmin.bin", ios::binary | ios::in);
 	if (fin.is_open())
 	{
 		int len_log = 0;
 		int pass = 0;
-		fin.read((char*)&len_log, sizeof(int));
+		fin.read(reinterpret_cast<char*>(&len_log), sizeof(int));
 		char* buff = new char(len_log + 1);
 		fin.read(buff, len_log);
-		setLogAdmin(buff);
-		fin.read((char*)&pass, sizeof(int));
-		setPassAdmin(pass);
+		set_log_admin(buff);
+		fin.read(reinterpret_cast<char*>(&pass), sizeof(int));
+		set_pass_admin(pass);
 	}
 	fin.close();
 }

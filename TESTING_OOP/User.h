@@ -5,27 +5,27 @@ class User
 {
 private:
 
-	string login;// = "";  //логин пользователя
-	unsigned int pass = 0;       //пароль пользователя
+	string login_;              //логин пользователя
+	int pass_ = 0;     //пароль пользователя
 
-	string name;// = "";   //ФИО пользователя
-	string email;// = "";  //электронный адресс пользователя
-	string phone;// = "";  //номер телефона пользователя
+	string name_;               //ФИО пользователя
+	string email_;              //электронный адресс пользователя
+	string phone_;              //номер телефона пользователя
 
 public:
 	
 
-	string getLogin() { return login; };
-	string getName() { return name; };
-	string getEmail() { return email; };
-	string getPhone() { return phone; };
-	unsigned int getPass() { return pass; };
+	string get_login() const { return login_; };
+	string get_name() const { return name_; };
+	string get_email() const { return email_; };
+	string get_phone() const { return phone_; };
+	int get_pass() const { return pass_; };
 
-	void setLogin(string log) { login = log; }
-	void setName(string n) { name = n; }
-	void setEmail(string em) { email = em; }
-	void setPhone(string ph) { phone = ph; }
-	void setPass(unsigned int p) { pass = p; }
+	void set_login(string log) { login_ = log; }
+	void set_name(string n) { name_ = n; }
+	void set_email(string em) { email_ = em; }
+	void set_phone(string ph) { phone_ = ph; }
+	void set_pass(int p) { pass_ = p; }
 	
 	friend ostream& operator<<(ostream& out, const User& us);
 	friend ostream& operator<<(ostream& out, const User* us);
