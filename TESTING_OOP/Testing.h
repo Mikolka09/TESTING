@@ -1,9 +1,6 @@
 ﻿#pragma once
 
-#include"Tests.h"
 #include"Admin.h"
-#include"Tested.h"
-#include "Functions.h"
 
 
 class Testing

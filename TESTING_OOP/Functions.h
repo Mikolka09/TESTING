@@ -22,20 +22,20 @@ enum ConsoleColor
 };
 
 //цвет символов
-void SetColor(int text, int background)
-{
-	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hStdOut, (WORD)((background << 4) | text));
-}
+//void SetColor(int text, int background)
+//{
+//	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+//	SetConsoleTextAttribute(hStdOut, (WORD)((background << 4) | text));
+//}
 
 //перенос курсосра по координатам
-void gotoxy(int x, int y)
-{
-	COORD coord;
-	coord.X = x;
-	coord.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
+//void gotoxy(int x, int y)
+//{
+//	COORD coord;
+//	coord.X = x;
+//	coord.Y = y;
+//	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+//}
 
 //подсчет времени (секундомер)
 class Timer
@@ -77,10 +77,10 @@ inline bool check_size(string p)
 }
 
 //шифрование пароля
-inline unsigned int hashing(const string p)
+inline unsigned int hashing(string p)
 {
-	const hash<string> cod;
-	const unsigned pass = cod(p);
+	hash<string> cod;
+	unsigned int pass = cod(p);
 	return pass;
 }
 

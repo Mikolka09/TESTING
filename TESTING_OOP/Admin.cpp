@@ -551,10 +551,11 @@ void Admin::print_user(Tested& tes) const
 	system("cls");
 	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
 	int i = 1;
-	tes.base_tested_.sort();
-	auto it = tes.base_tested_.begin();
-	for (; it != tes.base_tested_.end(); ++it, i++)
-		cout << setw(4) << i << *it;
+	//tes.base_tested_.sort();
+	//auto it = tes.base_tested_.begin();
+	/*for (; it != tes.base_tested_.end(); ++it, i++)
+		cout << setw(4) << i << (*it);*/
+	for(auto&x; tes.base_tested_.end())
 	cout << endl;
 }
 
