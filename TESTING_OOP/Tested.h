@@ -2,6 +2,7 @@
 #include"User.h"
 
 
+
 class Tested :public User
 {
 private:

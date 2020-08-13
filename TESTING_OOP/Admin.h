@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include"Tested.h"
-
+#include "Maths.h"
 
 
 class Admin 
 {
 private:
-	
+
 	string log_admin_;        //логин администратора
 	int pass_admin_ = 0;      //пароль администратора
 	
@@ -19,7 +19,7 @@ public:
 	
 	void registry_in_admin();                  //регестрация администратора
 	void menu_admin(Tested& tes);              //меню админитсратора
-	void add_tests();                          //добавление тестов, категорий или вопросов
+	void control_tests();                      //управление тестами
 	void load_tests();                         //загрузка тестов из файла
 
 	void change_login();                       //изменение логина и пароля администратора

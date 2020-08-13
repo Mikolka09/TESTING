@@ -1,6 +1,7 @@
 ﻿#include"Admin.h"
 
 
+
 //регестрация администратора
 void Admin::registry_in_admin()
 {
@@ -32,9 +33,9 @@ void Admin::registry_in_admin()
 		system("cls");
 		cout << "ОШИБКА!!! АДМИНИСТРАТОР уже ЗАРЕГЕСТРИРОВАН!!!" << endl;
 		Sleep(2500);
-		
+
 	}
-		
+
 }
 
 //меню админитсратора
@@ -58,7 +59,7 @@ void Admin::menu_admin(Tested& tes)
 			look_statics();
 			break;
 		case 3:
-			add_tests();
+			control_tests();
 			break;
 		case 4:
 			change_login();
@@ -70,9 +71,35 @@ void Admin::menu_admin(Tested& tes)
 	}
 }
 
-//добавление тестов, категорий или вопросов
-void Admin::add_tests()
+//управление тестами
+void Admin::control_tests()
 {
+	while (true)
+	{
+		Tested tes;
+		Maths mat_;
+		system("cls");
+		cout << "УПРАВЛЕНИЕ ТЕСТАМИ:\n" << endl;
+		cout << "1. Управление тестами по МАТЕМАТИКЕ\n" << "2. Управление тестами по ФИЗИКЕ\n"
+			<< "3. Управление тестами по ХИМИИ\n" << "4. Возврат в предыдущее меню\n" << endl;
+		int var1;
+		cin >> var1;
+		cin.ignore();
+		switch (var1)
+		{
+		case 1:
+			mat_.menu_maths_admin();
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			menu_admin(tes);
+			break;
+		default:;
+		}
+	}
 }
 
 //загрузка тестов из файла
@@ -83,8 +110,6 @@ void Admin::load_tests()
 //изменение логина и пароля администратора
 void Admin::change_login()
 {
-	system("cls");
-	cout << "РЕДАКТИРОВАНИЕ ДАННЫХ АДМИНИСТРАТОРА:\n" << endl;
 	bool l = true;
 	string log;
 	while (l)
@@ -551,11 +576,10 @@ void Admin::print_user(Tested& tes) const
 	system("cls");
 	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
 	int i = 1;
-	//tes.base_tested_.sort();
-	//auto it = tes.base_tested_.begin();
-	/*for (; it != tes.base_tested_.end(); ++it, i++)
-		cout << setw(4) << i << (*it);*/
-	for(auto&x; tes.base_tested_.end())
+	tes.base_tested_.sort();
+	auto it = tes.base_tested_.begin();
+	for (; it != tes.base_tested_.end(); ++it, i++)
+		cout << setw(4) << i << (*it);
 	cout << endl;
 }
 

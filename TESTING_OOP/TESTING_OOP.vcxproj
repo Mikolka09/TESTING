@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
+    <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Tested.cpp" />
     <ClCompile Include="Testing.cpp" />
