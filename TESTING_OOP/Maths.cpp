@@ -225,6 +225,7 @@ void Algebra::creature_test_alg()
 	base_alg_.push_back(tes);
 	system("cls");
 	cout << "НОВЫЙ ТЕСТ по АЛГЕБРЕ СОЗДАН!!!" << endl;
+	Sleep(2500);
 	save_test_alg();
 	print_test_alg();
 }
@@ -232,11 +233,136 @@ void Algebra::creature_test_alg()
 //редактирование тестов по алгебре
 void Algebra::edit_test_alg()
 {
+	system("cls");
+	cout << "РЕДАКТИРОВАНИЕ ТЕСТА ПО АЛГЕБРЕ:\n" << endl;
+	cout << "Введите номер теста: ";
+	int idd = 0;
+	cin >> idd;
+	bool set = true;
+	if (base_alg_.empty())
+		cout << "БАЗА ТЕСТОВ ПО АЛГЕБРЕ ПУСТА!!!" << endl;
+	else
+	{
+		auto it = base_alg_.begin();
+		for (; it != base_alg_.end(); ++it)
+		{
+			if ((*it)->get_id() != idd)
+			{
+				cout << "Такой номер теста отсутствует!!!" << endl;
+				set = false;
+			}
+			else
+				set = true;
+		}
+	}
+	if (set)
+	{
+		while (true)
+		{
+			load_test_alg();
+			system("cls");
+			int var;
+			cout << "РЕДАКТИРОВАНИЕ ТЕСТОВ ПО АЛГЕБРЕ:\n" << endl;
+			cout << "1. Редактировать ВОПРОС\n" << "2. Редактировать ОТВЕТЫ\n"
+				<< "3. Редактировать НОМЕР ПРАВИЛЬНОГО ОТВЕТА\n"
+				<< "4. Редактировать БАЛЛЫ\n" << "5. Возврат в предыдущее меню\n" << endl;
+			cin >> var;
+			cin.ignore();
+			switch (var)
+			{
+			case 1:
+			{
+				system("cls");
+				cout << "РЕДАКТИРОВАНИЕ ВОПРОСА:\n" << endl;
+				cout << "Введите текст вопроса: " << endl;
+				string q;
+				char* buff = new char;
+				cin.ignore();
+				cin.getline(buff, 1200);
+				q = buff;
+				auto it = base_alg_.begin();
+				for (; it != base_alg_.end(); ++it)
+				{
+					if ((*it)->get_id() == idd)
+						(*it)->set_question(q);
+				}
+				cout << endl;
+				cout << "ВОПРОС ЗАМЕНЕН!!!" << endl;
+				Sleep(2500);
+				save_test_alg();
+				break;
+			}
+			case 2:
+			{
+				system("cls");
+				cout << "РЕДАКТИРОВАНИЕ ОТВЕТОВ НА ВОПРОС:\n" << endl;
+				cout << "Введите текст ответов: " << endl;
+				string q;
+				char* buff = new char;
+				cin.ignore();
+				cin.getline(buff, 1200);
+				q = buff;
+				auto it = base_alg_.begin();
+				for (; it != base_alg_.end(); ++it)
+				{
+					if ((*it)->get_id() == idd)
+						(*it)->set_answer(q);
+				}
+				cout << endl;
+				cout << "ОТВЕТЫ ЗАМЕНЕНЫ!!!" << endl;
+				Sleep(2500);
+				save_test_alg();
+				break;
+			}
+			case 3:
+			{
+				system("cls");
+				cout << "РЕДАКТИРОВАНИЕ НОМЕРА ПРАВИЛЬНОГО ОТВЕТА:\n" << endl;
+				cout << "Введите номер правильного ответа: " << endl;
+				int an = 0;
+				auto it = base_alg_.begin();
+				for (; it != base_alg_.end(); ++it)
+				{
+					if ((*it)->get_id() == idd)
+						(*it)->set_right_answer(an);
+				}
+				cout << endl;
+				cout << "НОМЕР ПРАВИЛЬНОГО ОТВЕТА ЗАМЕНЕН!!!" << endl;
+				Sleep(2500);
+				save_test_alg();
+				break;
+			}
+			case 4:
+			{
+				system("cls");
+				cout << "РЕДАКТИРОВАНИЕ БАЛЛОВ:\n" << endl;
+				cout << "Введите количество баллов: " << endl;
+				int bl = 0;
+				auto it = base_alg_.begin();
+				for (; it != base_alg_.end(); ++it)
+				{
+					if ((*it)->get_id() == idd)
+						(*it)->set_balls(bl);
+				}
+				cout << endl;
+				cout << "БАЛЛЫ ЗАМЕНЕНЫ!!!" << endl;
+				Sleep(2500);
+				save_test_alg();
+				break;
+			}
+			case 5:
+				menu_maths_admin();
+				break;
+			default:;
+			}
+		}
+	}
 }
 
 //сохранение промежуточного тестирования по алгебре
 void Algebra::save_media_test_alg()
 {
+
 }
 
 //загрузка промежуточного тестирования по алгебре
@@ -244,8 +370,34 @@ void Algebra::load_media_test_alg()
 {
 }
 
-//сохранение нового теста по алгебре
+//сохранение тестов по алгебре
 void Algebra::save_test_alg()
+{
+	ofstream out("BaseTestsAlgebra.bin", ios::binary | ios::out);
+	int length = base_alg_.size();
+	out.write(reinterpret_cast<char*>(&length), sizeof(int));
+	for (int i = 0; i < length; i++)
+	{
+		Tests* test = base_alg_.front();
+		int id = test->get_id();
+		out.write(reinterpret_cast<char*>(&id), sizeof(int));
+		int l_q = test->get_question().size() + 1;
+		out.write(reinterpret_cast<char*>(&l_q), sizeof(int));
+		out.write(const_cast<char*>(test->get_question().c_str()), l_q);
+		int l_an = test->get_answer().size() + 1;
+		out.write(reinterpret_cast<char*>(&l_an), sizeof(int));
+		out.write(const_cast<char*>(test->get_answer().c_str()), l_an);
+		int an_r = test->get_right_answer();
+		out.write(reinterpret_cast<char*>(&an_r), sizeof(int));
+		int bl = test->get_balls();
+		out.write(reinterpret_cast<char*>(&bl), sizeof(int));
+		base_alg_.pop_front();
+	}
+	out.close();
+}
+
+//загрузка тестов по алгебре
+void Algebra::load_test_alg()
 {
 }
 
@@ -427,6 +579,130 @@ void Geometry::creature_test_geo()
 //редактирование тестов по геометрии
 void Geometry::edit_test_geo()
 {
+	system("cls");
+	cout << "РЕДАКТИРОВАНИЕ ТЕСТА ПО ГЕОМЕТРИИ:\n" << endl;
+	cout << "Введите номер теста: ";
+	int idd = 0;
+	cin >> idd;
+	bool set = true;
+	if (base_geo_.empty())
+		cout << "БАЗА ТЕСТОВ ПО ГЕОМЕТРИИ ПУСТА!!!" << endl;
+	else
+	{
+		auto it = base_geo_.begin();
+		for (; it != base_geo_.end(); ++it)
+		{
+			if ((*it)->get_id() != idd)
+			{
+				cout << "Такой номер теста отсутствует!!!" << endl;
+				set = false;
+			}
+			else
+				set = true;
+		}
+	}
+	if (set)
+	{
+		while (true)
+		{
+			load_test_geo();
+			system("cls");
+			int var;
+			cout << "РЕДАКТИРОВАНИЕ ТЕСТОВ ПО ГЕОМЕТРИИ:\n" << endl;
+			cout << "1. Редактировать ВОПРОС\n" << "2. Редактировать ОТВЕТЫ\n"
+				<< "3. Редактировать НОМЕР ПРАВИЛЬНОГО ОТВЕТА\n"
+				<< "4. Редактировать БАЛЛЫ\n" << "5. Возврат в предыдущее меню\n" << endl;
+			cin >> var;
+			cin.ignore();
+			switch (var)
+			{
+			case 1:
+			{
+				system("cls");
+				cout << "РЕДАКТИРОВАНИЕ ВОПРОСА:\n" << endl;
+				cout << "Введите текст вопроса: " << endl;
+				string q;
+				char* buff = new char;
+				cin.ignore();
+				cin.getline(buff, 1200);
+				q = buff;
+				auto it = base_geo_.begin();
+				for (; it != base_geo_.end(); ++it)
+				{
+					if ((*it)->get_id() == idd)
+						(*it)->set_question(q);
+				}
+				cout << endl;
+				cout << "ВОПРОС ЗАМЕНЕН!!!" << endl;
+				Sleep(2500);
+				save_test_geo();
+				break;
+			}
+			case 2:
+			{
+				system("cls");
+				cout << "РЕДАКТИРОВАНИЕ ОТВЕТОВ НА ВОПРОС:\n" << endl;
+				cout << "Введите текст ответов: " << endl;
+				string q;
+				char* buff = new char;
+				cin.ignore();
+				cin.getline(buff, 1200);
+				q = buff;
+				auto it = base_geo_.begin();
+				for (; it != base_geo_.end(); ++it)
+				{
+					if ((*it)->get_id() == idd)
+						(*it)->set_answer(q);
+				}
+				cout << endl;
+				cout << "ОТВЕТЫ ЗАМЕНЕНЫ!!!" << endl;
+				Sleep(2500);
+				save_test_geo();
+				break;
+			}
+			case 3:
+			{
+				system("cls");
+				cout << "РЕДАКТИРОВАНИЕ НОМЕРА ПРАВИЛЬНОГО ОТВЕТА:\n" << endl;
+				cout << "Введите номер правильного ответа: " << endl;
+				int an = 0;
+				auto it = base_geo_.begin();
+				for (; it != base_geo_.end(); ++it)
+				{
+					if ((*it)->get_id() == idd)
+						(*it)->set_right_answer(an);
+				}
+				cout << endl;
+				cout << "НОМЕР ПРАВИЛЬНОГО ОТВЕТА ЗАМЕНЕН!!!" << endl;
+				Sleep(2500);
+				save_test_geo();
+				break;
+			}
+			case 4:
+			{
+				system("cls");
+				cout << "РЕДАКТИРОВАНИЕ БАЛЛОВ:\n" << endl;
+				cout << "Введите количество баллов: " << endl;
+				int bl = 0;
+				auto it = base_geo_.begin();
+				for (; it != base_geo_.end(); ++it)
+				{
+					if ((*it)->get_id() == idd)
+						(*it)->set_balls(bl);
+				}
+				cout << endl;
+				cout << "БАЛЛЫ ЗАМЕНЕНЫ!!!" << endl;
+				Sleep(2500);
+				save_test_geo();
+				break;
+			}
+			case 5:
+				menu_maths_admin();
+				break;
+			default:;
+			}
+		}
+	}
 }
 
 //сохранение промежуточного тестирования ао геометрии
@@ -439,8 +715,34 @@ void Geometry::load_media_test_geo()
 {
 }
 
-//сохранение нового теста по геометрии
+//сохранение тестов по геометрии
 void Geometry::save_test_geo()
+{
+	ofstream out("BaseTestsGeometry.bin", ios::binary | ios::out);
+	int length = base_geo_.size();
+	out.write(reinterpret_cast<char*>(&length), sizeof(int));
+	for (int i = 0; i < length; i++)
+	{
+		Tests* test = base_geo_.front();
+		int id = test->get_id();
+		out.write(reinterpret_cast<char*>(&id), sizeof(int));
+		int l_q = test->get_question().size() + 1;
+		out.write(reinterpret_cast<char*>(&l_q), sizeof(int));
+		out.write(const_cast<char*>(test->get_question().c_str()), l_q);
+		int l_an = test->get_answer().size() + 1;
+		out.write(reinterpret_cast<char*>(&l_an), sizeof(int));
+		out.write(const_cast<char*>(test->get_answer().c_str()), l_an);
+		int an_r = test->get_right_answer();
+		out.write(reinterpret_cast<char*>(&an_r), sizeof(int));
+		int bl = test->get_balls();
+		out.write(reinterpret_cast<char*>(&bl), sizeof(int));
+		base_geo_.pop_front();
+	}
+	out.close();
+}
+
+//загрузка тестов по геометрии
+void Geometry::load_test_geo()
 {
 }
 
