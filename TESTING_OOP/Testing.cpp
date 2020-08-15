@@ -3,13 +3,15 @@
 //авторизированный вход
 void Testing::enter_system()
 {
-	admin_.load_login_pass();
-	tested_.load_base();
+	Admin admin;
+	Tested tested;
+	admin.load_login_pass();
+	tested.load_base();
 	while (true)
 	{
 		system("cls");
 		cout << "ВОХОД В СИСТЕМУ:\n" << endl;
-		cout << "1. ВХОД для ЗАРЕГЕТРИРОВАННЫХ\n"
+		cout << "1. ВХОД для ЗАРЕГЕCТРИРОВАННЫХ\n"
 			<< "2. Регестрация АДМИНИСТРАТОРА\n"
 			<< "3. Регестрация ПОЛЬЗОВАТЕЛЯ\n"
 			<< "4. Выход\n" << endl;
@@ -30,7 +32,7 @@ void Testing::enter_system()
 			switch (var2)
 			{
 			case 1:
-				if (admin_.get_log_admin().empty())
+				if (admin.get_log_admin().empty())
 				{
 					cout << "АДМИНИСТРАТОР не ЗАРЕГЕСТРИРОВАН!!!" << endl;
 					Sleep(2500);
@@ -48,8 +50,8 @@ void Testing::enter_system()
 					cout << "Введите ПАРОЛЬ: ";
 					cin >> pas;
 					auto pass = hashing(pas);
-					if (admin_.get_log_admin() == log && admin_.get_pass_admin() == pass)
-						admin_.menu_admin();
+					if (admin.get_log_admin() == log && admin.get_pass_admin() == pass)
+						admin.menu_admin();
 					else
 					{
 						cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
@@ -69,13 +71,20 @@ void Testing::enter_system()
 				cout << "Введите свой ПАРОЛЬ: ";
 				string pas;
 				cin >> pas;
-				int pass = hashing(pas);
+				auto pass = hashing(pas);
+				auto p = tested.get_base_users().find(pass);
+				auto d = tested.get_base_users().begin();
+				for (auto f = tested.get_base_users().begin(); f != tested.get_base_users().end(); ++f)
+				{
+					if ((*f).second.front()->get_login() == log)
+						d = f;
+				}
+				if (p == d)
+					tested.menu_tested(log);
+				/*int s = tested_.get_base_users().count(pass);
 				if (tested_.get_base_users().count(pass) == 1
 					&& (*tested_.get_base_users().find(pass)).second.front()->get_login() == log)
-				{
-					Results res;
-					tested_.menu_tested(res);
-				}
+					tested_.menu_tested(log);*/
 				else
 				{
 					cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
@@ -92,10 +101,10 @@ void Testing::enter_system()
 			}
 			break;
 		case 2:
-			admin_.registry_in_admin();
+			admin.registry_in_admin();
 			break;
 		case 3:
-			tested_.registry_in();
+			tested.registry_in();
 			break;
 		case 4:
 			exit(0);

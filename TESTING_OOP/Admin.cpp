@@ -91,8 +91,10 @@ void Admin::control_tests()
 			mat_.menu_maths_admin();
 			break;
 		case 2:
+			//mat_.menu_maths_admin();
 			break;
 		case 3:
+			//mat_.menu_maths_admin();
 			break;
 		case 4:
 			menu_admin();
@@ -589,9 +591,53 @@ void Admin::print_user() const
 	cout << endl;
 }
 
+
 //просмотр статистики
 void Admin::look_statics() const
 {
+	while (true)
+	{
+		Tested tes;
+		tes.load_testing();
+		tes.load_base();
+		system("cls");
+		cout << "УПРАВЛЕНИЕ СТАТИСТИКОЙ:\n" << endl;
+		cout << "1. Результаты в ОБЩЕМ\n"
+			<< "2. Результаты по конкретным ТЕСТАМ\n"
+			<< "3. Результаты по конкретным ПОЛЬЗОВАТЕЛЯМ\n"
+			<< "4. Печать результатов в ФАЙЛ\n"
+			<< "5. Возврат в предыдущее меню\n" << endl;
+		int var;
+		cin >> var;
+		cin.ignore();
+		switch (var)
+		{
+		case 1:
+		{
+			system("cls");
+			cout << "ОБЩАЯ БАЗА ДАННЫХ РЕЗУЛЬТАТОВ ТЕСТОВ\n" << endl;
+			string log = "NICK";
+			auto it = tes.get_base_users().begin();
+			cout << (*it).first << " " << (*it).second.front();
+			/*auto it_2 = tes.get_base_results().end();
+			for (; it != it_2; ++it)
+			{
+				cout << it->first << " " << it->second.front() << endl;
+			}*/
+			break;
+		}
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		default:;
+			
+		}
+	}
 }
 
 //сохранение статистики в файл

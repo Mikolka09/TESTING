@@ -6,7 +6,7 @@ class User
 private:
 
 	string login_;              //логин пользователя
-	int pass_ = 0;              //пароль пользователя
+	unsigned int pass_ = 0;     //пароль пользователя
 
 	string name_;               //ФИО пользователя
 	string email_;              //электронный адресс пользователя
@@ -19,13 +19,13 @@ public:
 	string get_name() const { return name_; };
 	string get_email() const { return email_; };
 	string get_phone() const { return phone_; };
-	int get_pass() const { return pass_; };
+	unsigned int get_pass() const { return pass_; };
 
 	void set_login(string log) { login_ = log; }
 	void set_name(string n) { name_ = n; }
 	void set_email(string em) { email_ = em; }
 	void set_phone(string ph) { phone_ = ph; }
-	void set_pass(int p) { pass_ = p; }
+	void set_pass(unsigned int p) { pass_ = p; }
 	
 	friend ostream& operator<<(ostream& out, const User& us);
 	friend ostream& operator<<(ostream& out, const User* us);

@@ -2,17 +2,20 @@
 
 
 //меню по математике 
-void Maths::menu_maths_user(const list<Results*>& res)
+void Maths::menu_maths_user(string const& log)
 {
 	while (true)
 	{
-		Algebra alg_;
-		Geometry geo_;
+
+		Algebra alg;
+		Geometry geo;
 		Tested tes;
+		tes.load_testing();
+		alg.load_test_alg();
 		system("cls");
 		cout << "БАЗА ТЕСТОВ ПО МАТЕМАТИКЕ для ПОЛЬЗОВАТЕЛЯ\n" << endl;
 		cout << "КАТЕГОРИИ ТЕСТОВ ПО МАТЕМАТИКЕ:" << endl;
-		cout << "1. Тесты по АЛГЕБРЕ\n" << "2. Тесты по ГЕОМЕТРИИ\n"
+		cout << "1. Сдача теста по АЛГЕБРЕ\n" << "2. Сдача теста по ГЕОМЕТРИИ\n"
 			<< "3. Возврат в предыдущее меню" << endl;
 		int var;
 		cin >> var;
@@ -20,13 +23,42 @@ void Maths::menu_maths_user(const list<Results*>& res)
 		switch (var)
 		{
 		case 1:
-			alg_.menu_alg(res);
+		{
+			if (tes.get_base_results().empty())
+				alg.passing_test_alg(log);
+			else
+			{
+				string cat = "АЛГЕБРА";
+				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == cat)     //проверка есть ли в базе результатов категория по алгебре
+				{
+					cout << "Тест по АЛГЕБРЕ пройден, выберите другой ТЕСТ!!!" << endl;
+					Sleep(2500);
+				}
+
+				else
+					alg.passing_test_alg(log);
+			}
 			break;
+		}
 		case 2:
-			geo_.menu_geo(res);
+		{
+			if (tes.get_base_results().empty())
+				geo.passing_test_geo(log);
+			else
+			{
+				string cat = "ГЕОМЕТРИЯ";
+				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == cat)    //проверка есть ли в базе результатов категория по геометрии
+				{
+					cout << "Тест по ГЕОМЕТРИИ пройден, выберите другой ТЕСТ!!!" << endl;
+					Sleep(2500);
+				}
+				else
+					geo.passing_test_geo(log);
+			}
 			break;
+		}
 		case 3:
-			tes.new_testing(res);
+			tes.new_testing(log);
 			break;
 		default:;
 		}
@@ -43,6 +75,7 @@ void Maths::menu_maths_admin()
 		Algebra alg;
 		Geometry geo;
 		alg.load_test_alg();
+		geo.load_test_geo();
 		system("cls");
 		cout << "БАЗА ТЕСТОВ ПО МАТЕМАТИКЕ для АДМИНИСТРАТОРА\n" << endl;
 		cout << "МЕНЮ ДЕЙСТВИЙ:" << endl;
@@ -75,45 +108,14 @@ void Maths::menu_maths_admin()
 }
 
 
-//меню по алгебре для пользователя
-void Algebra::menu_alg(Results& res)
-{
-	while (true)
-	{
-		load_test_alg();
-		system("cls");
-		cout << "РАЗДЕЛ АЛГЕБРА\n" << endl;
-		cout << "МЕНЮ:" << endl;
-		cout << "1. Прохождние тестов\n" << "2. Промежуточное сохранение теста\n"
-			<< "3. Загрузить последнее сохраненное тестирование\n" << "4. Возврат в предыдущее меню" << endl;
-		int var1;
-		cin >> var1;
-		cin.ignore();
-		switch (var1)
-		{
-		case 1:
-			passing_test_alg(res);
-			break;
-		case 2:
-			save_media_test_alg();
-			break;
-		case 3:
-			load_media_test_alg();
-			break;
-		case 4:
-			menu_maths_user(res);
-			break;
-		default:;
-		}
-	}
-}
-
 //прохождение теста по алгебре
-void Algebra::passing_test_alg(Results& res)
+void Algebra::passing_test_alg(string const& log)
 {
 	system("cls");
 	cout << "СДАЧА ТЕСТОВ ПО АЛГЕБРЕ\n" << endl;
 	Tested tes;
+	Tests ts;
+	string lg = log;
 	int count_u = 0;                                     //количесвто угаданных ответов
 	int bal_u = 0;                                       //количество набранных балов за тест
 	auto it = base_alg_.begin();
@@ -130,22 +132,26 @@ void Algebra::passing_test_alg(Results& res)
 			count_u++;
 		}
 	}
-	res.set_cat("algebra");
-	res.set_kol_que(base_alg_.size());
-	res.set_kol_righ_ans(count_u);
-	res.set_kol_bal(bal_u);
-	tes.save_testing();
+	Results* res = new Results;
+	res->set_log(lg);
+	int size = base_alg_.size();
+	res->set_cat("АЛГЕБРА");
+	res->set_kol_que((count_u / size) * 100);
+	res->set_kol_righ_ans(count_u);
+	res->set_kol_bal(bal_u);
+	tes.get_res_base(res);
 	system("cls");
 	cout << "ТЕСТ ПРОЙДЕН!!!" << endl;
+	Sleep(2500);
 }
 
 //создание теста по алгебре
 void Algebra::creature_test_alg()
 {
 	Tests* tes = new Tests;
-	tes->set_category("algebra");
-	print_test_alg();
-	Sleep(2000);
+	tes->set_category("АЛГЕБРА");
+	//print_test_alg();                     //на УДАЛЕНИЕ
+	//Sleep(2500);
 	int idd = 0;
 	bool p = true;
 	while (p)
@@ -165,7 +171,11 @@ void Algebra::creature_test_alg()
 			for (; it != base_alg_.end(); ++it)
 			{
 				if ((*it)->get_id() == idd)
+				{
+					cout << "Такой номер уже занят, попробуйте другой!!!" << endl;
+					Sleep(2500);
 					p = true;
+				}
 				else
 					p = false;
 			}
@@ -180,6 +190,7 @@ void Algebra::creature_test_alg()
 		cout << "СОЗДАНИЕ ТЕСТА ПО АЛГЕБРЕ:\n" << endl;
 		cout << "Введите текст вопроса: " << endl;;
 		char* str = new char;
+		cin.ignore();
 		cin.getline(str, 1200);
 		q = str;
 		if (base_alg_.empty())
@@ -192,8 +203,13 @@ void Algebra::creature_test_alg()
 			auto it = base_alg_.begin();
 			for (; it != base_alg_.end(); ++it)
 			{
-				if (strcmp((*it)->get_question().c_str(), q.c_str()) != 0)
+				string que = (*it)->get_question();
+				if (que == q)
+				{
+					cout << "Такой вопрос уже есть, попробуйте еще раз!!!" << endl;
+					Sleep(2500);
 					w = true;
+				}
 				else
 					w = false;
 			}
@@ -236,7 +252,10 @@ void Algebra::edit_test_alg()
 	cin >> idd;
 	bool set = true;
 	if (base_alg_.empty())
+	{
 		cout << "БАЗА ТЕСТОВ ПО АЛГЕБРЕ ПУСТА!!!" << endl;
+		Sleep(2500);
+	}
 	else
 	{
 		auto it = base_alg_.begin();
@@ -245,6 +264,7 @@ void Algebra::edit_test_alg()
 			if ((*it)->get_id() != idd)
 			{
 				cout << "Такой номер теста отсутствует!!!" << endl;
+				Sleep(2500);
 				set = false;
 			}
 			else
@@ -270,7 +290,7 @@ void Algebra::edit_test_alg()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ ВОПРОСА:\n" << endl;
-				cout << "Введите текст вопроса: " << endl;
+				cout << "Введите новый текст вопроса: " << endl;
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -292,7 +312,7 @@ void Algebra::edit_test_alg()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ ОТВЕТОВ НА ВОПРОС:\n" << endl;
-				cout << "Введите текст ответов: " << endl;
+				cout << "Введите новый текст ответов: " << endl;
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -314,7 +334,7 @@ void Algebra::edit_test_alg()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ НОМЕРА ПРАВИЛЬНОГО ОТВЕТА:\n" << endl;
-				cout << "Введите номер правильного ответа: " << endl;
+				cout << "Введите новый номер правильного ответа: " << endl;
 				int an = 0;
 				auto it = base_alg_.begin();
 				for (; it != base_alg_.end(); ++it)
@@ -332,7 +352,7 @@ void Algebra::edit_test_alg()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ БАЛЛОВ:\n" << endl;
-				cout << "Введите количество баллов: " << endl;
+				cout << "Введите новое количество баллов: " << endl;
 				int bl = 0;
 				auto it = base_alg_.begin();
 				for (; it != base_alg_.end(); ++it)
@@ -355,16 +375,6 @@ void Algebra::edit_test_alg()
 	}
 }
 
-//сохранение промежуточного тестирования по алгебре
-void Algebra::save_media_test_alg()
-{
-
-}
-
-//загрузка промежуточного тестирования по алгебре
-void Algebra::load_media_test_alg()
-{
-}
 
 //сохранение тестов по алгебре
 void Algebra::save_test_alg()
@@ -449,45 +459,14 @@ void Algebra::print_test_alg() const
 		if ((*it)->get_id() == idd)
 			cout << (*it);
 		else
-			cout << "ТЕСТ с таким номер ОТСУТСТВУВЕТ!!!" << endl;
+			cout << "ТЕСТ с таким номер ОТСУТСТВУЕТ!!!" << endl;
 	}
 	system("pause");
 }
 
-//меню по геометрии для пользователя
-void Geometry::menu_geo(Results& res)
-{
-	while (true)
-	{
-		system("cls");
-		cout << "РАЗДЕЛ ГЕОМЕТРИЯ\n" << endl;
-		cout << "МЕНЮ:" << endl;
-		cout << "1. Прохождние тестов\n" << "2. Промежуточное сохранение теста\n"
-			<< "3. Загрузить последнее сохраненное тестирование\n" << "4. Возврат в предыдущее меню" << endl;
-		int var1;
-		cin >> var1;
-		cin.ignore();
-		switch (var1)
-		{
-		case 1:
-			passing_test_geo(res);
-			break;
-		case 2:
-			save_media_test_geo();
-			break;
-		case 3:
-			load_media_test_geo();
-			break;
-		case 4:
-			menu_maths_user(res);
-			break;
-		default:;
-		}
-	}
-}
 
 //прохождение теста по геометрии
-void Geometry::passing_test_geo(Results& res)
+void Geometry::passing_test_geo(string const& log)
 {
 }
 
@@ -495,7 +474,7 @@ void Geometry::passing_test_geo(Results& res)
 void Geometry::creature_test_geo()
 {
 	Tests* tes = new Tests;
-	tes->set_category("geometry");
+	tes->set_category("ГЕОМЕТРИЯ");
 	int idd = 0;
 	bool p = true;
 	while (p)
@@ -515,7 +494,11 @@ void Geometry::creature_test_geo()
 			for (; it != base_geo_.end(); ++it)
 			{
 				if ((*it)->get_id() == idd)
+				{
+					cout << "Такой номер уже занят, попробуйте другой!!!" << endl;
+					Sleep(2500);
 					p = true;
+				}
 				else
 					p = false;
 			}
@@ -542,8 +525,13 @@ void Geometry::creature_test_geo()
 			auto it = base_geo_.begin();
 			for (; it != base_geo_.end(); ++it)
 			{
-				if (strcmp((*it)->get_question().c_str(), q.c_str()) != 0)
+				string que = (*it)->get_question();
+				if (que == q)
+				{
+					cout << "Такой вопрос уже есть, попробуйте еще раз!!!" << endl;
+					Sleep(2500);
 					w = true;
+				}
 				else
 					w = false;
 			}
@@ -571,8 +559,10 @@ void Geometry::creature_test_geo()
 	base_geo_.push_back(tes);
 	system("cls");
 	cout << "НОВЫЙ ТЕСТ по ГЕОМЕТРИИ СОЗДАН!!!" << endl;
-	save_test_geo();
+	Sleep(2500);
 	print_test_geo();
+	save_test_geo();
+
 }
 
 //редактирование тестов по геометрии
@@ -585,7 +575,10 @@ void Geometry::edit_test_geo()
 	cin >> idd;
 	bool set = true;
 	if (base_geo_.empty())
+	{
 		cout << "БАЗА ТЕСТОВ ПО ГЕОМЕТРИИ ПУСТА!!!" << endl;
+		Sleep(2500);
+	}
 	else
 	{
 		auto it = base_geo_.begin();
@@ -594,6 +587,7 @@ void Geometry::edit_test_geo()
 			if ((*it)->get_id() != idd)
 			{
 				cout << "Такой номер теста отсутствует!!!" << endl;
+				Sleep(2500);
 				set = false;
 			}
 			else
@@ -619,7 +613,7 @@ void Geometry::edit_test_geo()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ ВОПРОСА:\n" << endl;
-				cout << "Введите текст вопроса: " << endl;
+				cout << "Введите новый текст вопроса: " << endl;
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -641,7 +635,7 @@ void Geometry::edit_test_geo()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ ОТВЕТОВ НА ВОПРОС:\n" << endl;
-				cout << "Введите текст ответов: " << endl;
+				cout << "Введите новый текст ответов: " << endl;
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -663,7 +657,7 @@ void Geometry::edit_test_geo()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ НОМЕРА ПРАВИЛЬНОГО ОТВЕТА:\n" << endl;
-				cout << "Введите номер правильного ответа: " << endl;
+				cout << "Введите новый номер правильного ответа: " << endl;
 				int an = 0;
 				auto it = base_geo_.begin();
 				for (; it != base_geo_.end(); ++it)
@@ -681,7 +675,7 @@ void Geometry::edit_test_geo()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ БАЛЛОВ:\n" << endl;
-				cout << "Введите количество баллов: " << endl;
+				cout << "Введите новое количество баллов: " << endl;
 				int bl = 0;
 				auto it = base_geo_.begin();
 				for (; it != base_geo_.end(); ++it)
@@ -704,15 +698,6 @@ void Geometry::edit_test_geo()
 	}
 }
 
-//сохранение промежуточного тестирования ао геометрии
-void Geometry::save_media_test_geo()
-{
-}
-
-//загрузка промежуточного тестирования по алгебре
-void Geometry::load_media_test_geo()
-{
-}
 
 //сохранение тестов по геометрии
 void Geometry::save_test_geo()
@@ -797,7 +782,7 @@ void Geometry::print_test_geo() const
 		if ((*it)->get_id() == idd)
 			cout << (*it);
 		else
-			cout << "ТЕСТ с таким номер ОТСУТСТВУВЕТ!!!" << endl;
+			cout << "ТЕСТ с таким номер ОТСУТСТВУЕТ!!!" << endl;
 	}
 	system("pause");
 }

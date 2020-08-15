@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"Tested.h"
 #include "Maths.h"
+#include "Results.h"
 
 
 class Admin 
@@ -33,4 +34,7 @@ public:
 	void save_statics();            //сохранение статистики в файл
 	void save_login_pass();         //сохранение логина и пароля администратора
 	void load_login_pass();         //загрузка логина и пароля администратора
+
+	
+	friend class Testing;
 };
