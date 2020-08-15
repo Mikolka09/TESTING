@@ -36,6 +36,9 @@
     <ClCompile Include="Maths.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Results.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Testing.h">
@@ -65,12 +68,21 @@
     <ClInclude Include="Functions.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Results.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="PassAdmin.bin">
       <Filter>Файлы ресурсов</Filter>
     </None>
-    <None Include="BaseTasted.bin">
+    <None Include="BaseTested.bin">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="BaseTestsGeometry.bin">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="BaseTestsAlgebra.bin">
       <Filter>Файлы ресурсов</Filter>
     </None>
   </ItemGroup>

@@ -21,7 +21,7 @@ void Admin::registry_in_admin()
 			cin >> pas;
 			ad = check_size(pas);
 		}
-		int pass = hashing(pas);
+		auto pass = hashing(pas);
 		this->log_admin_ = log;
 		this->pass_admin_ = pass;
 		cout << "Данные АДМИНИСТРАТОРА сохранены!!!" << endl;
@@ -39,7 +39,7 @@ void Admin::registry_in_admin()
 }
 
 //меню админитсратора
-void Admin::menu_admin(Tested& tes)
+void Admin::menu_admin()
 {
 	while (true)
 	{
@@ -53,7 +53,7 @@ void Admin::menu_admin(Tested& tes)
 		switch (var1)
 		{
 		case 1:
-			control_user(tes);
+			control_user();
 			break;
 		case 2:
 			look_statics();
@@ -95,7 +95,7 @@ void Admin::control_tests()
 		case 3:
 			break;
 		case 4:
-			menu_admin(tes);
+			menu_admin();
 			break;
 		default:;
 		}
@@ -141,7 +141,7 @@ void Admin::change_login()
 		cin >> pas;
 		ad = check_size(pas);
 	}
-	int pass = hashing(pas);
+	auto pass = hashing(pas);
 	bool p = true;
 	//проверка пароля на повторение
 	while (p)
@@ -167,11 +167,12 @@ void Admin::change_login()
 	save_login_pass();
 }
 
-void Admin::registry_user(Tested& tes)
+void Admin::registry_user()
 {
 	string log;
 	bool lp = true;
 	User* user = new User;
+	Tested tes;
 	//проверяем логин на повторение
 	while (lp)
 	{
@@ -209,7 +210,7 @@ void Admin::registry_user(Tested& tes)
 		ad = check_size(pas);
 	}
 	//шифрование пароля
-	int pass = hashing(pas);
+	auto pass = hashing(pas);
 	bool ps = true;
 	while (ps)
 	{
@@ -253,14 +254,15 @@ void Admin::registry_user(Tested& tes)
 	cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 	Sleep(2500);
 	tes.save_base();
-	control_user(tes);
+	control_user();
 }
 
 //изменение данных пользователя (тестируемого)
-void Admin::control_user(Tested& tes)
+void Admin::control_user()
 {
 	while (true)
 	{
+		Tested tes;
 		tes.load_base();
 		system("cls");
 		cout << "УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ:\n" << endl;
@@ -275,13 +277,13 @@ void Admin::control_user(Tested& tes)
 		switch (var)
 		{
 		case 1:
-			registry_user(tes);
+			registry_user();
 			break;
 		case 2:
-			dell_user(tes);
+			dell_user();
 			break;
 		case 3:
-			edit_user(tes);
+			edit_user();
 			break;
 		case 4:
 			while (true)
@@ -297,20 +299,20 @@ void Admin::control_user(Tested& tes)
 				switch (var1)
 				{
 				case 1:
-					print_user_file(tes);
+					print_user_file();
 					break;
 				case 2:
-					print_user(tes);
+					print_user();
 					system(("pause"));
 					break;
 				case 3:
-					control_user(tes);
+					control_user();
 					break;
 				default:;
 				}
 			}
 		case 5:
-			menu_admin(tes);
+			menu_admin();
 			break;
 		default:;
 		}
@@ -318,17 +320,18 @@ void Admin::control_user(Tested& tes)
 }
 
 //удаление пользователя
-void Admin::dell_user(Tested& tes)
+void Admin::dell_user()
 {
 	system("cls");
 	cout << "УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
-	print_user(tes);
+	print_user();
 	cout << "\n";
 	string ld;
 	cout << "Введите ЛОГИН ПОЛЬЗОВАТЕЛЯ для УДАЛЕНИЯ: ";
 	cin >> ld;
 	uppercase(ld);
 	bool set = false;
+	Tested tes;
 	auto it = tes.base_tested_.begin();
 	for (; it != tes.base_tested_.end(); ++it)
 	{
@@ -354,18 +357,19 @@ void Admin::dell_user(Tested& tes)
 }
 
 //редактирование пользователя
-void Admin::edit_user(Tested& tes)
+void Admin::edit_user()
 {
 	system("cls");
 	cout << "РЕДАКТИРОВАННИЕ ДАННЫХ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
-	print_user(tes);
+	print_user();
 	cout << "\n";
 	string ld;
 	cout << "Введите ЛОГИН ПОЛЬЗОВАТЕЛЯ для РЕДАКТИРОВАНИЯ: ";
 	cin >> ld;
 	uppercase(ld);
 	bool set = false;
-	int pas_p = 0;
+	Tested tes;
+	unsigned int pas_p = 0;
 	auto it = tes.base_tested_.begin();
 	for (; it != tes.base_tested_.end(); ++it)
 	{
@@ -446,7 +450,7 @@ void Admin::edit_user(Tested& tes)
 					cin >> pas;
 					ad = check_size(pas);
 				}
-				int pp = hashing(pas);
+				auto pp = hashing(pas);
 				bool ps = true;
 				while (ps)
 				{
@@ -537,7 +541,7 @@ void Admin::edit_user(Tested& tes)
 				break;
 			}
 			case 6:
-				control_user(tes);
+				control_user();
 				break;
 			default:
 				break;
@@ -553,11 +557,12 @@ void Admin::edit_user(Tested& tes)
 }
 
 //печать пользователей в файл
-void Admin::print_user_file(Tested& tes) const
+void Admin::print_user_file() const
 {
 	ofstream out("ListUsers.txt", ios::out);
 	out << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
 	int i = 1;
+	Tested tes;
 	tes.base_tested_.sort();
 	auto it = tes.base_tested_.begin();
 	for (; it != tes.base_tested_.end(); ++it, i++)
@@ -571,11 +576,12 @@ void Admin::print_user_file(Tested& tes) const
 }
 
 //печать пользователей на экран
-void Admin::print_user(Tested& tes) const
+void Admin::print_user() const
 {
 	system("cls");
 	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
 	int i = 1;
+	Tested tes;
 	tes.base_tested_.sort();
 	auto it = tes.base_tested_.begin();
 	for (; it != tes.base_tested_.end(); ++it, i++)
@@ -599,8 +605,8 @@ void Admin::save_login_pass()
 	int len_log = get_log_admin().size() + 1;
 	out.write(reinterpret_cast<char*>(&len_log), sizeof(int));
 	out.write(const_cast<char*>(get_log_admin().c_str()), len_log);
-	int pass = get_pass_admin();
-	out.write(reinterpret_cast<char*>(&pass), sizeof(int));
+	unsigned int pass = get_pass_admin();
+	out.write(reinterpret_cast<char*>(&pass), sizeof(unsigned int));
 	out.close();
 }
 
@@ -610,12 +616,12 @@ void Admin::load_login_pass()
 	if (fin.is_open())
 	{
 		int len_log = 0;
-		int pass = 0;
+		unsigned int pass = 0;
 		fin.read(reinterpret_cast<char*>(&len_log), sizeof(int));
 		char* buff = new char(len_log + 1);
 		fin.read(buff, len_log);
 		set_log_admin(buff);
-		fin.read(reinterpret_cast<char*>(&pass), sizeof(int));
+		fin.read(reinterpret_cast<char*>(&pass), sizeof(unsigned int));
 		set_pass_admin(pass);
 	}
 	fin.close();

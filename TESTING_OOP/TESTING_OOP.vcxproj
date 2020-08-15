@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="Results.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Tested.cpp" />
     <ClCompile Include="Testing.cpp" />
@@ -154,13 +155,16 @@
     <ClInclude Include="Functions.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Results.h" />
     <ClInclude Include="Tested.h" />
     <ClInclude Include="Testing.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BaseTasted.bin" />
+    <None Include="BaseTested.bin" />
+    <None Include="BaseTestsAlgebra.bin" />
+    <None Include="BaseTestsGeometry.bin" />
     <None Include="PassAdmin.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

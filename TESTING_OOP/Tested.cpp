@@ -3,8 +3,42 @@
 
 
 
-void Tested::new_testing()
+void Tested::new_testing(const list<Results*>& res)
 {
+	while (true)
+	{
+		system("cls");
+		Maths mat;
+		list<Results*> res = get_result();
+		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ ПО СДАЧИ ТЕСТОВ:\n" << endl;
+		cout << "1. Сдать тест по МАТЕМАТИКЕ\n"
+			<< "2. Сдать тест по ФИЗИКЕ\n"
+			<< "3. Сдать тест по ХИМИИ\n"
+			<< "4. Просмотреть текущий результат\n"
+			<< "5. Возврат в предыдущее меню\n" << endl;
+		int var1;
+		cin >> var1;
+		cin.ignore();
+		switch (var1)
+		{
+		case 1:
+			mat.menu_maths_user(res);
+			break;
+		case 2:
+			//mat.menu_phisics_user(res);
+			break;
+		case 3:
+			//mat.menu_chemistry_user(res);
+			break;
+		case 4:
+			print_result(res);
+			break;
+		case 5:
+			menu_tested(res);
+			break;
+		default:;
+		}
+	}
 }
 
 //регестрация пользователя
@@ -13,6 +47,7 @@ void Tested::registry_in()
 	system("cls");
 	cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 	User* user = new User;
+	Results* res = new Results;
 	if (base_users_.empty())  //проверка на пустоту
 	{
 		string log;
@@ -20,6 +55,7 @@ void Tested::registry_in()
 		cin >> log;
 		uppercase(log);
 		user->set_login(log);
+		res->set_log(log);
 		string pas;
 		bool ad = true;
 		//проверка пороля на размер
@@ -29,7 +65,7 @@ void Tested::registry_in()
 			cin >> pas;
 			ad = check_size(pas);  //проверка на размер пароля
 		}
-		int pass = hashing(pas);  //шифрование пароля
+		auto pass = hashing(pas);  //шифрование пароля
 		user->set_pass(pass);
 		char* n = new char;
 		cin.ignore();
@@ -46,11 +82,16 @@ void Tested::registry_in()
 		cin >> phone;
 		user->set_phone(phone);
 		base_tested_.push_back(user);
+		result_.push_back(res);
 		base_users_.insert(make_pair(pass, base_tested_));
+		base_results_.insert(make_pair(log, result_));
 		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
+		system("cls");
+		cout << "Теперь можете войти под своим ЛОГИНОМ и ПАРОЛЕМ!!!" << endl;
+		Sleep(2500);
 		save_base();
-		menu_tested();
+
 	}
 	else
 	{
@@ -83,6 +124,7 @@ void Tested::registry_in()
 				lp = false;
 		}
 		user->set_login(log);
+		res->set_log(log);
 		string pas;
 		bool ad = true;
 		//проверка пороля на размер
@@ -93,7 +135,7 @@ void Tested::registry_in()
 			ad = check_size(pas);
 		}
 		//шифрование пароля
-		int pass = hashing(pas);
+		auto pass = hashing(pas);
 		bool ps = true;
 		while (ps)
 		{
@@ -133,23 +175,28 @@ void Tested::registry_in()
 		cin >> phone;
 		user->set_phone(phone);
 		base_tested_.push_back(user);
+		result_.push_back(res);
 		base_users_.insert(make_pair(pass, base_tested_));
+		base_results_.insert(make_pair(log, result_));
 		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
+		system("cls");
+		cout << "Теперь можете войти под своим ЛОГИНОМ и ПАРОЛЕМ!!!" << endl;
+		Sleep(2500);
 		save_base();
-		menu_tested();
+
 	}
 }
 
 
 //меню тестируемого
-void Tested::menu_tested()
+void Tested::menu_tested(const list<Results*>& res)
 {
 	while (true)
 	{
 		system("cls");
 		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
-		cout << "1. Сдать новое ТЕСТИРОВАНИЕ\n"
+		cout << "1. Сдать ТЕСТИРОВАНИЕ\n"
 			<< "2. Просмотор результатов ТЕСТИРОВАНИЯ\n"
 			<< "3. Сохранить промежуточное ТЕСТИРОВАНИЕ\n"
 			<< "4. Загрузить последнее сохраненное ТЕСТИРОВАНИЕ\n"
@@ -160,10 +207,11 @@ void Tested::menu_tested()
 		switch (var1)
 		{
 		case 1:
-			new_testing();
+			new_testing(res);
 			break;
 		case 2:
-			print_result();
+			print_result(res);
+			system("pause");
 			break;
 		case 3:
 			save_testing();
@@ -173,14 +221,25 @@ void Tested::menu_tested()
 			break;
 		case 5:
 			exit(0);
-		default: ;
+		default:;
 		}
 	}
 }
 
 //просмотр результата тестирования
-void Tested::print_result() const
+void Tested::print_result(const list<Results*>& res) const
 {
+	system("cls");
+	cout << "РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЯ\n" << endl;
+	string lg;
+	cout << "Введите свой ЛОГИН: ";
+	cin >> lg;
+	auto it = result_.begin();
+	for (; it != result_.end(); ++it)
+	{
+		if ((*it)->get_log().c_str() == lg)
+			cout << (*it);
+	}
 }
 
 
@@ -198,14 +257,14 @@ void Tested::load_testing()
 //сохранение базы тестируемых
 void Tested::save_base()
 {
-	ofstream out("BaseTasted.bin", ios::binary | ios::out);
+	ofstream out("BaseTested.bin", ios::binary | ios::out);
 	int length = base_tested_.size();
 	out.write(reinterpret_cast<char*>(&length), sizeof(int));
 	for (int i = 0; i < length; i++)
 	{
 		User* user = base_tested_.front();
 		unsigned int pas = user->get_pass();
-		out.write(reinterpret_cast<char*>(&pas), sizeof(int));
+		out.write(reinterpret_cast<char*>(&pas), sizeof(unsigned int));
 		int l_log = user->get_login().size() + 1;
 		out.write(reinterpret_cast<char*>(&l_log), sizeof(int));
 		out.write(const_cast<char*>(user->get_login().c_str()), l_log);
@@ -227,17 +286,17 @@ void Tested::save_base()
 //загрузка базы тестируемых
 void Tested::load_base()
 {
-	ifstream fin("BaseTasted.bin", ios::binary | ios::in);
+	ifstream fin("BaseTested.bin", ios::binary | ios::in);
 	if (fin.is_open())
 	{
 		int length;
-		this->base_tested_.clear();
 		fin.read(reinterpret_cast<char*>(&length), sizeof(int));
+		this->base_tested_.clear();
 		for (int i = 0; i < length; i++)
 		{
 			User* user = new User;
-			int pas;
-			fin.read(reinterpret_cast<char*>(&pas), sizeof(int));
+			unsigned int pas;
+			fin.read(reinterpret_cast<char*>(&pas), sizeof(unsigned int));
 			user->set_pass(pas);
 			int l_log;
 			fin.read(reinterpret_cast<char*>(&l_log), sizeof(int));
@@ -263,6 +322,7 @@ void Tested::load_base()
 			this->base_tested_.push_back(user);
 			this->base_users_.insert(make_pair(user->get_pass(), base_tested_));
 		}
+
 	}
 	fin.close();
 }

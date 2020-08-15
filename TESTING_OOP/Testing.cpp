@@ -47,9 +47,9 @@ void Testing::enter_system()
 					string pas;
 					cout << "Введите ПАРОЛЬ: ";
 					cin >> pas;
-					int pass = hashing(pas);
+					auto pass = hashing(pas);
 					if (admin_.get_log_admin() == log && admin_.get_pass_admin() == pass)
-						admin_.menu_admin(tested_);
+						admin_.menu_admin();
 					else
 					{
 						cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
@@ -72,7 +72,10 @@ void Testing::enter_system()
 				int pass = hashing(pas);
 				if (tested_.get_base_users().count(pass) == 1
 					&& (*tested_.get_base_users().find(pass)).second.front()->get_login() == log)
-					tested_.menu_tested();
+				{
+					Results res;
+					tested_.menu_tested(res);
+				}
 				else
 				{
 					cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;

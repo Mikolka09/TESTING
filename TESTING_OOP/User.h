@@ -6,7 +6,7 @@ class User
 private:
 
 	string login_;              //логин пользователя
-	int pass_ = 0;     //пароль пользователя
+	int pass_ = 0;              //пароль пользователя
 
 	string name_;               //ФИО пользователя
 	string email_;              //электронный адресс пользователя

@@ -12,7 +12,6 @@ private:
 	
 public:
 
-	
 	void enter_system();   //авторизированный вход
 	
 };
