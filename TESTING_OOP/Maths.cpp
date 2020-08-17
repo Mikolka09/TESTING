@@ -10,7 +10,7 @@ void Maths::menu_maths_user(string const& log)
 		Algebra alg;
 		Geometry geo;
 		Tested tes;
-		tes.load_testing();
+		tes.load_results();
 		alg.load_test_alg();
 		system("cls");
 		cout << "БАЗА ТЕСТОВ ПО МАТЕМАТИКЕ для ПОЛЬЗОВАТЕЛЯ\n" << endl;

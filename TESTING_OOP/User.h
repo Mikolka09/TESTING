@@ -6,7 +6,7 @@ class User
 private:
 
 	string login_;              //логин пользователя
-	unsigned int pass_ = 0;     //пароль пользователя
+	unsigned int pass_;     //пароль пользователя
 
 	string name_;               //ФИО пользователя
 	string email_;              //электронный адресс пользователя
@@ -14,6 +14,12 @@ private:
 
 public:
 	
+	User();
+	User(string lg, unsigned int ps, string n, string em, string ph);
+	User(const User& obj);
+
+	User& operator=(const User& obj);
+
 
 	string get_login() const { return login_; };
 	string get_name() const { return name_; };

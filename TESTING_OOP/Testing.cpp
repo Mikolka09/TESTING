@@ -72,25 +72,24 @@ void Testing::enter_system()
 				string pas;
 				cin >> pas;
 				auto pass = hashing(pas);
-				auto p = tested.get_base_users().find(pass);
-				auto d = tested.get_base_users().begin();
-				for (auto f = tested.get_base_users().begin(); f != tested.get_base_users().end(); ++f)
+				bool p = true;
+				auto it = tested.get_base().begin();
+				for (; it != tested.get_base().end(); ++it)
 				{
-					if ((*f).second.front()->get_login() == log)
-						d = f;
+					if ((*it)->get_pass() == pass && (*it)->get_login() == log)
+						p = true;
+					else
+						p = false;
+					
 				}
-				if (p == d)
+				if(p)
 					tested.menu_tested(log);
-				/*int s = tested_.get_base_users().count(pass);
-				if (tested_.get_base_users().count(pass) == 1
-					&& (*tested_.get_base_users().find(pass)).second.front()->get_login() == log)
-					tested_.menu_tested(log);*/
 				else
-				{
+					{
 					cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
 					Sleep(2000);
 					enter_system();
-				}
+					}
 				break;
 			}
 			case 3:
@@ -107,7 +106,7 @@ void Testing::enter_system()
 			tested.registry_in();
 			break;
 		case 4:
-			exit(0);
+			return;
 		default:
 			break;
 		}

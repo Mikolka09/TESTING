@@ -73,16 +73,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PassAdmin.bin">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
     <None Include="BaseTested.bin">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
-    <None Include="BaseTestsGeometry.bin">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
-    <None Include="BaseTestsAlgebra.bin">
       <Filter>Файлы ресурсов</Filter>
     </None>
   </ItemGroup>

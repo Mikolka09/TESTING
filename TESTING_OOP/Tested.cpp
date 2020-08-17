@@ -7,7 +7,7 @@ void Tested::new_testing(string const& log)
 	{
 		system("cls");
 		Maths mat;
-		load_testing();
+		load_results();
 		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ ПО СДАЧИ ТЕСТОВ:\n" << endl;
 		cout << "1. Сдать тест по МАТЕМАТИКЕ\n"
 			<< "2. Сдать тест по ФИЗИКЕ\n"
@@ -181,7 +181,7 @@ void Tested::menu_tested(string const& log)
 {
 	while (true)
 	{
-		load_testing();
+		load_results();
 		Testing ts;
 		system("cls");
 		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
@@ -227,14 +227,15 @@ void Tested::print_result(string const& log) const
 
 
 //сохранить промежуточное тестирование
-void Tested::save_testing()
+void Tested::save_results()
 {
 	ofstream out("BaseResult.bin", ios::binary | ios::out);
 	int length = result_.size();
 	out.write(reinterpret_cast<char*>(&length), sizeof(int));
+	Results* res = new Results;
 	for (int i = 0; i < length; i++)
 	{
-		Results* res = result_.front();
+		res = result_.front();
 		int l_log = res->get_log().size() + 1;
 		out.write(reinterpret_cast<char*>(&l_log), sizeof(int));
 		out.write(const_cast<char*>(res->get_log().c_str()), l_log);
@@ -248,33 +249,37 @@ void Tested::save_testing()
 		int kol_b = res->get_kol_bal();
 		out.write(reinterpret_cast<char*>(&kol_b), sizeof(int));
 		result_.pop_front();
+		
 	}
+	delete res;
 	out.close();
 }
 
 //загрузить последнее сохраненное тестирование
-void Tested::load_testing()
+void Tested::load_results()
 {
 	ifstream in("BaseResult.bin", ios::binary | ios::in);
 	int length;
 	in.read(reinterpret_cast<char*>(&length), sizeof(int));
 	result_.clear();
 	base_results_.clear();
+	Results* res = new Results;
 	if (in.is_open())
 	{
 		for (int i = 0; i < length; i++)
 		{
-			Results* res = new Results;
 			int l_log;
 			in.read(reinterpret_cast<char*>(&l_log), sizeof(int));
 			char* buff = new char(l_log + 1);
 			in.read(buff, l_log);
 			res->set_log(buff);
+			delete buff;
 			int l_c;
 			in.read(reinterpret_cast<char*>(&l_c), sizeof(int));
 			char* buff1 = new char(l_c + 1);
 			in.read(buff1, l_c);
 			res->set_cat(buff1);
+			delete buff1;
 			int kol_q;
 			in.read(reinterpret_cast<char*>(&kol_q), sizeof(int));
 			res->set_kol_que(kol_q);
@@ -288,6 +293,7 @@ void Tested::load_testing()
 			result_.push_back(res);
 			base_results_.insert(make_pair(res->get_log(), result_));
 		}
+		delete res;
 	}
 	in.close();
 }
@@ -299,9 +305,10 @@ void Tested::save_base()
 	ofstream out("BaseTested.bin", ios::binary | ios::out);
 	int length = base_tested_.size();
 	out.write(reinterpret_cast<char*>(&length), sizeof(int));
+	User* user = new User;
 	for (int i = 0; i < length; i++)
 	{
-		User* user = base_tested_.front();
+		user = base_tested_.front();
 		unsigned int pas = user->get_pass();
 		out.write(reinterpret_cast<char*>(&pas), sizeof(unsigned int));
 		int l_log = user->get_login().size() + 1;
@@ -318,6 +325,7 @@ void Tested::save_base()
 		out.write(const_cast<char*>(user->get_phone().c_str()), l_ph);
 		base_tested_.pop_front();
 	}
+	delete user;
 	out.close();
 
 }
@@ -331,9 +339,9 @@ void Tested::load_base()
 		int length;
 		fin.read(reinterpret_cast<char*>(&length), sizeof(int));
 		this->base_tested_.clear();
+		User* user = new User;
 		for (int i = 0; i < length; i++)
 		{
-			User* user = new User;
 			unsigned int pas;
 			fin.read(reinterpret_cast<char*>(&pas), sizeof(unsigned int));
 			user->set_pass(pas);
@@ -357,11 +365,11 @@ void Tested::load_base()
 			char* buff3 = new char(l_ph + 1);
 			fin.read(buff3, l_ph);
 			user->set_phone(buff3);
-
+			
 			this->base_tested_.push_back(user);
 			this->base_users_.insert(make_pair(user->get_pass(), base_tested_));
 		}
-
+		delete user;
 	}
 	fin.close();
 }
@@ -380,7 +388,7 @@ void Tested::get_res_base(Results*& res)
 		result_.push_back(res);
 		base_results_.insert(make_pair(log, result_));
 	}
-	save_testing();
+	save_results();
 }
 
 //печать результатов тестирования в файл

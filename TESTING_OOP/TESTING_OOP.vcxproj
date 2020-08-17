@@ -163,9 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="BaseTested.bin" />
-    <None Include="BaseTestsAlgebra.bin" />
-    <None Include="BaseTestsGeometry.bin" />
-    <None Include="PassAdmin.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

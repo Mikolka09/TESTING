@@ -585,8 +585,9 @@ void Admin::print_user() const
 	int i = 1;
 	Tested tes;
 	tes.base_tested_.sort();
-	auto it = tes.base_tested_.begin();
-	for (; it != tes.base_tested_.end(); ++it, i++)
+	tes.get_base().sort();
+	auto it = tes.get_base().begin();
+	for (; it != tes.get_base().end(); ++it, i++)
 		cout << setw(4) << i << (*it);
 	cout << endl;
 }
@@ -598,7 +599,7 @@ void Admin::look_statics() const
 	while (true)
 	{
 		Tested tes;
-		tes.load_testing();
+		tes.load_results();
 		tes.load_base();
 		system("cls");
 		cout << "УПРАВЛЕНИЕ СТАТИСТИКОЙ:\n" << endl;
