@@ -13,6 +13,28 @@ ostream& operator<<(ostream& out, const User* us)
 	return out;
 }
 
+//для сохранения в текстовый фаил
+ofstream& operator<<(ofstream& out, const User& us)
+{
+	out << us.login_ << "\n" << us.pass_ << "\n" << us.name_ << "\n" << us.email_ << "\n" << us.phone_ << endl;
+	return out;
+}
+//для выгрузки из фаила
+ifstream& operator>>(ifstream& in, User* us)
+{
+	while (true)
+	{
+		in >> us->login_;
+		in >> us->pass_;
+		getline(in, us->name_);
+		in >> us->email_;
+		in >> us->phone_;
+		if (in.eof())
+			break;
+	}
+	return in;
+}
+
 User::User()
 {
 	login_ = ""; pass_ = 0; name_ = ""; email_ = ""; phone_ = "";

@@ -454,6 +454,8 @@ void Algebra::print_test_alg() const
 	cout << "Введите номер теста: ";
 	cin >> idd;
 	auto it = base_alg_.begin();
+	system("cls");
+	cout << "ПЕЧАТЬ ТЕСТА ПО НОМЕРУ:\n" << endl;
 	for (; it != base_alg_.end(); ++it)
 	{
 		if ((*it)->get_id() == idd)

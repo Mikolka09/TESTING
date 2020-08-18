@@ -9,9 +9,14 @@ class Admin
 private:
 
 	string log_admin_;                 //логин администратора
-	unsigned int pass_admin_ = 0;      //пароль администратора
+	unsigned int pass_admin_;      //пароль администратора
 	
 public:
+
+	Admin() { log_admin_ = ""; pass_admin_ = 0; }
+	Admin(string lg, unsigned int pas) { log_admin_ = lg; pass_admin_ = pas; }
+	Admin(const Admin& ob);
+	Admin& operator=(const Admin& ob);
 
 	string get_log_admin() const { return log_admin_; }
 	unsigned int get_pass_admin() const { return pass_admin_; }
@@ -28,8 +33,6 @@ public:
 	void control_user();            //изменение данных пользователя (тестируемого)
 	void dell_user();               //удаление пользователя
 	void edit_user();               //редактирование пользователя
-	void print_user_file() const;   //печать пользователей в файл
-	void print_user() const;        //печать пользователей на экран
 	void look_statics() const;      //просмотр статистики
 	void save_statics();            //сохранение статистики в файл
 	void save_login_pass();         //сохранение логина и пароля администратора

@@ -42,7 +42,7 @@ void Tested::registry_in()
 	cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 	User* user = new User;
 	Results* res = new Results;
-	if (base_users_.empty())  //проверка на пустоту
+	if (base_tested_.empty())  //проверка на пустоту
 	{
 		string log;
 		cout << "Введите ЛОГИН: ";
@@ -75,7 +75,7 @@ void Tested::registry_in()
 		cin >> phone;
 		user->set_phone(phone);
 		base_tested_.push_back(user);
-		base_users_.insert(make_pair(pass, base_tested_));
+		//base_users_.insert(make_pair(pass, base_tested_));
 		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
 		system("cls");
@@ -128,25 +128,29 @@ void Tested::registry_in()
 		bool ps = true;
 		while (ps)
 		{
-			if (base_users_.count(pass) != 0)  //проверяем есть ли еще такой пароль в базе
+			auto it = base_tested_.begin();
+			for (; it != base_tested_.end(); ++it)
 			{
-				cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
-				Sleep(2500);
-				system("cls");
-				bool d = true;
-				while (d)
+				if ((*it)->get_pass() == pass)  //проверяем есть ли еще такой пароль в базе
 				{
-					cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
-					cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
-					cin >> pas;
-					d = check_size(pas);
+					cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+					Sleep(2500);
+					system("cls");
+					bool d = true;
+					while (d)
+					{
+						cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+						cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+						cin >> pas;
+						d = check_size(pas);
+					}
+					pass = hashing(pas);
+					if ((*it)->get_pass() != pass)
+						ps = false;
 				}
-				pass = hashing(pas);
-				if (base_users_.count(pass) == 0)
+				else
 					ps = false;
 			}
-			else
-				ps = false;
 		}
 		user->set_pass(pass);
 		char* n = new char;
@@ -164,15 +168,25 @@ void Tested::registry_in()
 		cin >> phone;
 		user->set_phone(phone);
 		base_tested_.push_back(user);
-		base_users_.insert(make_pair(pass, base_tested_));
+		//base_users_.insert(make_pair(pass, base_tested_));
 		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
 		system("cls");
 		cout << "Теперь можете войти под своим ЛОГИНОМ и ПАРОЛЕМ!!!" << endl;
 		Sleep(2500);
 		save_base();
-		delete user;
 	}
+}
+
+bool Tested::check_in(unsigned int ps, string lg)
+{
+	auto it = base_tested_.begin();
+	for (; it != base_tested_.end(); ++it)
+	{
+		if ((*it)->get_pass() == ps && (*it)->get_login() == lg)
+			return true;
+	}
+	return false;
 }
 
 
@@ -249,7 +263,7 @@ void Tested::save_results()
 		int kol_b = res->get_kol_bal();
 		out.write(reinterpret_cast<char*>(&kol_b), sizeof(int));
 		result_.pop_front();
-		
+
 	}
 	delete res;
 	out.close();
@@ -263,11 +277,12 @@ void Tested::load_results()
 	in.read(reinterpret_cast<char*>(&length), sizeof(int));
 	result_.clear();
 	base_results_.clear();
-	Results* res = new Results;
+
 	if (in.is_open())
 	{
 		for (int i = 0; i < length; i++)
 		{
+			Results* res = new Results;
 			int l_log;
 			in.read(reinterpret_cast<char*>(&l_log), sizeof(int));
 			char* buff = new char(l_log + 1);
@@ -293,7 +308,7 @@ void Tested::load_results()
 			result_.push_back(res);
 			base_results_.insert(make_pair(res->get_log(), result_));
 		}
-		delete res;
+
 	}
 	in.close();
 }
@@ -302,76 +317,139 @@ void Tested::load_results()
 //сохранение базы тестируемых
 void Tested::save_base()
 {
-	ofstream out("BaseTested.bin", ios::binary | ios::out);
-	int length = base_tested_.size();
-	out.write(reinterpret_cast<char*>(&length), sizeof(int));
-	User* user = new User;
-	for (int i = 0; i < length; i++)
+	ofstream out("BaseTested.txt", ios::out);
+	user_ = new User;
+	while (true)
 	{
-		user = base_tested_.front();
-		unsigned int pas = user->get_pass();
-		out.write(reinterpret_cast<char*>(&pas), sizeof(unsigned int));
-		int l_log = user->get_login().size() + 1;
-		out.write(reinterpret_cast<char*>(&l_log), sizeof(int));
-		out.write(const_cast<char*>(user->get_login().c_str()), l_log);
-		int l_n = user->get_name().size() + 1;
-		out.write(reinterpret_cast<char*>(&l_n), sizeof(int));
-		out.write(const_cast<char*>(user->get_name().c_str()), l_n);
-		int l_em = user->get_email().size() + 1;
-		out.write(reinterpret_cast<char*>(&l_em), sizeof(int));
-		out.write(const_cast<char*>(user->get_email().c_str()), l_em);
-		int l_ph = user->get_phone().size() + 1;
-		out.write(reinterpret_cast<char*>(&l_ph), sizeof(int));
-		out.write(const_cast<char*>(user->get_phone().c_str()), l_ph);
+		user_ = base_tested_.front();
+		out << user_->get_login() << endl;;
+		out << user_->get_pass() << endl;
+		out << user_->get_name() << endl;
+		out << user_->get_email() << endl;
+		out << user_->get_phone() << endl;;
 		base_tested_.pop_front();
+		if (base_tested_.empty())
+			break;
 	}
-	delete user;
+	delete user_;
 	out.close();
+
+	//
+	//ofstream out("BaseTested.bin", ios::binary | ios::out);
+	//int length = base_tested_.size();
+	//out.write(reinterpret_cast<char*>(&length), sizeof(int));
+	//user_ = new User;
+	//for (int i = 0; i < length; i++)
+	//{
+	//	user_ = base_tested_.front();
+	//	unsigned int pas = user_->get_pass();
+	//	out.write(reinterpret_cast<char*>(&pas), sizeof(unsigned int));
+	//	int l_log = user_->get_login().size() + 1;
+	//	out.write(reinterpret_cast<char*>(&l_log), sizeof(int));
+	//	out.write(const_cast<char*>(user_->get_login().c_str()), l_log);
+	//	int l_n = user_->get_name().size() + 1;
+	//	out.write(reinterpret_cast<char*>(&l_n), sizeof(int));
+	//	out.write(const_cast<char*>(user_->get_name().c_str()), l_n);
+	//	int l_em = user_->get_email().size() + 1;
+	//	out.write(reinterpret_cast<char*>(&l_em), sizeof(int));
+	//	out.write(const_cast<char*>(user_->get_email().c_str()), l_em);
+	//	int l_ph = user_->get_phone().size() + 1;
+	//	out.write(reinterpret_cast<char*>(&l_ph), sizeof(int));
+	//	out.write(const_cast<char*>(user_->get_phone().c_str()), l_ph);
+	//	base_tested_.pop_front();
+	//}
+	////delete user;
+	//out.close();
 
 }
 
 //загрузка базы тестируемых
 void Tested::load_base()
 {
-	ifstream fin("BaseTested.bin", ios::binary | ios::in);
+	ifstream fin("BaseTested.txt");
 	if (fin.is_open())
 	{
-		int length;
-		fin.read(reinterpret_cast<char*>(&length), sizeof(int));
-		this->base_tested_.clear();
-		User* user = new User;
-		for (int i = 0; i < length; i++)
+		base_tested_.clear();
+
+		while (true)
 		{
+			user_ = new User;
+			char lg[1200];
+			fin >> lg;
+			int l_lg = strlen(lg) + 1;
+			char* buff = new char(l_lg + 1);
+			strcpy(buff, lg);
+			user_->set_login(buff);
 			unsigned int pas;
-			fin.read(reinterpret_cast<char*>(&pas), sizeof(unsigned int));
-			user->set_pass(pas);
-			int l_log;
-			fin.read(reinterpret_cast<char*>(&l_log), sizeof(int));
-			char* buff = new char(l_log + 1);
-			fin.read(buff, l_log);
-			user->set_login(buff);
-			int l_n;
-			fin.read(reinterpret_cast<char*>(&l_n), sizeof(int));
-			char* buff1 = new char(l_n + 1);
-			fin.read(buff1, l_n);
-			user->set_name(buff1);
-			int l_em;
-			fin.read(reinterpret_cast<char*>(&l_em), sizeof(int));
-			char* buff2 = new char(l_em + 1);
-			fin.read(buff2, l_em);
-			user->set_email(buff2);
-			int l_ph;
-			fin.read(reinterpret_cast<char*>(&l_ph), sizeof(int));
-			char* buff3 = new char(l_ph + 1);
-			fin.read(buff3, l_ph);
-			user->set_phone(buff3);
-			
-			this->base_tested_.push_back(user);
-			this->base_users_.insert(make_pair(user->get_pass(), base_tested_));
+			fin >> pas;
+			user_->set_pass(pas);
+			char ln[1200];
+			fin.ignore();
+			fin.getline(ln,1200);
+			int l_ln = strlen(ln) + 1;
+			char* buff1 = new char(l_ln + 1);
+			strcpy(buff1, ln);
+			user_->set_name(buff1);
+			char le[1200];
+			fin >> le;
+			int l_le = strlen(le) + 1;
+			char* buff2 = new char(l_le + 1);
+			strcpy(buff2, le);
+			user_->set_email(buff2);
+			char lp[1200];
+			fin.ignore();
+			fin.getline(lp, 1200);
+			int l_lp = strlen(lp) + 1;
+			char* buff3 = new char(l_lp + 1);
+			strcpy(buff3, lp);
+			user_->set_phone(buff3);
+			base_tested_.push_back(user_);
+			fin.ignore();
+			if(fin.eof())
+				break;
 		}
-		delete user;
 	}
 	fin.close();
+
+	//ifstream fin("BaseTested.bin", ios::binary | ios::in);
+	//if (fin.is_open())
+	//{
+	//	int length;
+	//	fin.read(reinterpret_cast<char*>(&length), sizeof(int));
+	//	base_tested_.clear();
+	//	user_ = new User;
+	//	for (int i = 0; i < length; i++)
+	//	{
+	//		unsigned int pas;
+	//		fin.read(reinterpret_cast<char*>(&pas), sizeof(unsigned int));
+	//		user_->set_pass(pas);
+	//		int l_log;
+	//		fin.read(reinterpret_cast<char*>(&l_log), sizeof(int));
+	//		char* buff = new char(l_log + 1);
+	//		fin.read(buff, l_log);
+	//		user_->set_login(buff);
+	//		int l_n;
+	//		fin.read(reinterpret_cast<char*>(&l_n), sizeof(int));
+	//		char* buff1 = new char(l_n + 1);
+	//		fin.read(buff1, l_n);
+	//		user_->set_name(buff1);
+	//		int l_em;
+	//		fin.read(reinterpret_cast<char*>(&l_em), sizeof(int));
+	//		char* buff2 = new char(l_em + 1);
+	//		fin.read(buff2, l_em);
+	//		user_->set_email(buff2);
+	//		int l_ph;
+	//		fin.read(reinterpret_cast<char*>(&l_ph), sizeof(int));
+	//		char* buff3 = new char(l_ph + 1);
+	//		fin.read(buff3, l_ph);
+	//		user_->set_phone(buff3);
+	//		
+	//		base_tested_.push_back(user_);
+	//		//base_users_.insert(make_pair(user_->get_pass(), base_tested_));
+	//	}
+	//	//delete user;
+	//}
+	//fin.close();
 }
 
 //проверка и добавление нового результата 
@@ -389,6 +467,13 @@ void Tested::get_res_base(Results*& res)
 		base_results_.insert(make_pair(log, result_));
 	}
 	save_results();
+}
+
+//проверка и добавление нового пользователя
+void Tested::get_user_base(User*& us)
+{
+	base_tested_.push_back(us);
+	save_base();
 }
 
 //печать результатов тестирования в файл
@@ -412,4 +497,35 @@ void Tested::print_result_file(string const& log) const
 	out.close();
 	system("cls");
 	cout << "РЕЗУЛЬТАТЫ СОХРАНЕНЫ В ФАЙЛ!!!" << endl;
+}
+
+//просмотр базы пользователей
+void Tested::print_users()
+{
+	system("cls");
+	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
+	int i = 1;
+	//base_tested_.sort();
+	auto it = base_tested_.begin();
+	for (; it != base_tested_.end(); ++it, i++)
+		cout << setw(4) << i << (*it);
+	cout << endl;
+}
+
+//печать базы пользователей в файл
+void Tested::print_users_file()
+{
+	system("cls");
+	cout << "Введите название файла для печати базы пользователей: ";
+	string file;
+	cin >> file;
+	file += ".txt";
+	ofstream out(file, ios::out);
+	out << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
+	int i = 1;
+	base_tested_.sort();
+	auto it = base_tested_.begin();
+	for (; it != base_tested_.end(); ++it, i++)
+		out << setw(4) << i << (*it);
+	out << endl;
 }

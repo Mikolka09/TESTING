@@ -6,7 +6,7 @@ class User
 private:
 
 	string login_;              //логин пользователя
-	unsigned int pass_;     //пароль пользователя
+	unsigned int pass_;         //пароль пользователя
 
 	string name_;               //ФИО пользователя
 	string email_;              //электронный адресс пользователя
@@ -35,7 +35,8 @@ public:
 	
 	friend ostream& operator<<(ostream& out, const User& us);
 	friend ostream& operator<<(ostream& out, const User* us);
-	
+	friend ofstream& operator<<(ofstream& out, const User& us);        //для сохранения в текстовый фаил
+	friend ifstream& operator>>(ifstream& in, User* us);               //для выгрузки из фаила
 };
 
 

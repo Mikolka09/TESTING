@@ -72,9 +72,4 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="BaseTested.bin">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
-  </ItemGroup>
 </Project>

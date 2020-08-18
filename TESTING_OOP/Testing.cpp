@@ -5,10 +5,10 @@ void Testing::enter_system()
 {
 	Admin admin;
 	Tested tested;
-	admin.load_login_pass();
-	tested.load_base();
 	while (true)
 	{
+		admin.load_login_pass();
+		tested.load_base();
 		system("cls");
 		cout << "ВОХОД В СИСТЕМУ:\n" << endl;
 		cout << "1. ВХОД для ЗАРЕГЕCТРИРОВАННЫХ\n"
@@ -72,17 +72,7 @@ void Testing::enter_system()
 				string pas;
 				cin >> pas;
 				auto pass = hashing(pas);
-				bool p = true;
-				auto it = tested.get_base().begin();
-				for (; it != tested.get_base().end(); ++it)
-				{
-					if ((*it)->get_pass() == pass && (*it)->get_login() == log)
-						p = true;
-					else
-						p = false;
-					
-				}
-				if(p)
+				if(tested.check_in(pass, log))
 					tested.menu_tested(log);
 				else
 					{
@@ -106,7 +96,7 @@ void Testing::enter_system()
 			tested.registry_in();
 			break;
 		case 4:
-			return;
+			exit(0);
 		default:
 			break;
 		}
