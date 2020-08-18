@@ -13,9 +13,9 @@ private:
 	string phone_;              //номер телефона пользователя
 
 public:
-	
+
 	User();
-	User(string lg, unsigned int ps, string n, string em, string ph);
+	//User(string lg, unsigned int ps, string n, string em, string ph);
 	User(const User& obj);
 
 	User& operator=(const User& obj);

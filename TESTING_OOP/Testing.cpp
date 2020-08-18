@@ -10,7 +10,7 @@ void Testing::enter_system()
 		admin.load_login_pass();
 		tested.load_base();
 		system("cls");
-		cout << "ВОХОД В СИСТЕМУ:\n" << endl;
+		cout << "ВХОД В СИСТЕМУ:\n" << endl;
 		cout << "1. ВХОД для ЗАРЕГЕCТРИРОВАННЫХ\n"
 			<< "2. Регестрация АДМИНИСТРАТОРА\n"
 			<< "3. Регестрация ПОЛЬЗОВАТЕЛЯ\n"

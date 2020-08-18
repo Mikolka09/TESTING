@@ -75,7 +75,6 @@ void Tested::registry_in()
 		cin >> phone;
 		user->set_phone(phone);
 		base_tested_.push_back(user);
-		//base_users_.insert(make_pair(pass, base_tested_));
 		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
 		system("cls");
@@ -195,7 +194,7 @@ void Tested::menu_tested(string const& log)
 {
 	while (true)
 	{
-		load_results();
+		//load_results();
 		Testing ts;
 		system("cls");
 		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
@@ -322,6 +321,7 @@ void Tested::save_base()
 	while (true)
 	{
 		user_ = base_tested_.front();
+		out << "\n";
 		out << user_->get_login() << endl;;
 		out << user_->get_pass() << endl;
 		out << user_->get_name() << endl;
@@ -331,7 +331,7 @@ void Tested::save_base()
 		if (base_tested_.empty())
 			break;
 	}
-	delete user_;
+	delete[] user_;
 	out.close();
 
 	//
@@ -374,7 +374,7 @@ void Tested::load_base()
 		while (true)
 		{
 			user_ = new User;
-			char lg[1200];
+			char lg[50];
 			fin >> lg;
 			int l_lg = strlen(lg) + 1;
 			char* buff = new char(l_lg + 1);
@@ -382,29 +382,30 @@ void Tested::load_base()
 			user_->set_login(buff);
 			unsigned int pas;
 			fin >> pas;
+			fin.get();
 			user_->set_pass(pas);
-			char ln[1200];
-			fin.ignore();
-			fin.getline(ln,1200);
+			//fin.get();
+			char ln[50];
+			fin.getline(ln,50);
 			int l_ln = strlen(ln) + 1;
 			char* buff1 = new char(l_ln + 1);
 			strcpy(buff1, ln);
 			user_->set_name(buff1);
-			char le[1200];
+			char le[50];
 			fin >> le;
 			int l_le = strlen(le) + 1;
 			char* buff2 = new char(l_le + 1);
 			strcpy(buff2, le);
 			user_->set_email(buff2);
-			char lp[1200];
+			char lp[50];
 			fin.ignore();
-			fin.getline(lp, 1200);
+			fin.getline(lp, 50);
 			int l_lp = strlen(lp) + 1;
 			char* buff3 = new char(l_lp + 1);
 			strcpy(buff3, lp);
 			user_->set_phone(buff3);
 			base_tested_.push_back(user_);
-			fin.ignore();
+			fin.get();
 			if(fin.eof())
 				break;
 		}

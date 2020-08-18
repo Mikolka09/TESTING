@@ -12,13 +12,6 @@ private:
 		
 public:
 
-	virtual void passing_test(string const& log);       //прохождение теста
-	virtual void creature_test(string c, list<Tests*> b);                       //создание теста
-	virtual void edit_test();                           //редактирование тестов
-	virtual void save_test();                           //сохранение тестов
-	virtual void load_test();                           //загрузка тестов
-	virtual void print_test() const;                    //печать на экран теста
-
 	void menu_physics_user(string const& log);     //меню по математике для пользователя
 	void menu_physics_admin();                     //меню по математике для администратора
 };
@@ -30,14 +23,14 @@ private:
 	list<Tests*> base_quan_;
 public:
 
-	virtual void passing_test(string const& log);       //прохождение теста
-	virtual void creature_test(string c, list<Tests*> b);                       //создание теста
-	virtual void edit_test();                           //редактирование тестов
-	virtual void save_test();                           //сохранение тестов
-	virtual void load_test();                           //загрузка тестов
-	virtual void print_test() const;                    //печать на экран теста
+	void passing_test_quan(string const& log);       //прохождение теста
+	void creature_test_quan(string c, list<Tests*> b);                       //создание теста
+	void edit_test_quan();                           //редактирование тестов
+	void save_test_quan();                           //сохранение тестов
+	void load_test_quan();                           //загрузка тестов
+	void print_test_quan() const;                    //печать на экран теста
 
-	friend class Maths;
+	friend class Physics;
 };
 
 class Mechanics :public Physics
@@ -47,12 +40,12 @@ private:
 	list<Tests*> base_mech_;
 public:
 
-	virtual void passing_test(string const& log);       //прохождение теста
-	virtual void creature_test();                       //создание теста
-	virtual void edit_test();                           //редактирование тестов
-	virtual void save_test();                           //сохранение тестов
-	virtual void load_test();                           //загрузка тестов
-	virtual void print_test() const;                    //печать на экран теста
+	void passing_test_mech(string const& log);       //прохождение теста
+	void creature_test_mech();                       //создание теста
+	void edit_test_mech();                           //редактирование тестов
+	void save_test_mech();                           //сохранение тестов
+	void load_test_mech();                           //загрузка тестов
+	void print_test_mech() const;                    //печать на экран теста
 
-	friend class Maths;
+	friend class Physics;;
 };

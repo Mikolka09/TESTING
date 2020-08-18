@@ -17,7 +17,7 @@ private:
 
 public:
 
-	~Tested() { delete user_; }
+	~Tested() { delete[] user_; }
 	map<string, list<Results*>> get_base_results() const { return base_results_; }
 	list<User*> get_base() const { return base_tested_; }
 	list<Results*>get_result() const { return result_; }

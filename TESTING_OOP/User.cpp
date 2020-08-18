@@ -16,7 +16,7 @@ ostream& operator<<(ostream& out, const User* us)
 //для сохранения в текстовый фаил
 ofstream& operator<<(ofstream& out, const User& us)
 {
-	out << us.login_ << "\n" << us.pass_ << "\n" << us.name_ << "\n" << us.email_ << "\n" << us.phone_ << endl;
+	out << us.login_ << " " << us.pass_ << " " << us.name_ << " " << us.email_ << " " << us.phone_ << endl;
 	return out;
 }
 //для выгрузки из фаила
@@ -35,15 +35,28 @@ ifstream& operator>>(ifstream& in, User* us)
 	return in;
 }
 
+//User::User()
+//{
+//	login_ = "";
+//	pass_ = 0;
+//	name_ = "";
+//	email_ = "";
+//	phone_ = "";
+//}
+
 User::User()
 {
-	login_ = ""; pass_ = 0; name_ = ""; email_ = ""; phone_ = "";
+	pass_ = 0;
 }
 
-User::User(string lg, unsigned int ps, string n, string em, string ph)
-{
-	login_ = lg; pass_ = ps; name_ = n; email_ = em; phone_ = ph;
-}
+//User::User(string lg, unsigned int ps, string n, string em, string ph)
+//{
+//	login_ = lg;
+//	pass_ = ps;
+//	name_ = n;
+//	email_ = em;
+//	phone_ = ph;
+//}
 
 User::User(const User& obj)
 {
