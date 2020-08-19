@@ -8,7 +8,7 @@ void Testing::enter_system()
 	while (true)
 	{
 		admin.load_login_pass();
-		tested.load_base();
+		//tested.load_base();
 		system("cls");
 		cout << "ВХОД В СИСТЕМУ:\n" << endl;
 		cout << "1. ВХОД для ЗАРЕГЕCТРИРОВАННЫХ\n"
