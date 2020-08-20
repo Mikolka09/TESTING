@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{3dd7e09d-8a9f-4de2-9196-ad7e81994bd4}</ProjectGuid>
     <RootNamespace>EXAMOOP</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <ProjectName>TESTING_OOP</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -141,11 +141,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
+    <ClCompile Include="Chemistry.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Results.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Tested.cpp" />
-    <ClCompile Include="Testing.cpp" />
+    <ClCompile Include="Start.cpp" />
     <ClCompile Include="Tests.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
@@ -157,7 +159,7 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Results.h" />
     <ClInclude Include="Tested.h" />
-    <ClInclude Include="Testing.h" />
+    <ClInclude Include="Start.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>

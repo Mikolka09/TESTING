@@ -2,7 +2,9 @@
 #include"User.h"
 #include "Results.h"
 #include "Maths.h"
-#include "Testing.h"
+#include "Physics.h"
+#include "Chemistry.h"
+#include "Start.h"
 
 
 
@@ -10,14 +12,16 @@ class Tested :public User
 {
 private:
 
-	User* user_;
 	list<Results*> result_;                        //список результатов пользователей
 	list<User*> base_tested_;                      //список данных пользователей
 	map<string, list<Results*>> base_results_;     //база данных результатов пользователей (тестируемых)
 
 public:
 
-	~Tested() { delete[] user_; }
+	Tested(){}
+	Tested(const Tested& ob);
+	Tested& operator=(const Tested& ob);
+
 	map<string, list<Results*>> get_base_results() const { return base_results_; }
 	list<User*> get_base() const { return base_tested_; }
 	list<Results*>get_result() const { return result_; }

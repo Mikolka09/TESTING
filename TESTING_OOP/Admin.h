@@ -9,12 +9,12 @@ class Admin
 private:
 
 	string log_admin_;                 //логин администратора
-	unsigned int pass_admin_;      //пароль администратора
+	unsigned int pass_admin_ = 0;      //пароль администратора
 	
 public:
 
-	Admin() { log_admin_ = ""; pass_admin_ = 0; }
-	Admin(string lg, unsigned int pas) { log_admin_ = lg; pass_admin_ = pas; }
+	Admin() {}
+	Admin(const string lg, const unsigned int pas) { log_admin_ = lg; pass_admin_ = pas; }
 	Admin(const Admin& ob);
 	Admin& operator=(const Admin& ob);
 
@@ -38,6 +38,5 @@ public:
 	void save_login_pass();         //сохранение логина и пароля администратора
 	void load_login_pass();         //загрузка логина и пароля администратора
 
-	
-	friend class Testing;
+	friend class Start;
 };

@@ -14,6 +14,10 @@ private:
 
 public:
 
+	Results(){}
+	Results(const Results& ob);
+	Results& operator=(const Results& ob);
+
 	string get_log() const { return log_; }
 	string get_cat() const { return cat_; }
 	int get_kol_que() const { return kol_que_; }

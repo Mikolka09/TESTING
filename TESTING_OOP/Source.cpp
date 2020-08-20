@@ -1,14 +1,14 @@
-﻿#include"Testing.h"
+﻿#include"Start.h"
 
 
 
 int main()
 {
-	/*SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);*/
-	setlocale(LC_ALL, "");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	//setlocale(0, "");
 
-	Testing t;
+	Start t;
 	t.enter_system();
 
 

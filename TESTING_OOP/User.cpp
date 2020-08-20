@@ -35,44 +35,22 @@ ifstream& operator>>(ifstream& in, User* us)
 	return in;
 }
 
-//User::User()
-//{
-//	login_ = "";
-//	pass_ = 0;
-//	name_ = "";
-//	email_ = "";
-//	phone_ = "";
-//}
-
-User::User()
-{
-	pass_ = 0;
-}
-
-//User::User(string lg, unsigned int ps, string n, string em, string ph)
-//{
-//	login_ = lg;
-//	pass_ = ps;
-//	name_ = n;
-//	email_ = em;
-//	phone_ = ph;
-//}
 
 User::User(const User& obj)
 {
-	login_.clear(); login_ = obj.login_;
-	pass_ = 0; pass_ = obj.pass_;
-	name_.clear(); name_ = obj.name_;
-	email_.clear(); email_ = obj.email_;
-	phone_.clear(); phone_ = obj.phone_;
+	login_ = obj.login_;
+	pass_ = obj.pass_;
+	name_ = obj.name_;
+	email_ = obj.email_;
+	phone_ = obj.phone_;
 }
 
 User& User::operator=(const User& obj)
 {
-	login_.clear(); login_ = obj.login_;
-	pass_ = 0; pass_ = obj.pass_;
-	name_.clear(); name_ = obj.name_;
-	email_.clear(); email_ = obj.email_;
-	phone_.clear(); phone_ = obj.phone_;
+	login_ = obj.login_;
+	pass_ = obj.pass_;
+	name_ = obj.name_;
+	email_ = obj.email_;
+	phone_ = obj.phone_;
 	return *this;
 }

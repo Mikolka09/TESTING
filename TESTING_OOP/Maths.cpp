@@ -18,8 +18,16 @@ void Maths::menu_maths_user(string const& log)
 		cout << "1. Сдача теста по АЛГЕБРЕ\n" << "2. Сдача теста по ГЕОМЕТРИИ\n"
 			<< "3. Возврат в предыдущее меню" << endl;
 		int var;
-		cin >> var;
-		cin.ignore();
+		bool v = true;
+		while (v)
+		{
+			cin >> var;
+			cin.ignore();
+			if (var < 1 || var > 3)    // проверка ввода
+				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+			else
+				v = false;
+		}
 		switch (var)
 		{
 		case 1:
@@ -28,8 +36,8 @@ void Maths::menu_maths_user(string const& log)
 				alg.passing_test_alg(log);
 			else
 			{
-				string cat = "АЛГЕБРА";
-				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == cat)     //проверка есть ли в базе результатов категория по алгебре
+				//string cat = "АЛГЕБРА";
+				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == alg.cat_al_)     //проверка есть ли в базе результатов категория по алгебре
 				{
 					cout << "Тест по АЛГЕБРЕ пройден, выберите другой ТЕСТ!!!" << endl;
 					Sleep(2500);
@@ -46,8 +54,8 @@ void Maths::menu_maths_user(string const& log)
 				geo.passing_test_geo(log);
 			else
 			{
-				string cat = "ГЕОМЕТРИЯ";
-				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == cat)    //проверка есть ли в базе результатов категория по геометрии
+				//string cat = "ГЕОМЕТРИЯ";
+				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == geo.cat_g_)    //проверка есть ли в базе результатов категория по геометрии
 				{
 					cout << "Тест по ГЕОМЕТРИИ пройден, выберите другой ТЕСТ!!!" << endl;
 					Sleep(2500);
@@ -81,10 +89,19 @@ void Maths::menu_maths_admin()
 		cout << "МЕНЮ ДЕЙСТВИЙ:" << endl;
 		cout << "1. Создание тестов по АЛГЕБРЕ\n" << "2. Создание тестов по ГЕОМЕТРИИ\n"
 			<< "3. Редактирование тестов по АЛГЕБРЕ\n" << "4. Редактирование тестов по ГЕОМЕТРИИ\n"
-			<< "5. Возврат в предыдущее меню" << endl;
+			<< "5. Печать на экран тестов по АЛГЕБРЕ\n" << "6. Печать на экран тестов по ГЕОМЕТРИИ\n"
+			<< "7. Возврат в предыдущее меню" << endl;
 		int var;
-		cin >> var;
-		cin.ignore();
+		bool v = true;
+		while (v)
+		{
+			cin >> var;
+			cin.ignore();
+			if (var < 1 || var > 5)    // проверка ввода
+				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+			else
+				v = false;
+		}
 		switch (var)
 		{
 		case 1:
@@ -100,6 +117,12 @@ void Maths::menu_maths_admin()
 			geo.edit_test_geo();
 			break;
 		case 5:
+			alg.print_test_all_alg();
+			break;
+		case 6:
+			geo.print_test_all_geo();
+			break;
+		case 7:
 			ad.control_tests();
 			break;
 		default:;
@@ -107,6 +130,23 @@ void Maths::menu_maths_admin()
 	}
 }
 
+
+Algebra::Algebra(const Algebra& ob)
+{
+	cat_al_ = ob.cat_al_;
+	list<Tests*> t;
+	t = ob.base_alg_;
+	base_alg_ = t;
+}
+
+Algebra& Algebra::operator=(const Algebra& ob)
+{
+	cat_al_ = ob.cat_al_;
+	list<Tests*> t;
+	t = ob.base_alg_;
+	base_alg_ = t;
+	return *this;
+}
 
 //прохождение теста по алгебре
 void Algebra::passing_test_alg(string const& log)
@@ -135,7 +175,7 @@ void Algebra::passing_test_alg(string const& log)
 	Results* res = new Results;
 	res->set_log(lg);
 	int size = base_alg_.size();
-	res->set_cat("АЛГЕБРА");
+	res->set_cat(cat_al_);
 	res->set_kol_que((count_u / size) * 100);
 	res->set_kol_righ_ans(count_u);
 	res->set_kol_bal(bal_u);
@@ -149,7 +189,7 @@ void Algebra::passing_test_alg(string const& log)
 void Algebra::creature_test_alg()
 {
 	Tests* tes = new Tests;
-	tes->set_category("АЛГЕБРА");
+	tes->set_category(cat_al_);
 	//print_test_alg();                     //на УДАЛЕНИЕ
 	//Sleep(2500);
 	int idd = 0;
@@ -219,7 +259,7 @@ void Algebra::creature_test_alg()
 	string an;
 	system("cls");
 	cout << "СОЗДАНИЕ ТЕСТА ПО АЛГЕБРЕ:\n" << endl;
-	cout << "Введите варианты ответов: " << endl;
+	cout << "Введите варианты ответов через пробел: " << endl;
 	char* buff1 = new char;
 	cin.getline(buff1, 1200);
 	an = buff1;
@@ -282,8 +322,16 @@ void Algebra::edit_test_alg()
 			cout << "1. Редактировать ВОПРОС\n" << "2. Редактировать ОТВЕТЫ\n"
 				<< "3. Редактировать НОМЕР ПРАВИЛЬНОГО ОТВЕТА\n"
 				<< "4. Редактировать БАЛЛЫ\n" << "5. Возврат в предыдущее меню\n" << endl;
-			cin >> var;
-			cin.ignore();
+			bool v = true;
+			while (v)
+			{
+				cin >> var;
+				cin.ignore();
+				if (var < 1 || var > 5)    // проверка ввода
+					cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				else
+					v = false;
+			}
 			switch (var)
 			{
 			case 1:
@@ -312,7 +360,7 @@ void Algebra::edit_test_alg()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ ОТВЕТОВ НА ВОПРОС:\n" << endl;
-				cout << "Введите новый текст ответов: " << endl;
+				cout << "Введите новый текст ответов через пробел: " << endl;
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -379,7 +427,26 @@ void Algebra::edit_test_alg()
 //сохранение тестов по алгебре
 void Algebra::save_test_alg()
 {
-	ofstream out("BaseTestsAlgebra.bin", ios::binary | ios::out);
+	ofstream out("BaseTestsAlgebra.txt", ios::out);
+	Tests* tes = new Tests;
+	while(true)
+	{
+		tes = base_alg_.front();
+		out << "\n";
+		out << tes->get_category() << endl;
+		out << tes->get_id() << endl;
+		out << tes->get_question() << endl;
+		out << tes->get_answer() << endl;
+		out << tes->get_right_answer() << endl;
+		out << tes->get_balls() << endl;
+		base_alg_.pop_front();
+		if (base_alg_.empty())
+			break;
+	}
+	delete tes;
+	out.close();
+	
+	/*ofstream out("BaseTestsAlgebra.bin", ios::binary | ios::out);
 	int length = base_alg_.size();
 	out.write(reinterpret_cast<char*>(&length), sizeof(int));
 	for (int i = 0; i < length; i++)
@@ -402,13 +469,59 @@ void Algebra::save_test_alg()
 		out.write(reinterpret_cast<char*>(&bl), sizeof(int));
 		base_alg_.pop_front();
 	}
-	out.close();
+	out.close();*/
 }
 
 //загрузка тестов по алгебре
 void Algebra::load_test_alg()
 {
-	ifstream in("BaseTestsAlgebra.bin", ios::binary | ios::in);
+	ifstream in("BaseTestsAlgebra.txt", ios::in);
+	base_alg_.clear();
+	if(in.is_open())
+	{
+		while(true)
+		{
+			Tests* tes = new Tests;
+			char lc[50];
+			in >> lc;
+			int l_lc = strlen(lc) + 1;
+			char* buff = new char(l_lc + 1);
+			strcpy(buff, lc);
+			tes->set_category(buff);
+			int id;
+			in >> id;
+			in.get();
+			tes->set_id(id);
+			char lq[1000];
+			in.getline(lq, 1000);
+			int l_lq = strlen(lq) + 1;
+			char* buff1 = new char(l_lq + 1);
+			strcpy(buff1, lq);
+			tes->set_question(buff1);
+			char la[1000];
+			in.getline(la, 1000);
+			int l_la = strlen(la) + 1;
+			char* buff2 = new char(l_lq + 1);
+			strcpy(buff2, la);
+			tes->set_question(buff2);
+			int ra;
+			in >> ra;
+			in.get();
+			tes->set_id(ra);
+			int b;
+			in >> b;
+			in.get();
+			tes->set_id(b);
+			base_alg_.push_back(tes);
+			in.get();
+			if (in.eof())
+				break;
+		}
+	}
+	in.close();
+
+	
+	/*ifstream in("BaseTestsAlgebra.bin", ios::binary | ios::in);
 	int length = 0;
 	in.read(reinterpret_cast<char*>(&length), sizeof(int));
 	base_alg_.clear();
@@ -442,7 +555,7 @@ void Algebra::load_test_alg()
 
 		base_alg_.push_back(test);
 	}
-	in.close();
+	in.close();*/
 }
 
 //печать на экран теста по алгебре
@@ -466,17 +579,82 @@ void Algebra::print_test_alg() const
 	system("pause");
 }
 
+//печать на экран всех тестов по алгебре
+void Algebra::print_test_all_alg() const
+{
+	system("cls");
+	int idd = 0;
+	auto it = base_alg_.begin();
+	system("cls");
+	cout << "ПЕЧАТЬ ВСЕХ ТЕСТОВ ПО АЛГЕБРЕ:\n" << endl;
+	for (; it != base_alg_.end(); ++it)
+	{
+				cout << (*it);
+		
+	}
+	system("pause");
+}
+
+
+Geometry::Geometry(const Geometry& ob)
+{
+	cat_g_ = ob.cat_g_;
+	list<Tests*> t;
+	t = ob.base_geo_;
+	base_geo_ = t;
+}
+
+Geometry& Geometry::operator=(const Geometry& ob)
+{
+	cat_g_ = ob.cat_g_;
+	list<Tests*> t;
+	t = ob.base_geo_;
+	base_geo_ = t;
+	return *this;
+}
 
 //прохождение теста по геометрии
 void Geometry::passing_test_geo(string const& log)
 {
+	system("cls");
+	cout << "СДАЧА ТЕСТОВ ПО ГЕОМЕТРИИ\n" << endl;
+	Tested tes;
+	Tests ts;
+	string lg = log;
+	int count_u = 0;                                     //количесвто угаданных ответов
+	int bal_u = 0;                                       //количество набранных балов за тест
+	auto it = base_geo_.begin();
+	for (; it != base_geo_.end(); ++it)
+	{
+		cout << (*it);
+		cout << endl;
+		cout << "Введите номер ответа: ";
+		int nom;
+		cin >> nom;
+		if ((*it)->get_right_answer() == nom)            //проверка на правильность ответа
+		{
+			bal_u += (*it)->get_balls();
+			count_u++;
+		}
+	}
+	Results* res = new Results;
+	res->set_log(lg);
+	int size = base_geo_.size();
+	res->set_cat(cat_g_);
+	res->set_kol_que((count_u / size) * 100);
+	res->set_kol_righ_ans(count_u);
+	res->set_kol_bal(bal_u);
+	tes.get_res_base(res);
+	system("cls");
+	cout << "ТЕСТ ПРОЙДЕН!!!" << endl;
+	Sleep(2500);
 }
 
 //создание теста по геометрии
 void Geometry::creature_test_geo()
 {
 	Tests* tes = new Tests;
-	tes->set_category("ГЕОМЕТРИЯ");
+	tes->set_category(cat_g_);
 	int idd = 0;
 	bool p = true;
 	while (p)
@@ -543,7 +721,7 @@ void Geometry::creature_test_geo()
 	string an;
 	system("cls");
 	cout << "СОЗДАНИЕ ТЕСТА ПО ГЕОМЕТРИИ:\n" << endl;
-	cout << "Введите варианты ответов: " << endl;
+	cout << "Введите варианты ответов через пробел: " << endl;
 	char* buff1 = new char;
 	cin.getline(buff1, 1200);
 	an = buff1;
@@ -607,8 +785,16 @@ void Geometry::edit_test_geo()
 			cout << "1. Редактировать ВОПРОС\n" << "2. Редактировать ОТВЕТЫ\n"
 				<< "3. Редактировать НОМЕР ПРАВИЛЬНОГО ОТВЕТА\n"
 				<< "4. Редактировать БАЛЛЫ\n" << "5. Возврат в предыдущее меню\n" << endl;
-			cin >> var;
-			cin.ignore();
+			bool v = true;
+			while (v)
+			{
+				cin >> var;
+				cin.ignore();
+				if (var < 1 || var > 5)    // проверка ввода
+					cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				else
+					v = false;
+			}
 			switch (var)
 			{
 			case 1:
@@ -637,7 +823,7 @@ void Geometry::edit_test_geo()
 			{
 				system("cls");
 				cout << "РЕДАКТИРОВАНИЕ ОТВЕТОВ НА ВОПРОС:\n" << endl;
-				cout << "Введите новый текст ответов: " << endl;
+				cout << "Введите новый текст ответов через пробел: " << endl;
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -704,7 +890,27 @@ void Geometry::edit_test_geo()
 //сохранение тестов по геометрии
 void Geometry::save_test_geo()
 {
-	ofstream out("BaseTestsGeometry.bin", ios::binary | ios::out);
+	ofstream out("BaseTestsGeometry.txt", ios::out);
+	Tests* tes = new Tests;
+	while (true)
+	{
+		tes = base_geo_.front();
+		out << "\n";
+		out << tes->get_category() << endl;
+		out << tes->get_id() << endl;
+		out << tes->get_question() << endl;
+		out << tes->get_answer() << endl;
+		out << tes->get_right_answer() << endl;
+		out << tes->get_balls() << endl;
+		base_geo_.pop_front();
+		if (base_geo_.empty())
+			break;
+	}
+	delete tes;
+	out.close();
+
+	
+	/*ofstream out("BaseTestsGeometry.bin", ios::binary | ios::out);
 	int length = base_geo_.size();
 	out.write(reinterpret_cast<char*>(&length), sizeof(int));
 	for (int i = 0; i < length; i++)
@@ -727,13 +933,60 @@ void Geometry::save_test_geo()
 		out.write(reinterpret_cast<char*>(&bl), sizeof(int));
 		base_geo_.pop_front();
 	}
-	out.close();
+	out.close();*/
 }
 
 //загрузка тестов по геометрии
 void Geometry::load_test_geo()
 {
-	ifstream in("BaseTestsGeometry.bin", ios::binary | ios::in);
+	ifstream in("BaseTestsGeometry.txt", ios::in);
+	base_geo_.clear();
+	if (in.is_open())
+	{
+		while (true)
+		{
+			Tests* tes = new Tests;
+			char lc[50];
+			in >> lc;
+			int l_lc = strlen(lc) + 1;
+			char* buff = new char(l_lc + 1);
+			strcpy(buff, lc);
+			tes->set_category(buff);
+			int id;
+			in >> id;
+			in.get();
+			tes->set_id(id);
+			char lq[1000];
+			in.getline(lq, 1000);
+			int l_lq = strlen(lq) + 1;
+			char* buff1 = new char(l_lq + 1);
+			strcpy(buff1, lq);
+			tes->set_question(buff1);
+			char la[1000];
+			in.getline(la, 1000);
+			int l_la = strlen(la) + 1;
+			char* buff2 = new char(l_lq + 1);
+			strcpy(buff2, la);
+			tes->set_question(buff2);
+			int ra;
+			in >> ra;
+			in.get();
+			tes->set_id(ra);
+			int b;
+			in >> b;
+			in.get();
+			tes->set_id(b);
+			base_geo_.push_back(tes);
+			in.get();
+			if (in.eof())
+				break;
+		}
+	}
+	in.close();
+
+
+	
+	/*ifstream in("BaseTestsGeometry.bin", ios::binary | ios::in);
 	int length = 0;
 	in.read(reinterpret_cast<char*>(&length), sizeof(int));
 	base_geo_.clear();
@@ -767,7 +1020,7 @@ void Geometry::load_test_geo()
 
 		base_geo_.push_back(test);
 	}
-	in.close();
+	in.close();*/
 }
 
 //сохранение нового теста по геометрии
@@ -785,6 +1038,22 @@ void Geometry::print_test_geo() const
 			cout << (*it);
 		else
 			cout << "ТЕСТ с таким номер ОТСУТСТВУЕТ!!!" << endl;
+	}
+	system("pause");
+}
+
+//печать на экран всех тестов по геометрии
+void Geometry::print_test_all_geo() const
+{
+	system("cls");
+	int idd = 0;
+	auto it = base_geo_.begin();
+	system("cls");
+	cout << "ПЕЧАТЬ ВСЕХ ТЕСТОВ ПО ГЕОМЕТРИИ:\n" << endl;
+	for (; it != base_geo_.end(); ++it)
+	{
+		cout << (*it);
+
 	}
 	system("pause");
 }

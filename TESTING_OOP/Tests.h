@@ -15,6 +15,10 @@ private:
 
 public:
 
+	Tests(){}
+	Tests(const Tests& ob);
+	Tests& operator=(const Tests& ob);
+
 	string get_category() const { return category_; }
 	string get_question() const { return question_; }
 	string get_answer() const { return answers_; }
@@ -28,11 +32,13 @@ public:
 	void set_right_answer(int r_an) { right_answer_ = r_an; }
 	void set_balls(int bl) { balls_ = bl; }
 	void set_id(int d) { id_ = d; }
+	void print_test() const;      //вывод теста на экран
 
 	friend ostream& operator<<(ostream& out, const Tests& ts);
 	friend ostream& operator<<(ostream& out, const Tests* ts);
-
-	void print_test() const;      //вывод теста на экран
+	friend ofstream& operator<<(ofstream& out, const Tests& ts);        //для сохранения в текстовый фаил
+	friend ifstream& operator>>(ifstream& in, Tests* ts);               //для выгрузки из фаила
+	
 
 };
 

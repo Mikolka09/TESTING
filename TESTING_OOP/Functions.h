@@ -1,16 +1,16 @@
 ﻿#pragma once
 #define _CRT_SECURE_NO_WARNINGS
-
-#include<iostream>
-#include <string>
-#include<list>
-#include<map>
-#include<functional>
-#include<Windows.h>
-#include<iomanip>
-#include<fstream>
 #include <algorithm>
 #include <chrono>
+#include<fstream>
+#include<functional>
+#include<iomanip>
+#include<iostream>
+#include<list>
+#include<map>
+#include <string>
+#include <Windows.h>
+
 
 
 using namespace std;

@@ -1,17 +1,18 @@
 ﻿#include"Admin.h"
 
-
-
 Admin::Admin(const Admin& ob)
 {
-	log_admin_.clear(); log_admin_ = ob.log_admin_;
-	pass_admin_ = 0; pass_admin_ = ob.pass_admin_;
+	log_admin_.clear();
+	log_admin_ = ob.log_admin_;
+	pass_admin_ = ob.pass_admin_;
 }
 
 Admin& Admin::operator=(const Admin& ob)
 {
-	log_admin_.clear(); log_admin_ = ob.log_admin_;
-	pass_admin_ = 0; pass_admin_ = ob.pass_admin_;
+	log_admin_.clear();
+	log_admin_ = ob.log_admin_;
+	pass_admin_ = 0;
+	pass_admin_ = ob.pass_admin_;
 	return *this;
 }
 
@@ -61,8 +62,16 @@ void Admin::menu_admin()
 		cout << "1. Управление ПОЛЬЗОАВАТЕЛЯМИ\n" << "2. Управление СТАТИСТИКОЙ\n" << "3. Управление ТЕСТАМИ\n"
 			<< "4. Управление данными АДМИНИСТРАТОРА\n" << "5. Выход\n" << endl;
 		int var1;
-		cin >> var1;
-		cin.ignore();
+		bool v = true;
+		while (v)
+		{
+			cin >> var1;
+			cin.ignore();
+			if (var1 < 1 || var1 > 5)    // проверка ввода
+				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+			else
+				v = false;
+		}
 		switch (var1)
 		{
 		case 1:
@@ -96,8 +105,16 @@ void Admin::control_tests()
 		cout << "1. Управление тестами по МАТЕМАТИКЕ\n" << "2. Управление тестами по ФИЗИКЕ\n"
 			<< "3. Управление тестами по ХИМИИ\n" << "4. Возврат в предыдущее меню\n" << endl;
 		int var1;
-		cin >> var1;
-		cin.ignore();
+		bool v = true;
+		while (v)
+		{
+			cin >> var1;
+			cin.ignore();
+			if (var1 < 1 || var1 > 4)    // проверка ввода
+				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+			else
+				v = false;
+		}
 		switch (var1)
 		{
 		case 1:
@@ -188,6 +205,7 @@ void Admin::registry_user()
 	bool lp = true;
 	User* user = new User;
 	Tested tes;
+	tes.load_base();
 	//проверяем логин на повторение
 	while (lp)
 	{
@@ -290,8 +308,16 @@ void Admin::control_user()
 			<< "4. Печать ПОЛЬЗОВАТЕЛЕЙ\n"
 			<< "5. Возврат в предыдущее меню\n" << endl;
 		int var;
-		cin >> var;
-		cin.ignore();
+		bool v = true;
+		while (v)
+		{
+			cin >> var;
+			cin.ignore();
+			if (var < 1 || var > 5)    // проверка ввода
+				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+			else
+				v = false;
+		}
 		switch (var)
 		{
 		case 1:
@@ -312,8 +338,16 @@ void Admin::control_user()
 					<< "2. Печать на экран ПОЛЬЗОВАТЕЛЕЙ\n"
 					<< "3. Возврат в предыдущее меню\n" << endl;
 				int var1;
-				cin >> var1;
-				cin.ignore();
+				bool v = true;
+				while (v)
+				{
+					cin >> var1;
+					cin.ignore();
+					if (var1 < 1 || var1 > 3)    // проверка ввода
+						cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+					else
+						v = false;
+				}
 				switch (var1)
 				{
 				case 1:
@@ -343,6 +377,7 @@ void Admin::dell_user()
 	system("cls");
 	cout << "УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 	Tested tes;
+	tes.load_base();
 	tes.print_users();
 	cout << "\n";
 	string ld;
@@ -389,7 +424,6 @@ void Admin::edit_user()
 	cin >> ld;
 	uppercase(ld);
 	bool set = false;
-
 	unsigned int pas_p = 0;
 	auto it = tes.base_tested_.begin();
 	for (; it != tes.base_tested_.end(); ++it)
@@ -399,7 +433,6 @@ void Admin::edit_user()
 			set = true;
 			pas_p = (*it)->get_pass();
 		}
-
 	}
 	if (set)
 	{
@@ -411,8 +444,16 @@ void Admin::edit_user()
 			cout << "РЕДАКТИРОВАНИЕ ПРОФИЛЯ:\n" << endl;
 			cout << "1. Редактировать ЛОГИН\n" << "2. Редактировать ПАРОЛЬ\n" << "3. Редактировать ФИО\n"
 				<< "4. Редактировать EMAIL\n" << "5. Редактировать номер ТЕЛЕФОНА\n" << "6. Возврат в предыдущее меню\n" << endl;
-			cin >> var;
-			cin.ignore();
+			bool v = true;
+			while (v)
+			{
+				cin >> var;
+				cin.ignore();
+				if (var < 1 || var > 6)    // проверка ввода
+					cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				else
+					v = false;
+			}
 			switch (var)
 			{
 			case 1:
@@ -599,8 +640,16 @@ void Admin::look_statics() const
 			<< "4. Печать результатов в ФАЙЛ\n"
 			<< "5. Возврат в предыдущее меню\n" << endl;
 		int var;
-		cin >> var;
-		cin.ignore();
+		bool v = true;
+		while (v)
+		{
+			cin >> var;
+			cin.ignore();
+			if (var < 1 || var > 5)    // проверка ввода
+				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+			else
+				v = false;
+		}
 		switch (var)
 		{
 		case 1:
