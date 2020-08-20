@@ -1,5 +1,21 @@
 ﻿#include"Tested.h"
 
+void Tested::shapka_start(string const& log)
+{
+	string S(40, '#');
+	gotoxy(30, 1);
+	SetColor(8, 0);
+	cout << S << endl;
+	gotoxy(37, 2);
+	SetColor(12, 0);
+	cout << "ТЕСТОВАЯ БАЗА ТЕСТИРОВАНИЙ" << endl;
+	gotoxy(8, 2);
+	SetColor(10, 0);
+	cout << "ЛОГИН: " << log;
+	gotoxy(30, 3);
+	SetColor(8, 0);
+	cout << S << endl << endl;
+}
 
 Tested::Tested(const Tested& ob)
 {
@@ -37,7 +53,10 @@ void Tested::new_testing(string const& log)
 		Physics phys;
 		Chemistry chem;
 		load_results();
+		shapka_start(log);
+		SetColor(12, 0);
 		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ ПО СДАЧИ ТЕСТОВ:\n" << endl;
+		SetColor(14, 0);
 		cout << "1. Сдать тест по МАТЕМАТИКЕ\n"
 			<< "2. Сдать тест по ФИЗИКЕ\n"
 			<< "3. Сдать тест по ХИМИИ\n"
@@ -46,10 +65,15 @@ void Tested::new_testing(string const& log)
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var1;
 			cin.ignore();
 			if (var1 < 1 || var1 > 4)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -77,12 +101,16 @@ void Tested::registry_in()
 {
 	system("cls");
 	string log = "";
+	SetColor(12, 0);
+	gotoxy(2, 10);
 	cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 	User* user = new User;
 	if (base_tested_.empty())  //проверка на пустоту
 	{
 		//string log;
+		SetColor(14, 0);
 		cout << "Введите ЛОГИН: ";
+		SetColor(15, 0);
 		cin >> log;
 		uppercase(log);
 		user->set_login(log);
@@ -91,7 +119,9 @@ void Tested::registry_in()
 		//проверка пороля на размер
 		while (ad)
 		{
+			SetColor(14, 0);
 			cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+			SetColor(15, 0);
 			cin >> pas;
 			ad = check_size(pas);  //проверка на размер пароля
 		}
@@ -99,23 +129,33 @@ void Tested::registry_in()
 		user->set_pass(pass);
 		char* n = new char;
 		cin.ignore();
+		SetColor(14, 0);
 		cout << "Введите ФИО: ";
+		SetColor(15, 0);
 		cin.getline(n, 100);
 		string name = n;
 		user->set_name(name);
 		string email;
+		SetColor(14, 0);
 		cout << "Введите электронный адрес: ";
+		SetColor(15, 0);
 		cin >> email;
 		user->set_email(email);
 		string phone;
+		SetColor(14, 0);
 		cout << "Введите номер телефона: ";
+		SetColor(15, 0);
 		cin >> phone;
 		user->set_phone(phone);
 		base_tested_.push_back(user);
-		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
+		SetColor(12, 0);
+		cout << "\nПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
 		system("cls");
+		SetColor(12, 0);
+		gotoxy(10, 10);
 		cout << "Теперь можете войти под своим ЛОГИНОМ и ПАРОЛЕМ!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 		save_base();
 	}
@@ -127,8 +167,12 @@ void Tested::registry_in()
 		while (lp)
 		{
 			system("cls");
+			SetColor(12, 0);
+			gotoxy(2, 10);
 			cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+			SetColor(14, 0);
 			cout << "Введите ЛОГИН: ";
+			SetColor(15, 0);
 			cin >> log;
 			uppercase(log);
 			int count = 0;
@@ -143,7 +187,9 @@ void Tested::registry_in()
 			}
 			if (count != 0)
 			{
-				cout << "Такой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nТакой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 			}
 			else
@@ -155,7 +201,9 @@ void Tested::registry_in()
 		//проверка пороля на размер
 		while (ad)
 		{
+			SetColor(14, 0);
 			cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+			SetColor(15, 0);
 			cin >> pas;
 			ad = check_size(pas);
 		}
@@ -169,14 +217,20 @@ void Tested::registry_in()
 			{
 				if ((*it)->get_pass() == pass)  //проверяем есть ли еще такой пароль в базе
 				{
-					cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nТакой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 					system("cls");
 					bool d = true;
 					while (d)
 					{
+						SetColor(12, 0);
+						gotoxy(2, 10);
 						cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+						SetColor(14, 0);
 						cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+						SetColor(15, 0);
 						cin >> pas;
 						d = check_size(pas);
 					}
@@ -191,23 +245,33 @@ void Tested::registry_in()
 		user->set_pass(pass);
 		char* n = new char;
 		cin.ignore();
+		SetColor(14, 0);
 		cout << "Введите ФИО: ";
+		SetColor(15, 0);
 		cin.getline(n, 100);
 		string name = n;
 		user->set_name(name);
 		string email;
+		SetColor(14, 0);
 		cout << "Введите электронный адрес: ";
+		SetColor(15, 0);
 		cin >> email;
 		user->set_email(email);
 		string phone;
+		SetColor(14, 0);
 		cout << "Введите номер телефона: ";
+		SetColor(15, 0);
 		cin >> phone;
 		user->set_phone(phone);
 		base_tested_.push_back(user);
-		cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
+		SetColor(12, 0);
+		cout << "\nПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
 		Sleep(2500);
 		system("cls");
+		SetColor(12, 0);
+		gotoxy(10, 10);
 		cout << "Теперь можете войти под своим ЛОГИНОМ и ПАРОЛЕМ!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 		save_base();
 	}
@@ -234,7 +298,10 @@ void Tested::menu_tested(string const& log)
 		load_results();
 		Start ts;
 		system("cls");
+		shapka_start(log);
+		SetColor(12, 0);
 		cout << "МЕНЮ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+		SetColor(14, 0);
 		cout << "1. Сдать ТЕСТИРОВАНИЕ\n"
 			<< "2. Просмотор результатов ТЕСТИРОВАНИЯ\n"
 			<< "3. Печать результатов ТЕСТИРОВАНИЯ в файл\n"
@@ -243,10 +310,15 @@ void Tested::menu_tested(string const& log)
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var1;
 			cin.ignore();
 			if (var1 < 1 || var1 > 4)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -270,12 +342,21 @@ void Tested::menu_tested(string const& log)
 }
 
 //просмотр результата тестирования
-void Tested::print_result(string const& log) const
+void Tested::print_result(string const& log)
 {
 	system("cls");
 	Tested tes;
 	tes.load_results();
+	SetColor(10, 0);
+	string S(51, '#');
+	cout << endl;
+	gotoxy(5, 2);
+	cout << "ЛОГИН: " << log;
+	SetColor(12, 0);
+	gotoxy(20, 2);
 	cout << "РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЯ\n" << endl;
+	SetColor(13, 0);
+	shapka_results();
 	string lg = log;
 	auto it = result_.begin();
 	for (; it != result_.end(); ++it)
@@ -283,6 +364,8 @@ void Tested::print_result(string const& log) const
 		if ((*it)->get_log().c_str() == lg)
 			cout << (*it);
 	}
+	cout << S << endl << endl;
+	SetColor(15, 0);
 }
 
 
@@ -347,14 +430,12 @@ void Tested::load_results()
 			Results* res = new Results;
 			char lg[50];
 			in >> lg;
-			int l_lg = strlen(lg) + 1;
-			char* buff = new char(l_lg + 1);
+			char* buff = new char[strlen(lg) + 1];
 			strcpy(buff, lg);
 			res->set_log(buff);
 			char lc[50];
 			in >> lc;
-			int l_lc = strlen(lc) + 1;
-			char* buff1 = new char(l_lc + 1);
+			char* buff1 = new char[strlen(lc) + 1];
 			strcpy(buff1, lc);
 			res->set_cat(buff1);
 			int qr;
@@ -484,8 +565,7 @@ void Tested::load_base()
 			User* us = new User;
 			char lg[50];
 			fin >> lg;
-			int l_lg = strlen(lg) + 1;
-			char* buff = new char[l_lg];
+			char* buff = new char[strlen(lg) + 1];
 			strcpy(buff, lg);
 			us->set_login(buff);
 			unsigned int pas;
@@ -494,21 +574,18 @@ void Tested::load_base()
 			us->set_pass(pas);
 			char ln[50];
 			fin.getline(ln, 50);
-			int l_ln = strlen(ln) + 1;
-			char* buff1 = new char[l_ln];
+			char* buff1 = new char[strlen(ln) + 1];
 			strcpy(buff1, ln);
 			us->set_name(buff1);
 			char le[50];
 			fin >> le;
-			int l_le = strlen(le) + 1;
-			char* buff2 = new char[l_le];
+			char* buff2 = new char[strlen(le) + 1];
 			strcpy(buff2, le);
 			us->set_email(buff2);
 			char lp[50];
 			fin.ignore();
 			fin.getline(lp, 50);
-			int l_lp = strlen(lp) + 1;
-			char* buff3 = new char[l_lp];
+			char* buff3 = new char[strlen(lp) + 1];
 			strcpy(buff3, lp);
 			us->set_phone(buff3);
 			base_tested_.push_back(us);
@@ -585,16 +662,30 @@ void Tested::get_user_base(User*& us)
 }
 
 //печать результатов тестирования в файл
-void Tested::print_result_file(string const& log) const
+void Tested::print_result_file(string const& log)
 {
 	system("cls");
+	shapka_start(log);
+	SetColor(12, 0);
 	cout << "СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛ\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите имя файла: ";
 	string file;
+	SetColor(15, 0);
 	cin >> file;
 	file = file + ".txt";
 	ofstream out(file, ios::out);
-	out << "РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЯ\n" << endl;
+	string S(51, '#');
+	out << endl;
+	gotoxy(5, 2);
+	out << "ЛОГИН: " << log;
+	gotoxy(20, 2);
+	out << "  РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЯ\n" << endl;
+	SetColor(13, 0);
+	out << S << endl;
+	out << right << "#" << setw(10) << "ПРЕДМЕТ" << "  #" << setw(12) << "ВЕРНЫЕ ОТВ." << "  #" << setw(8)
+		<< "ПРОЦЕНТ" << "  #" << setw(8) << "БАЛЛЫ" << "  #" << endl;
+	out << S << endl;
 	string lg = log;
 	auto it = result_.begin();
 	for (; it != result_.end(); ++it)
@@ -602,38 +693,224 @@ void Tested::print_result_file(string const& log) const
 		if ((*it)->get_log().c_str() == lg)
 			out << (*it);
 	}
+	out << S << endl;
 	out.close();
 	system("cls");
+	SetColor(12, 0);
+	gotoxy(10, 10);
 	cout << "РЕЗУЛЬТАТЫ СОХРАНЕНЫ В ФАЙЛ!!!" << endl;
+	Sleep(2500);
+	SetColor(15, 0);
+}
+
+void Tested::shapka_users()
+{
+	SetColor(13, 0);
+	string S(94, '#');
+	cout << S << endl;
+	cout << right << "#" << setw(5) << " НОМЕР" << " #" << setw(8) << "ЛОГИН" << "    #" << setw(18) << "ФИО"
+		<< "         #" << setw(20) << "EMAIL" << "  #" << setw(18) << "ТЕЛЕФОН" << "  #" << endl;
+	cout << S << endl;
+}
+
+void Tested::shapka_results()
+{
+	SetColor(13, 0);
+	string S(51, '#');
+	cout << S << endl;
+	cout << right << "#" << setw(10) << "ПРЕДМЕТ" << "  #" << setw(12) << "ВЕРНЫЕ ОТВ." << "  #" << setw(8)
+		<< "ПРОЦЕНТ" << "  #" << setw(8) << "БАЛЛЫ" << "  #" << endl;
+	cout << S << endl;
+}
+
+//показать на экран все результаты
+void Tested::print_all_results()
+{
+	system("cls");
+	load_results();
+	SetColor(10, 0);
+	string S(61, '#');
+	cout << endl;
+	SetColor(12, 0);
+	gotoxy(20, 2);
+	cout << "ОБЩАЯ БАЗА ДАННЫХ РЕЗУЛЬТАТОВ ТЕСТОВ\n" << endl;
+	auto it = base_results_.begin();
+	for (; it != base_results_.end(); ++it)
+	{
+		SetColor(13, 0);
+		cout << S << endl;
+		SetColor(12, 0);
+		cout << "  ЛОГИН: " << (*it).first << endl;
+		auto it2 = (*it).second.begin();
+		for (; it2 != (*it).second.end(); ++it2)
+		{
+			SetColor(13, 0);
+			if ((*it).first.c_str() == (*it2)->get_log().c_str())
+				cout << "  ПРЕДМЕТ: " << (*it2)->get_cat() << "  " << "ВЕРНЫЕ ОТВ.: " << (*it2)->get_kol_righ_ans()
+				<< "  " << "ПРОЦЕНТ: " << (*it2)->get_kol_que() << "  " << "БАЛЛЫ: " << (*it2)->get_kol_bal() << endl;
+		}
+		cout << S << endl << endl;
+	}
+	SetColor(15, 0);
+}
+
+//показать на экран результаты по определенному тесту
+void Tested::print_result_tests(string cat)
+{
+	system("cls");
+	load_results();
+	SetColor(10, 0);
+	string ct = cat;
+	string S(61, '#');
+	cout << endl;
+	SetColor(12, 0);
+	gotoxy(20, 2);
+	cout << "БАЗА ДАННЫХ РЕЗУЛЬТАТОВ ПО ТЕСТАМ: " << ct << "\n" << endl;
+	auto it = base_results_.begin();
+	for (; it != base_results_.end(); ++it)
+	{
+		SetColor(13, 0);
+		cout << S << endl;
+		auto it2 = (*it).second.begin();
+		for (; it2 != (*it).second.end(); ++it2)
+		{
+			if ((*it2)->get_cat().c_str() == ct)
+				cout << "  ПРЕДМЕТ: " << (*it2)->get_cat() << "  " << "ВЕРНЫЕ ОТВ.: " << (*it2)->get_kol_righ_ans()
+				<< "  " << "ПРОЦЕНТ: " << (*it2)->get_kol_que() << "  " << "БАЛЛЫ: " << (*it2)->get_kol_bal() << endl;
+		}
+		cout << S << endl << endl;
+	}
+	SetColor(15, 0);
+
+}
+
+//показать на экран результаты по определенному пользователю
+void Tested::print_result_user()
+{
+	system("cls");
+	load_results();
+	load_base();
+	SetColor(10, 0);
+	print_users();
+	string lg;
+	string S(61, '#');
+	cout << endl << endl;
+	SetColor(14, 0);
+	cout << "Введите ЛОГИН ПОЛЬЗОВАТЕЛЯ для ПЕЧАТИ РЕЗУЛЬТАТОВ: ";
+	SetColor(15, 0);
+	cin >> lg;
+	cout << endl;
+	SetColor(12, 0);
+	gotoxy(20, 2);
+	cout << "БАЗА ДАННЫХ РЕЗУЛЬТАТОВ ПО ЛОГИНУ: " << lg << "\n" << endl;
+	auto it = base_results_.begin();
+	for (; it != base_results_.end(); ++it)
+	{
+		if ((*it).first == lg)
+		{
+			SetColor(13, 0);
+			cout << S << endl;
+			SetColor(12, 0);
+			cout << "  ЛОГИН: " << (*it).first << endl;
+			auto it2 = (*it).second.begin();
+			for (; it2 != (*it).second.end(); ++it2)
+			{
+				if ((*it2)->get_log().c_str() == lg)
+					cout << "  ПРЕДМЕТ: " << (*it2)->get_cat() << "  " << "ВЕРНЫЕ ОТВ.: " << (*it2)->get_kol_righ_ans()
+					<< "  " << "ПРОЦЕНТ: " << (*it2)->get_kol_que() << "  " << "БАЛЛЫ: " << (*it2)->get_kol_bal() << endl;
+			}
+			cout << S << endl << endl;
+		}
+	}
+	SetColor(15, 0);
+}
+
+//печать всех результатов тестирования в файл
+void Tested::print_all_result_file()
+{
+	system("cls");
+	gotoxy(2, 2);
+	SetColor(12, 0);
+	cout << "СОХРАНЕНИЕ РЕЗУЛЬТАТОВ В ФАЙЛ\n" << endl;
+	SetColor(14, 0);
+	cout << "Введите имя файла: ";
+	string file;
+	SetColor(15, 0);
+	cin >> file;
+	file = file + ".txt";
+	ofstream out(file, ios::out);
+	string S(51, '#');
+	out << endl;
+	gotoxy(20, 2);
+	out << "  ВСЕ РЕЗУЛЬТАТЫ ТЕСТИРОВАНИЯ\n" << endl;
+	SetColor(13, 0);
+	out << S << endl;
+	out << right << "#" << setw(10) << "ПРЕДМЕТ" << "  #" << setw(12) << "ВЕРНЫЕ ОТВ." << "  #" << setw(8)
+		<< "ПРОЦЕНТ" << "  #" << setw(8) << "БАЛЛЫ" << "  #" << endl;
+	out << S << endl;
+	auto it = result_.begin();
+	for (; it != result_.end(); ++it)
+	{
+		out << (*it);
+	}
+	out << S << endl;
+	out.close();
+	system("cls");
+	SetColor(12, 0);
+	gotoxy(10, 10);
+	cout << "РЕЗУЛЬТАТЫ СОХРАНЕНЫ В ФАЙЛ!!!" << endl;
+	Sleep(2500);
+	SetColor(15, 0);
 }
 
 //просмотр базы пользователей
 void Tested::print_users()
 {
 	system("cls");
+	string S(94, '#');
+	gotoxy(37, 2);
+	SetColor(12, 0);
 	cout << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
+	SetColor(15, 0);
 	int i = 1;
-	//base_tested_.sort();
+	base_tested_.sort();
+	shapka_users();
 	auto it = base_tested_.begin();
 	for (; it != base_tested_.end(); ++it, i++)
-		cout << setw(4) << i << (*it);
-	cout << endl;
+		cout << "#" << setw(4) << i << "   #" << (*it);
+	cout << S << endl;
 }
 
 //печать базы пользователей в файл
 void Tested::print_users_file()
 {
 	system("cls");
+	SetColor(12, 0);
+	gotoxy(2, 4);
 	cout << "Введите название файла для печати базы пользователей: ";
+	SetColor(15, 0);
 	string file;
 	cin >> file;
 	file += ".txt";
 	ofstream out(file, ios::out);
+	gotoxy(37, 2);
 	out << "СПИСОК ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
 	int i = 1;
 	base_tested_.sort();
+	string S(94, '#');
+	out << S << endl;
+	out << right << "#" << setw(5) << " НОМЕР" << " #" << setw(8) << "ЛОГИН" << "    #" << setw(18) << "ФИО"
+		<< "         #" << setw(20) << "EMAIL" << "  #" << setw(18) << "ТЕЛЕФОН" << "  #" << endl;
+	out << S << endl;
 	auto it = base_tested_.begin();
 	for (; it != base_tested_.end(); ++it, i++)
-		out << setw(4) << i << (*it);
-	out << endl;
+		out << "#" << setw(4) << i << "   #" << (*it);
+	out << S << endl;
+	out.close();
+	system("cls");
+	SetColor(12, 0);
+	gotoxy(10, 10);
+	cout << "БАЗА ПОЛЬЗОВАТЕЛЕЙ СОХРАНЕНА В ФАЙЛ!!!" << endl;
+	Sleep(2500);
+	SetColor(15, 0);
 }

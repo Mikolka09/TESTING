@@ -1,5 +1,23 @@
 #include "Physics.h"
 
+
+void Physics::shapka_start(string const& log)
+{
+	string S(40, '#');
+	gotoxy(30, 1);
+	SetColor(8, 0);
+	cout << S << endl;
+	gotoxy(37, 2);
+	SetColor(12, 0);
+	cout << "ТЕСТОВАЯ БАЗА ТЕСТИРОВАНИЙ" << endl;
+	gotoxy(8, 2);
+	SetColor(10, 0);
+	cout << "ЛОГИН: " << log;
+	gotoxy(30, 3);
+	SetColor(8, 0);
+	cout << S << endl << endl;
+}
+
 //меню по физике
 void Physics::menu_physics_user(string const& log)
 {
@@ -12,7 +30,10 @@ void Physics::menu_physics_user(string const& log)
 		tes.load_results();
 		qua.load_test_quan();
 		system("cls");
+		shapka_start(log);
+		SetColor(12, 0);
 		cout << "БАЗА ТЕСТОВ ПО ФИЗИКЕ для ПОЛЬЗОВАТЕЛЯ\n" << endl;
+		SetColor(14, 0);
 		cout << "КАТЕГОРИИ ТЕСТОВ ПО ФИЗИКЕ:" << endl;
 		cout << "1. Сдача теста по КВАНТОВОЙ\n" << "2. Сдача теста по МЕХАНИКЕ\n"
 			<< "3. Возврат в предыдущее меню" << endl;
@@ -20,10 +41,15 @@ void Physics::menu_physics_user(string const& log)
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var;
 			cin.ignore();
 			if (var < 1 || var > 3)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -38,7 +64,9 @@ void Physics::menu_physics_user(string const& log)
 				//string cat = "АЛГЕБРА";
 				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == qua.cat_q_)     //проверка есть ли в базе результатов категория по алгебре
 				{
-					cout << "Тест по КВАНТОВОЙ пройден, выберите другой ТЕСТ!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nТест по КВАНТОВОЙ пройден, выберите другой ТЕСТ!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 				}
 
@@ -56,7 +84,9 @@ void Physics::menu_physics_user(string const& log)
 				//string cat = "ГЕОМЕТРИЯ";
 				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == mec.cat_m_)    //проверка есть ли в базе результатов категория по геометрии
 				{
-					cout << "Тест по МЕХАНИКЕ пройден, выберите другой ТЕСТ!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nТест по МЕХАНИКЕ пройден, выберите другой ТЕСТ!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 				}
 				else
@@ -84,7 +114,9 @@ void Physics::menu_physics_admin()
 		qua.load_test_quan();
 		mec.load_test_mech();
 		system("cls");
+		SetColor(12, 0);
 		cout << "БАЗА ТЕСТОВ ПО ФИЗИКЕ для АДМИНИСТРАТОРА\n" << endl;
+		SetColor(14, 0);
 		cout << "МЕНЮ ДЕЙСТВИЙ:" << endl;
 		cout << "1. Создание тестов по КВАНТОВОЙ\n" << "2. Создание тестов по МЕХАНИКЕ\n"
 			<< "3. Редактирование тестов по КВАНТОВОЙ\n" << "4. Редактирование тестов по МЕХАНИКЕ\n"
@@ -94,10 +126,15 @@ void Physics::menu_physics_admin()
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var;
 			cin.ignore();
 			if (var < 1 || var > 5)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -151,7 +188,9 @@ Quantum& Quantum ::operator=(const Quantum& ob)
 void Quantum::passing_test_quan(string const& log)
 {
 	system("cls");
+	SetColor(12, 0);
 	cout << "СДАЧА ТЕСТОВ ПО КВАНТОВОЙ\n" << endl;
+	SetColor(15, 0);
 	Tested tes;
 	Tests ts;
 	string lg = log;
@@ -160,9 +199,12 @@ void Quantum::passing_test_quan(string const& log)
 	auto it = base_quan_.begin();
 	for (; it != base_quan_.end(); ++it)
 	{
+		system("cls");
 		cout << (*it);
 		cout << endl;
+		SetColor(14, 0);
 		cout << "Введите номер ответа: ";
+		SetColor(15, 0);
 		int nom;
 		cin >> nom;
 		if ((*it)->get_right_answer() == nom)            //проверка на правильность ответа
@@ -180,7 +222,10 @@ void Quantum::passing_test_quan(string const& log)
 	res->set_kol_bal(bal_u);
 	tes.get_res_base(res);
 	system("cls");
+	gotoxy(10, 10);
+	SetColor(12, 0);
 	cout << "ТЕСТ ПРОЙДЕН!!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 }
 
@@ -196,8 +241,11 @@ void Quantum::creature_test_quan()
 	while (p)
 	{
 		system("cls");
+		SetColor(12, 0);
 		cout << "СОЗДАНИЕ ТЕСТА ПО КВАНТОВОЙ:\n" << endl;
+		SetColor(14, 0);
 		cout << "Введите номер теста: ";
+		SetColor(15, 0);
 		cin >> idd;
 		if (base_quan_.empty())
 		{
@@ -211,7 +259,9 @@ void Quantum::creature_test_quan()
 			{
 				if ((*it)->get_id() == idd)
 				{
-					cout << "Такой номер уже занят, попробуйте другой!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nТакой номер уже занят, попробуйте другой!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 					p = true;
 				}
@@ -226,8 +276,11 @@ void Quantum::creature_test_quan()
 	while (w)
 	{
 		system("cls");
+		SetColor(12, 0);
 		cout << "СОЗДАНИЕ ТЕСТА ПО КВАНТОВОЙ:\n" << endl;
-		cout << "Введите текст вопроса: " << endl;;
+		SetColor(14, 0);
+		cout << "Введите текст вопроса: " << endl;
+		SetColor(15, 0);
 		char* str = new char;
 		cin.ignore();
 		cin.getline(str, 1200);
@@ -245,7 +298,9 @@ void Quantum::creature_test_quan()
 				string que = (*it)->get_question();
 				if (que == q)
 				{
-					cout << "Такой вопрос уже есть, попробуйте еще раз!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nТакой вопрос уже есть, попробуйте еще раз!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 					w = true;
 				}
@@ -257,25 +312,36 @@ void Quantum::creature_test_quan()
 	tes->set_question(q);
 	string an;
 	system("cls");
+	SetColor(12, 0);
 	cout << "СОЗДАНИЕ ТЕСТА ПО КВАНТОВОЙ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите варианты ответов через пробел: " << endl;
+	SetColor(15, 0);
 	char* buff1 = new char;
 	cin.getline(buff1, 1200);
 	an = buff1;
 	tes->set_answer(an);
 	int v = 0, b = 0;
 	system("cls");
+	SetColor(12, 0);
 	cout << "СОЗДАНИЕ ТЕСТА ПО КВАНТОВОЙ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите номер правильного ответа: ";
+	SetColor(15, 0);
 	cin >> v;
 	tes->set_right_answer(v);
 	cout << endl;
+	SetColor(14, 0);
 	cout << "Введите количество балов за ответ: ";
+	SetColor(15, 0);
 	cin >> b;
 	tes->set_balls(b);
 	base_quan_.push_back(tes);
 	system("cls");
+	gotoxy(10, 10);
+	SetColor(12, 0);
 	cout << "НОВЫЙ ТЕСТ по АЛГЕБРЕ СОЗДАН!!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 	print_test_quan();
 	save_test_quan();
@@ -285,14 +351,19 @@ void Quantum::creature_test_quan()
 void Quantum::edit_test_quan()
 {
 	system("cls");
+	SetColor(12, 0);
 	cout << "РЕДАКТИРОВАНИЕ ТЕСТА ПО КВАНТОВОЙ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите номер теста: ";
+	SetColor(15, 0);
 	int idd = 0;
 	cin >> idd;
 	bool set = true;
 	if (base_quan_.empty())
 	{
-		cout << "БАЗА ТЕСТОВ ПО КВАНТОВОЙ ПУСТА!!!" << endl;
+		SetColor(12, 0);
+		cout << "\nБАЗА ТЕСТОВ ПО КВАНТОВОЙ ПУСТА!!!" << endl;
+		SetColor(14, 0);
 		Sleep(2500);
 	}
 	else
@@ -302,7 +373,9 @@ void Quantum::edit_test_quan()
 		{
 			if ((*it)->get_id() != idd)
 			{
-				cout << "Такой номер теста отсутствует!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nТакой номер теста отсутствует!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				set = false;
 			}
@@ -317,17 +390,24 @@ void Quantum::edit_test_quan()
 			load_test_quan();
 			system("cls");
 			int var;
+			SetColor(12, 0);
 			cout << "РЕДАКТИРОВАНИЕ ТЕСТОВ ПО КВАНТОВОЙ:\n" << endl;
+			SetColor(14, 0);
 			cout << "1. Редактировать ВОПРОС\n" << "2. Редактировать ОТВЕТЫ\n"
 				<< "3. Редактировать НОМЕР ПРАВИЛЬНОГО ОТВЕТА\n"
 				<< "4. Редактировать БАЛЛЫ\n" << "5. Возврат в предыдущее меню\n" << endl;
 			bool v = true;
 			while (v)
 			{
+				SetColor(15, 0);
 				cin >> var;
 				cin.ignore();
 				if (var < 1 || var > 5)    // проверка ввода
+				{
+					SetColor(12, 0);
 					cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+					SetColor(15, 0);
+				}
 				else
 					v = false;
 			}
@@ -336,8 +416,11 @@ void Quantum::edit_test_quan()
 			case 1:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "РЕДАКТИРОВАНИЕ ВОПРОСА:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новый текст вопроса: " << endl;
+				SetColor(15, 0);
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -350,7 +433,9 @@ void Quantum::edit_test_quan()
 						(*it)->set_question(q);
 				}
 				cout << endl;
-				cout << "ВОПРОС ЗАМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nВОПРОС ЗАМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_quan();
 				break;
@@ -358,8 +443,11 @@ void Quantum::edit_test_quan()
 			case 2:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "РЕДАКТИРОВАНИЕ ОТВЕТОВ НА ВОПРОС:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новый текст ответов через пробел: " << endl;
+				SetColor(15, 0);
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -372,7 +460,9 @@ void Quantum::edit_test_quan()
 						(*it)->set_answer(q);
 				}
 				cout << endl;
-				cout << "ОТВЕТЫ ЗАМЕНЕНЫ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nОТВЕТЫ ЗАМЕНЕНЫ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_quan();
 				break;
@@ -380,9 +470,13 @@ void Quantum::edit_test_quan()
 			case 3:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "РЕДАКТИРОВАНИЕ НОМЕРА ПРАВИЛЬНОГО ОТВЕТА:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новый номер правильного ответа: " << endl;
+				SetColor(15, 0);
 				int an = 0;
+				cin >> an;
 				auto it = base_quan_.begin();
 				for (; it != base_quan_.end(); ++it)
 				{
@@ -390,7 +484,9 @@ void Quantum::edit_test_quan()
 						(*it)->set_right_answer(an);
 				}
 				cout << endl;
-				cout << "НОМЕР ПРАВИЛЬНОГО ОТВЕТА ЗАМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nНОМЕР ПРАВИЛЬНОГО ОТВЕТА ЗАМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_quan();
 				break;
@@ -398,9 +494,13 @@ void Quantum::edit_test_quan()
 			case 4:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "РЕДАКТИРОВАНИЕ БАЛЛОВ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новое количество баллов: " << endl;
+				SetColor(15, 0);
 				int bl = 0;
+				cin >> bl;
 				auto it = base_quan_.begin();
 				for (; it != base_quan_.end(); ++it)
 				{
@@ -408,7 +508,9 @@ void Quantum::edit_test_quan()
 						(*it)->set_balls(bl);
 				}
 				cout << endl;
-				cout << "БАЛЛЫ ЗАМЕНЕНЫ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nБАЛЛЫ ЗАМЕНЕНЫ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_quan();
 				break;
@@ -483,8 +585,7 @@ void Quantum::load_test_quan()
 			Tests* tes = new Tests;
 			char lc[50];
 			in >> lc;
-			int l_lc = strlen(lc) + 1;
-			char* buff = new char(l_lc + 1);
+			char* buff = new char[strlen(lc) + 1];
 			strcpy(buff, lc);
 			tes->set_category(buff);
 			int id;
@@ -493,14 +594,12 @@ void Quantum::load_test_quan()
 			tes->set_id(id);
 			char lq[1000];
 			in.getline(lq, 1000);
-			int l_lq = strlen(lq) + 1;
-			char* buff1 = new char(l_lq + 1);
+			char* buff1 = new char[strlen(lq) + 1];
 			strcpy(buff1, lq);
 			tes->set_question(buff1);
 			char la[1000];
 			in.getline(la, 1000);
-			int l_la = strlen(la) + 1;
-			char* buff2 = new char(l_lq + 1);
+			char* buff2 = new char[strlen(la) + 1];
 			strcpy(buff2, la);
 			tes->set_question(buff2);
 			int ra;
@@ -562,18 +661,28 @@ void Quantum::print_test_quan() const
 {
 	system("cls");
 	int idd = 0;
+	SetColor(12, 0);
 	cout << "ПЕЧАТЬ ТЕСТА ПО НОМЕРУ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите номер теста: ";
+	SetColor(15, 0);
 	cin >> idd;
 	auto it = base_quan_.begin();
 	system("cls");
+	SetColor(12, 0);
 	cout << "ПЕЧАТЬ ТЕСТА ПО НОМЕРУ:\n" << endl;
+	SetColor(15, 0);
 	for (; it != base_quan_.end(); ++it)
 	{
 		if ((*it)->get_id() == idd)
 			cout << (*it);
 		else
-			cout << "ТЕСТ с таким номер ОТСУТСТВУЕТ!!!" << endl;
+		{
+			SetColor(12, 0);
+			cout << "\nТЕСТ с таким номер ОТСУТСТВУЕТ!!!" << endl;
+			SetColor(15, 0);
+			Sleep(2500);
+		}
 	}
 	system("pause");
 }
@@ -585,7 +694,9 @@ void Quantum::print_test_all_quan() const
 	int idd = 0;
 	auto it = base_quan_.begin();
 	system("cls");
+	SetColor(12, 0);
 	cout << "ПЕЧАТЬ ВСЕХ ТЕСТОВ ПО КВАНТОВОЙ:\n" << endl;
+	SetColor(15, 0);
 	for (; it != base_quan_.end(); ++it)
 	{
 		cout << (*it);
@@ -616,7 +727,9 @@ Mechanics& Mechanics::operator=(const Mechanics& ob)
 void Mechanics::passing_test_mech(string const& log)
 {
 	system("cls");
+	SetColor(12, 0);
 	cout << "СДАЧА ТЕСТОВ ПО МЕХАНИКЕ\n" << endl;
+	SetColor(15, 0);
 	Tested tes;
 	Tests ts;
 	string lg = log;
@@ -625,9 +738,12 @@ void Mechanics::passing_test_mech(string const& log)
 	auto it = base_mech_.begin();
 	for (; it != base_mech_.end(); ++it)
 	{
+		system("cls");
 		cout << (*it);
 		cout << endl;
+		SetColor(14, 0);
 		cout << "Введите номер ответа: ";
+		SetColor(15, 0);
 		int nom;
 		cin >> nom;
 		if ((*it)->get_right_answer() == nom)            //проверка на правильность ответа
@@ -645,7 +761,10 @@ void Mechanics::passing_test_mech(string const& log)
 	res->set_kol_bal(bal_u);
 	tes.get_res_base(res);
 	system("cls");
+	gotoxy(10, 10);
+	SetColor(12, 0);
 	cout << "ТЕСТ ПРОЙДЕН!!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 }
 
@@ -659,8 +778,11 @@ void Mechanics::creature_test_mech()
 	while (p)
 	{
 		system("cls");
+		SetColor(12, 0);
 		cout << "СОЗДАНИЕ ТЕСТА ПО МЕХАНИКЕ:\n" << endl;
+		SetColor(14, 0);
 		cout << "Введите номер теста: ";
+		SetColor(15, 0);
 		cin >> idd;
 		if (base_mech_.empty())
 		{
@@ -674,7 +796,9 @@ void Mechanics::creature_test_mech()
 			{
 				if ((*it)->get_id() == idd)
 				{
-					cout << "Такой номер уже занят, попробуйте другой!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nТакой номер уже занят, попробуйте другой!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 					p = true;
 				}
@@ -689,8 +813,11 @@ void Mechanics::creature_test_mech()
 	while (w)
 	{
 		system("cls");
+		SetColor(12, 0);
 		cout << "СОЗДАНИЕ ТЕСТА ПО МЕХАНИКЕ:\n" << endl;
-		cout << "Введите текст вопроса: " << endl;;
+		SetColor(14, 0);
+		cout << "Введите текст вопроса: " << endl;
+		SetColor(15, 0);
 		char* buff = new char;
 		cin.getline(buff, 1200);
 		q = buff;
@@ -707,7 +834,9 @@ void Mechanics::creature_test_mech()
 				string que = (*it)->get_question();
 				if (que == q)
 				{
-					cout << "Такой вопрос уже есть, попробуйте еще раз!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nТакой вопрос уже есть, попробуйте еще раз!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 					w = true;
 				}
@@ -719,25 +848,36 @@ void Mechanics::creature_test_mech()
 	tes->set_question(q);
 	string an;
 	system("cls");
+	SetColor(12, 0);
 	cout << "СОЗДАНИЕ ТЕСТА ПО МЕХАНИКЕ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите варианты ответов через пробел: " << endl;
+	SetColor(15, 0);
 	char* buff1 = new char;
 	cin.getline(buff1, 1200);
 	an = buff1;
 	tes->set_answer(an);
 	int v = 0, b = 0;
 	system("cls");
+	SetColor(12, 0);
 	cout << "СОЗДАНИЕ ТЕСТА ПО МЕХАНИКЕ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите номер правильного ответа: ";
+	SetColor(15, 0);
 	cin >> v;
 	tes->set_right_answer(v);
 	cout << endl;
+	SetColor(14, 0);
 	cout << "Введите количество балов за ответ: ";
+	SetColor(15, 0);
 	cin >> b;
 	tes->set_balls(b);
 	base_mech_.push_back(tes);
 	system("cls");
+	gotoxy(10, 10);
+	SetColor(12, 0);
 	cout << "НОВЫЙ ТЕСТ по ГЕОМЕТРИИ СОЗДАН!!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 	print_test_mech();
 	save_test_mech();
@@ -748,14 +888,19 @@ void Mechanics::creature_test_mech()
 void Mechanics::edit_test_mech()
 {
 	system("cls");
+	SetColor(12, 0);
 	cout << "РЕДАКТИРОВАНИЕ ТЕСТА ПО МЕХАНИКЕ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите номер теста: ";
+	SetColor(15, 0);
 	int idd = 0;
 	cin >> idd;
 	bool set = true;
 	if (base_mech_.empty())
 	{
-		cout << "БАЗА ТЕСТОВ ПО ГЕОМЕТРИИ ПУСТА!!!" << endl;
+		SetColor(12, 0);
+		cout << "\nБАЗА ТЕСТОВ ПО ГЕОМЕТРИИ ПУСТА!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 	}
 	else
@@ -765,7 +910,9 @@ void Mechanics::edit_test_mech()
 		{
 			if ((*it)->get_id() != idd)
 			{
-				cout << "Такой номер теста отсутствует!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nТакой номер теста отсутствует!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				set = false;
 			}
@@ -780,17 +927,24 @@ void Mechanics::edit_test_mech()
 			load_test_mech();
 			system("cls");
 			int var;
+			SetColor(12, 0);
 			cout << "РЕДАКТИРОВАНИЕ ТЕСТОВ ПО МЕХАНИКЕ:\n" << endl;
+			SetColor(14, 0);
 			cout << "1. Редактировать ВОПРОС\n" << "2. Редактировать ОТВЕТЫ\n"
 				<< "3. Редактировать НОМЕР ПРАВИЛЬНОГО ОТВЕТА\n"
 				<< "4. Редактировать БАЛЛЫ\n" << "5. Возврат в предыдущее меню\n" << endl;
+			SetColor(15, 0);
 			bool v = true;
 			while (v)
 			{
 				cin >> var;
 				cin.ignore();
 				if (var < 1 || var > 5)    // проверка ввода
+				{
+					SetColor(12, 0);
 					cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+					SetColor(15, 0);
+				}
 				else
 					v = false;
 			}
@@ -799,8 +953,11 @@ void Mechanics::edit_test_mech()
 			case 1:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "РЕДАКТИРОВАНИЕ ВОПРОСА:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новый текст вопроса: " << endl;
+				SetColor(15, 0);
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -813,7 +970,9 @@ void Mechanics::edit_test_mech()
 						(*it)->set_question(q);
 				}
 				cout << endl;
-				cout << "ВОПРОС ЗАМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nВОПРОС ЗАМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_mech();
 				break;
@@ -821,8 +980,11 @@ void Mechanics::edit_test_mech()
 			case 2:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "РЕДАКТИРОВАНИЕ ОТВЕТОВ НА ВОПРОС:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новый текст ответов через пробел: " << endl;
+				SetColor(15, 0);
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -835,7 +997,9 @@ void Mechanics::edit_test_mech()
 						(*it)->set_answer(q);
 				}
 				cout << endl;
-				cout << "ОТВЕТЫ ЗАМЕНЕНЫ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nОТВЕТЫ ЗАМЕНЕНЫ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_mech();
 				break;
@@ -843,9 +1007,13 @@ void Mechanics::edit_test_mech()
 			case 3:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "РЕДАКТИРОВАНИЕ НОМЕРА ПРАВИЛЬНОГО ОТВЕТА:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новый номер правильного ответа: " << endl;
+				SetColor(15, 0);
 				int an = 0;
+				cin >> an;
 				auto it = base_mech_.begin();
 				for (; it != base_mech_.end(); ++it)
 				{
@@ -853,7 +1021,9 @@ void Mechanics::edit_test_mech()
 						(*it)->set_right_answer(an);
 				}
 				cout << endl;
-				cout << "НОМЕР ПРАВИЛЬНОГО ОТВЕТА ЗАМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nНОМЕР ПРАВИЛЬНОГО ОТВЕТА ЗАМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_mech();
 				break;
@@ -861,9 +1031,13 @@ void Mechanics::edit_test_mech()
 			case 4:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "РЕДАКТИРОВАНИЕ БАЛЛОВ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новое количество баллов: " << endl;
+				SetColor(15, 0);
 				int bl = 0;
+				cin >> bl;
 				auto it = base_mech_.begin();
 				for (; it != base_mech_.end(); ++it)
 				{
@@ -871,7 +1045,9 @@ void Mechanics::edit_test_mech()
 						(*it)->set_balls(bl);
 				}
 				cout << endl;
-				cout << "БАЛЛЫ ЗАМЕНЕНЫ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nБАЛЛЫ ЗАМЕНЕНЫ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_mech();
 				break;
@@ -947,8 +1123,7 @@ void Mechanics::load_test_mech()
 			Tests* tes = new Tests;
 			char lc[50];
 			in >> lc;
-			int l_lc = strlen(lc) + 1;
-			char* buff = new char(l_lc + 1);
+			char* buff = new char[strlen(lc) + 1];
 			strcpy(buff, lc);
 			tes->set_category(buff);
 			int id;
@@ -957,14 +1132,12 @@ void Mechanics::load_test_mech()
 			tes->set_id(id);
 			char lq[1000];
 			in.getline(lq, 1000);
-			int l_lq = strlen(lq) + 1;
-			char* buff1 = new char(l_lq + 1);
+			char* buff1 = new char[strlen(lq) + 1];
 			strcpy(buff1, lq);
 			tes->set_question(buff1);
 			char la[1000];
 			in.getline(la, 1000);
-			int l_la = strlen(la) + 1;
-			char* buff2 = new char(l_lq + 1);
+			char* buff2 = new char[strlen(la) + 1];
 			strcpy(buff2, la);
 			tes->set_question(buff2);
 			int ra;
@@ -1027,8 +1200,11 @@ void Mechanics::print_test_mech() const
 {
 	system("cls");
 	int idd = 0;
+	SetColor(12, 0);
 	cout << "ПЕЧАТЬ ТЕСТА ПО НОМЕРУ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Введите номер теста: ";
+	SetColor(15, 0);
 	cin >> idd;
 	auto it = base_mech_.begin();
 	for (; it != base_mech_.end(); ++it)
@@ -1036,7 +1212,12 @@ void Mechanics::print_test_mech() const
 		if ((*it)->get_id() == idd)
 			cout << (*it);
 		else
-			cout << "ТЕСТ с таким номер ОТСУТСТВУЕТ!!!" << endl;
+		{
+			SetColor(12, 0);
+			cout << "\nТЕСТ с таким номер ОТСУТСТВУЕТ!!!" << endl;
+			SetColor(15, 0);
+			Sleep(2500);
+		}
 	}
 	system("pause");
 }
@@ -1044,11 +1225,12 @@ void Mechanics::print_test_mech() const
 //печать на экран всех тестов по механике
 void Mechanics::print_test_all_mech() const
 {
-	system("cls");
 	int idd = 0;
 	auto it = base_mech_.begin();
 	system("cls");
+	SetColor(12, 0);
 	cout << "ПЕЧАТЬ ВСЕХ ТЕСТОВ ПО МЕХАНИКЕ:\n" << endl;
+	SetColor(15, 0);
 	for (; it != base_mech_.end(); ++it)
 	{
 		cout << (*it);

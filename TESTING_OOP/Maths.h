@@ -15,6 +15,7 @@ public:
 		
 	void menu_maths_user(string const& log);     //меню по математике для пользователя
 	void menu_maths_admin();                     //меню по математике для администратора
+	void shapka_start(string const& log);
 	
 };
 

@@ -33,10 +33,11 @@ public:
 	void control_user();            //изменение данных пользователя (тестируемого)
 	void dell_user();               //удаление пользователя
 	void edit_user();               //редактирование пользователя
-	void look_statics() const;      //просмотр статистики
+	void look_statics();            //просмотр статистики
 	void save_statics();            //сохранение статистики в файл
 	void save_login_pass();         //сохранение логина и пароля администратора
 	void load_login_pass();         //загрузка логина и пароля администратора
+	void shapka_start();
 
 	friend class Start;
 };

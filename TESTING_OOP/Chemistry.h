@@ -14,7 +14,10 @@ public:
 
 	void menu_chem_user(string const& log);     //меню по химии для пользователя
 	void menu_chem_admin();                     //меню по химии для администратора
+	void shapka_start(string const& log);
 };
+
+
 
 class Organic :public Chemistry
 {

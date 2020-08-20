@@ -33,16 +33,23 @@ public:
 	void registry_in();                                //регестрация пользователя
 	bool check_in(unsigned int ps, string lg);         //проверка на повторение
 	void menu_tested(string const& log);               //меню тестируемого
-	void print_result(string const& log) const;        //просмотр результата тестирования
+	void print_result(string const& log);              //просмотр результата тестирования
 	void save_results();                               //сохранить промежуточное тестирование
 	void load_results();                               //загрузить последнее сохраненное тестирование 
 	void save_base();                                  //сохранение базы тестируемых
 	void load_base();                                  //загрузка базы тестируемых
 	void get_res_base (Results*& res);                 //проверка и добавление нового результата
 	void get_user_base(User*& us);                     //проверка и добавление нового пользователя
-	void print_result_file(string const& log) const;   //печать результатов тестирования в файл
+	void print_result_file(string const& log);         //печать результатов тестирования в файл
 	void print_users();                                //просмотр базы пользователей
 	void print_users_file();                           //печать базы пользователей в файл
+	void shapka_start(string const& log);
+	void shapka_users();
+	void shapka_results();
+	void print_all_results();                          //показать на экран все результаты
+	void print_result_tests(string cat);               //показать на экран результаты по определенному тесту
+	void print_result_user();                          //показать на экран результаты по определенному пользователю
+	void print_all_result_file();                      //печать всех результатов тестирования в файл
 
 	friend class Admin;
 	

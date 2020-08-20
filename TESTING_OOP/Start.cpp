@@ -27,12 +27,12 @@ void Start::enter_system() const
 		shapka_start();
 		SetColor(12, 0);
 		cout << "ВХОД В СИСТЕМУ:\n" << endl;
-		SetColor(1, 0);
+		SetColor(14, 0);
 		cout << "1. ВХОД для ЗАРЕГЕCТРИРОВАННЫХ\n"
 			<< "2. Регестрация АДМИНИСТРАТОРА\n"
 			<< "3. Регестрация ПОЛЬЗОВАТЕЛЯ\n"
 			<< "4. Выход\n" << endl;
-		SetColor(14, 0);
+		SetColor(15, 0);
 		int var;
 		bool v = true;
 		while (v)
@@ -40,7 +40,11 @@ void Start::enter_system() const
 			cin >> var;
 			cin.ignore();
 			if (var < 1 || var > 4)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -49,7 +53,10 @@ void Start::enter_system() const
 		case 1:
 		{
 			system("cls");
+			shapka_start();
+			SetColor(12, 0);
 			cout << "ВВОД ДАННЫХ:\n" << endl;
+			SetColor(14, 0);
 			cout << "1. Вход АДМИНИСТРАТОРА\n"
 				<< "2. Вход ПОЛЬЗОВАТЕЛЯ\n"
 				<< "3. Возврат в предыдущее меню\n" << endl;
@@ -57,10 +64,15 @@ void Start::enter_system() const
 			bool p = true;
 			while (p)
 			{
+				SetColor(15, 0);
 				cin >> var2;
 				cin.ignore();
 				if (var2 < 1 || var2 > 3)    // проверка ввода
+				{
+					SetColor(12, 0);
 					cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+					SetColor(15, 0);
+				}
 				else
 					p = false;
 			}
@@ -70,27 +82,35 @@ void Start::enter_system() const
 			{
 				if (admin.get_log_admin().empty())
 				{
-					cout << "АДМИНИСТРАТОР не ЗАРЕГЕСТРИРОВАН!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nАДМИНИСТРАТОР НЕ ЗАРЕГЕСТРИРОВАН!!!" << endl;
 					Sleep(2500);
 					enter_system();
 				}
 				else
 				{
 					system("cls");
+					shapka_start();
+					SetColor(12, 0);
 					cout << "ВХОД В СИСТЕМУ АДМИНИСТРАТОРА:\n" << endl;
 					string log;
+					SetColor(14, 0);
 					cout << "Введите ЛОГИН: ";
+					SetColor(15, 0);
 					cin >> log;
 					uppercase(log);
 					string pas;
+					SetColor(14, 0);
 					cout << "Введите ПАРОЛЬ: ";
+					SetColor(15, 0);
 					cin >> pas;
 					auto pass = hashing(pas);
 					if (admin.get_log_admin() == log && admin.get_pass_admin() == pass)
 						admin.menu_admin();
 					else
 					{
-						cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
+						SetColor(12, 0);
+						cout << "\nЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
 						Sleep(2500);
 						enter_system();
 					}
@@ -100,12 +120,18 @@ void Start::enter_system() const
 			case 2:
 			{
 				system("cls");
+				shapka_start();
+				SetColor(12, 0);
 				cout << "ВХОД В СИСТЕМУ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите свой ЛОГИН: ";
+				SetColor(15, 0);
 				string log;
 				cin >> log;
 				uppercase(log);
+				SetColor(14, 0);
 				cout << "Введите свой ПАРОЛЬ: ";
+				SetColor(15, 0);
 				string pas;
 				cin >> pas;
 				auto pass = hashing(pas);
@@ -113,8 +139,10 @@ void Start::enter_system() const
 					tested.menu_tested(log);
 				else
 				{
-					cout << "ЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nЛОГИН или ПАРОЛЬ указаны не верно!!!" << endl;
 					Sleep(2000);
+					SetColor(15, 0);
 					enter_system();
 				}
 				break;
@@ -135,8 +163,8 @@ void Start::enter_system() const
 			break;
 		case 4:
 			exit(0);
-		/*default:
-			break;*/
+		default:
+			break;
 		}
 
 	}

@@ -1,5 +1,20 @@
 ﻿#include"Admin.h"
 
+void Admin::shapka_start()
+{
+	string S(40, '#');
+	gotoxy(30, 1);
+	SetColor(8, 0);
+	cout << S << endl;
+	gotoxy(37, 2);
+	SetColor(12, 0);
+	cout << "ТЕСТОВАЯ БАЗА ТЕСТИРОВАНИЙ" << endl;
+	gotoxy(30, 3);
+	SetColor(8, 0);
+	cout << S << endl << endl;
+}
+
+
 Admin::Admin(const Admin& ob)
 {
 	log_admin_.clear();
@@ -22,30 +37,41 @@ void Admin::registry_in_admin()
 	if (log_admin_.empty())
 	{
 		system("cls");
+		shapka_start();
+		SetColor(12, 0);
 		cout << "РЕГЕСТРАЦИЯ АДМИНИСТРАТОРА:\n" << endl;
 		string log;
+		SetColor(14, 0);
 		cout << "Введите ЛОГИН: ";
+		SetColor(15, 0);
 		cin >> log;
 		uppercase(log);
 		string pas;
 		bool ad = true;
 		while (ad)
 		{
+			SetColor(14, 0);
 			cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+			SetColor(15, 0);
 			cin >> pas;
 			ad = check_size(pas);
 		}
 		auto pass = hashing(pas);
 		this->log_admin_ = log;
 		this->pass_admin_ = pass;
-		cout << "Данные АДМИНИСТРАТОРА сохранены!!!" << endl;
+		SetColor(12, 0);
+		cout << "\nДанные АДМИНИСТРАТОРА сохранены!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 		save_login_pass();
 	}
 	else
 	{
 		system("cls");
+		SetColor(12, 0);
+		gotoxy(10, 10);
 		cout << "ОШИБКА!!! АДМИНИСТРАТОР уже ЗАРЕГЕСТРИРОВАН!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 
 	}
@@ -58,17 +84,25 @@ void Admin::menu_admin()
 	while (true)
 	{
 		system("cls");
+		shapka_start();
+		SetColor(12, 0);
 		cout << "МЕНЮ АДМИНИСТРАТОРА:\n" << endl;
+		SetColor(14, 0);
 		cout << "1. Управление ПОЛЬЗОАВАТЕЛЯМИ\n" << "2. Управление СТАТИСТИКОЙ\n" << "3. Управление ТЕСТАМИ\n"
 			<< "4. Управление данными АДМИНИСТРАТОРА\n" << "5. Выход\n" << endl;
 		int var1;
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var1;
 			cin.ignore();
 			if (var1 < 1 || var1 > 5)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -99,32 +133,42 @@ void Admin::control_tests()
 	while (true)
 	{
 		Tested tes;
-		Maths mat_;
+		Maths mat;
+		Physics phys;
+		Chemistry chem;
 		system("cls");
+		shapka_start();
+		SetColor(12, 0);
 		cout << "УПРАВЛЕНИЕ ТЕСТАМИ:\n" << endl;
+		SetColor(14, 0);
 		cout << "1. Управление тестами по МАТЕМАТИКЕ\n" << "2. Управление тестами по ФИЗИКЕ\n"
 			<< "3. Управление тестами по ХИМИИ\n" << "4. Возврат в предыдущее меню\n" << endl;
 		int var1;
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var1;
 			cin.ignore();
 			if (var1 < 1 || var1 > 4)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
 		switch (var1)
 		{
 		case 1:
-			mat_.menu_maths_admin();
+			mat.menu_maths_admin();
 			break;
 		case 2:
-			//mat_.menu_maths_admin();
+			phys.menu_physics_admin();
 			break;
 		case 3:
-			//mat_.menu_maths_admin();
+			chem.menu_chem_admin();;
 			break;
 		case 4:
 			menu_admin();
@@ -147,20 +191,28 @@ void Admin::change_login()
 	while (l)
 	{
 		system("cls");
+		shapka_start();
+		SetColor(12, 0);
 		cout << "РЕДАКТИРОВАНИЕ ДАННЫХ АДМИНИСТРАТОРА:\n" << endl;
+		SetColor(14, 0);
 		cout << "Введите новый ЛОГИН: ";
+		SetColor(15, 0);
 		cin >> log;
 		uppercase(log);
 		if (get_log_admin() == log)
 		{
-			cout << "Такой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+			SetColor(12, 0);
+			cout << "\nТакой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+			SetColor(14, 0);
 			Sleep(2500);
 		}
 		else
 			l = false;
 	}
 	set_log_admin(log);
-	cout << "ЛОГИН ИЗМЕНЕН!!" << endl;
+	SetColor(12, 0);
+	cout << "\nЛОГИН ИЗМЕНЕН!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 	bool ad = true;
 	string pas;
@@ -168,8 +220,12 @@ void Admin::change_login()
 	while (ad)
 	{
 		system("cls");
+		shapka_start();
+		SetColor(12, 0);
 		cout << "РЕДАКТИРОВАНИЕ ДАННЫХ АДМИНИСТРАТОРА:\n" << endl;
+		SetColor(14, 0);
 		cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+		SetColor(15, 0);
 		cin >> pas;
 		ad = check_size(pas);
 	}
@@ -180,11 +236,16 @@ void Admin::change_login()
 	{
 		if (get_pass_admin() == pass)
 		{
-			cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+			SetColor(12, 0);
+			cout << "\nТакой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
 			Sleep(2500);
 			system("cls");
+			shapka_start();
+			SetColor(12, 0);
 			cout << "РЕДАКТИРОВАНИЕ ДАННЫХ АДМИНИСТРАТОРА:\n" << endl;
+			SetColor(14, 0);
 			cout << "Введите новый ПАРОЛЬ: ";
+			SetColor(15, 0);
 			cin >> pas;
 			pass = hashing(pas);
 			if (get_log_admin() != log)
@@ -194,7 +255,9 @@ void Admin::change_login()
 			p = false;
 	}
 	set_pass_admin(pass);
-	cout << "ПАРОЛЬ ИЗМЕНЕН!!" << endl;
+	SetColor(12, 0);
+	cout << "\nПАРОЛЬ ИЗМЕНЕН!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 	save_login_pass();
 }
@@ -210,8 +273,12 @@ void Admin::registry_user()
 	while (lp)
 	{
 		system("cls");
+		shapka_start();
+		SetColor(12, 0);
 		cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+		SetColor(14, 0);
 		cout << "Введите ЛОГИН: ";
+		SetColor(15, 0);
 		cin >> log;
 		uppercase(log);
 		int count = 0;
@@ -226,7 +293,9 @@ void Admin::registry_user()
 		}
 		if (count != 0)
 		{
-			cout << "Такой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+			SetColor(12, 0);
+			cout << "\nТакой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+			SetColor(15, 0);
 			Sleep(2500);
 		}
 		else
@@ -238,7 +307,9 @@ void Admin::registry_user()
 	//проверка пороля на размер
 	while (ad)
 	{
+		SetColor(14, 0);
 		cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+		SetColor(15, 0);
 		cin >> pas;
 		ad = check_size(pas);
 	}
@@ -252,15 +323,21 @@ void Admin::registry_user()
 		{
 			if ((*it)->get_pass() == pass)
 			{
-				cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nТакой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 
 				bool d = true;
 				while (d)
 				{
 					system("cls");
+					shapka_start();
+					SetColor(12, 0);
 					cout << "РЕГЕСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
+					SetColor(14, 0);
 					cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+					SetColor(15, 0);
 					cin >> pas;
 					d = check_size(pas);
 				}
@@ -275,21 +352,30 @@ void Admin::registry_user()
 	user->set_pass(pass);
 	char* n = new char;
 	cin.ignore();
+	SetColor(14, 0);
 	cout << "Введите ФИО: ";
+	SetColor(15, 0);
 	cin.getline(n, 100);
 	string name = n;
 	user->set_name(name);
 	string email;
+	SetColor(14, 0);
 	cout << "Введите электронный адрес: ";
+	SetColor(15, 0);
 	cin >> email;
 	user->set_email(email);
 	string phone;
+	SetColor(12, 0);
 	cout << "Введите номер телефона: ";
+	SetColor(15, 0);
 	cin >> phone;
 	user->set_phone(phone);
-
-	cout << "ПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
+	tes.base_tested_.push_back(user);
+	SetColor(12, 0);
+	cout << "\nПОЛЬЗОВАТЕЛЬ ДОБАВЛЕН!!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
+	tes.save_base();
 	control_user();
 }
 
@@ -301,7 +387,10 @@ void Admin::control_user()
 		Tested tes;
 		tes.load_base();
 		system("cls");
+		shapka_start();
+		SetColor(12, 0);
 		cout << "УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ:\n" << endl;
+		SetColor(14, 0);
 		cout << "1. Создание ПОЛЬЗОАВАТЕЛЯ\n"
 			<< "2. Удаление ПОЛЬЗОВАТЕЛЯ\n"
 			<< "3. Редактирование ПОЛЬЗОВАТЕЛЯ\n"
@@ -311,10 +400,16 @@ void Admin::control_user()
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var;
 			cin.ignore();
 			if (var < 1 || var > 5)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				Sleep(2000);
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -333,7 +428,10 @@ void Admin::control_user()
 			while (true)
 			{
 				system("cls");
+				shapka_start();
+				SetColor(12, 0);
 				cout << "ПЕЧАТЬ ПОЛЬЗОВАТЕЛЕЙ:\n" << endl;
+				SetColor(14, 0);
 				cout << "1. Печать в файл ПОЛЬЗОВАТЕЛЕЙ\n"
 					<< "2. Печать на экран ПОЛЬЗОВАТЕЛЕЙ\n"
 					<< "3. Возврат в предыдущее меню\n" << endl;
@@ -341,10 +439,16 @@ void Admin::control_user()
 				bool v = true;
 				while (v)
 				{
+					SetColor(15, 0);
 					cin >> var1;
 					cin.ignore();
 					if (var1 < 1 || var1 > 3)    // проверка ввода
+					{
+						SetColor(12, 0);
 						cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+						Sleep(2000);
+						SetColor(15, 0);
+					}
 					else
 						v = false;
 				}
@@ -375,13 +479,18 @@ void Admin::control_user()
 void Admin::dell_user()
 {
 	system("cls");
+	shapka_start();
+	SetColor(12, 0);
 	cout << "УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 	Tested tes;
 	tes.load_base();
+	SetColor(15, 0);
 	tes.print_users();
 	cout << "\n";
 	string ld;
+	SetColor(14, 0);
 	cout << "Введите ЛОГИН ПОЛЬЗОВАТЕЛЯ для УДАЛЕНИЯ: ";
+	SetColor(15, 0);
 	cin >> ld;
 	uppercase(ld);
 	bool set = false;
@@ -397,14 +506,20 @@ void Admin::dell_user()
 	if (set)
 	{
 		system("cls");
+		SetColor(12, 0);
+		gotoxy(10, 10);
 		cout << "ПОЛЬЗОВАТЕЛЬ УДАЛЕН!!!" << endl;
+		SetColor(15, 0);
 		tes.save_base();
 		Sleep(2500);
 	}
 	else
 	{
 		system("cls");
+		SetColor(12, 0);
+		gotoxy(10, 10);
 		cout << "ТАКОГО ПОЛЬЗОВАТЕЛЯ НЕТ!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 	}
 }
@@ -414,13 +529,18 @@ void Admin::edit_user()
 {
 	
 	system("cls");
+	shapka_start();
+	SetColor(12, 0);
 	cout << "РЕДАКТИРОВАННИЕ ДАННЫХ ПОЛЬЗОВАТЕЛЯ:\n" << endl;
 	Tested tes;
 	tes.load_base();
+	SetColor(15, 0);
 	tes.print_users();
 	cout << "\n";
 	string ld;
+	SetColor(14, 0);
 	cout << "Введите ЛОГИН ПОЛЬЗОВАТЕЛЯ для РЕДАКТИРОВАНИЯ: ";
+	SetColor(15, 0);
 	cin >> ld;
 	uppercase(ld);
 	bool set = false;
@@ -441,16 +561,25 @@ void Admin::edit_user()
 			//tes.load_base();
 			system("cls");
 			int var;
+			shapka_start();
+			SetColor(12, 0);
 			cout << "РЕДАКТИРОВАНИЕ ПРОФИЛЯ:\n" << endl;
+			SetColor(14, 0);
 			cout << "1. Редактировать ЛОГИН\n" << "2. Редактировать ПАРОЛЬ\n" << "3. Редактировать ФИО\n"
 				<< "4. Редактировать EMAIL\n" << "5. Редактировать номер ТЕЛЕФОНА\n" << "6. Возврат в предыдущее меню\n" << endl;
 			bool v = true;
 			while (v)
 			{
+				SetColor(15, 0);
 				cin >> var;
 				cin.ignore();
 				if (var < 1 || var > 6)    // проверка ввода
+				{
+					SetColor(12, 0);
 					cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+					Sleep(2000);
+					SetColor(15, 0);
+				}
 				else
 					v = false;
 			}
@@ -464,8 +593,12 @@ void Admin::edit_user()
 				while (s)
 				{
 					system("cls");
+					shapka_start();
+					SetColor(12, 0);
 					cout << "Редактирование ЛОГИНА:\n" << endl;
+					SetColor(14, 0);
 					cout << "Введите новый ЛОГИН:";
+					SetColor(15, 0);
 					cin >> log;
 					uppercase(log);
 					int count = 0;
@@ -480,7 +613,9 @@ void Admin::edit_user()
 					}
 					if (count != 0)
 					{
-						cout << "Такой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+						SetColor(12, 0);
+						cout << "\nТакой ЛОГИН уже есть, введите другой ЛОГИН!!!" << endl;
+						SetColor(15, 0);
 						Sleep(2500);
 					}
 					else
@@ -495,7 +630,9 @@ void Admin::edit_user()
 					}
 				}
 				ld = log;
-				cout << "ЛОГИН ИЗМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nЛОГИН ИЗМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				tes.save_base();
 				Sleep(2500);
 				break;
@@ -507,8 +644,12 @@ void Admin::edit_user()
 				while (ad)
 				{
 					system("cls");
+					shapka_start();
+					SetColor(12, 0);
 					cout << "Редактирование ПАРОЛЯ:\n" << endl;
+					SetColor(14, 0);
 					cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+					SetColor(15, 0);
 					cin >> pas;
 					ad = check_size(pas);
 				}
@@ -521,14 +662,20 @@ void Admin::edit_user()
 					{
 						if ((*it)->get_pass() == pp)
 						{
-							cout << "Такой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+							SetColor(12, 0);
+							cout << "\nТакой ПАРОЛЬ уже есть, введите другой ПАРОЛЬ!!!" << endl;
+							SetColor(15, 0);
 							Sleep(2500);
 							bool d = true;
 							while (d)
 							{
 								system("cls");
+								shapka_start();
+								SetColor(12, 0);
 								cout << "Редактирование ПАРОЛЯ:\n" << endl;
+								SetColor(14, 0);
 								cout << "Введите ПАРОЛЬ (не менее 8-ми символов): ";
+								SetColor(15, 0);
 								cin >> pas;
 								d = check_size(pas);
 							}
@@ -547,7 +694,9 @@ void Admin::edit_user()
 					if ((*it)->get_login() == ld)
 						(*it)->set_pass(pp);
 				}
-				cout << "ПАРОЛЬ ИЗМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nПАРОЛЬ ИЗМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				tes.save_base();
 				Sleep(2500);
 				break;
@@ -555,9 +704,13 @@ void Admin::edit_user()
 			case 3:
 			{
 				system("cls");
+				shapka_start();
 				char* n = new char;
+				SetColor(12, 0);
 				cout << "Редактирование ФИО:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новые ФИО: ";
+				SetColor(15, 0);
 				cin.getline(n, 100);
 				string name = n;
 				auto it = tes.base_tested_.begin();
@@ -566,7 +719,9 @@ void Admin::edit_user()
 					if ((*it)->get_login() == ld)
 						(*it)->set_name(name);
 				}
-				cout << "ФИО ИЗМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nФИО ИЗМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				tes.save_base();
 				Sleep(2500);
 				break;
@@ -574,8 +729,12 @@ void Admin::edit_user()
 			case 4:
 			{
 				system("cls");
+				shapka_start();
+				SetColor(12, 0);
 				cout << "Редактирование EMAIL:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новый EMAIL: ";
+				SetColor(15, 0);
 				string em;
 				cin >> em;
 				auto it = tes.base_tested_.begin();
@@ -584,7 +743,9 @@ void Admin::edit_user()
 					if ((*it)->get_login() == ld)
 						(*it)->set_email(em);
 				}
-				cout << "EMAIL ИЗМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nEMAIL ИЗМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				tes.save_base();
 				Sleep(2500);
 				break;
@@ -592,8 +753,12 @@ void Admin::edit_user()
 			case 5:
 			{
 				system("cls");
+				shapka_start();
+				SetColor(12, 0);
 				cout << "Редактирование номера ТЕЛЕФОНА:\n" << endl;
+				SetColor(14, 0);
 				cout << "Введите новый номер ТЕЛЕФОНА:";
+				SetColor(15, 0);
 				string ph;
 				cin >> ph;
 				auto it = tes.base_tested_.begin();
@@ -602,7 +767,9 @@ void Admin::edit_user()
 					if ((*it)->get_login() == ld)
 						(*it)->set_phone(ph);
 				}
-				cout << "ТЕЛЕФОН ИЗМЕНЕН!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nТЕЛЕФОН ИЗМЕНЕН!!!" << endl;
+				SetColor(15, 0);
 				tes.save_base();
 				Sleep(2500);
 				break;
@@ -618,14 +785,17 @@ void Admin::edit_user()
 	else
 	{
 		system("cls");
+		SetColor(12, 0);
+		gotoxy(10, 10);
 		cout << "ТАКОГО ПОЛЬЗОВАТЕЛЯ НЕТ!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 	}
 }
 
 
 //просмотр статистики
-void Admin::look_statics() const
+void Admin::look_statics()
 {
 	while (true)
 	{
@@ -633,7 +803,10 @@ void Admin::look_statics() const
 		tes.load_results();
 		tes.load_base();
 		system("cls");
+		shapka_start();
+		SetColor(12, 0);
 		cout << "УПРАВЛЕНИЕ СТАТИСТИКОЙ:\n" << endl;
+		SetColor(14, 0);
 		cout << "1. Результаты в ОБЩЕМ\n"
 			<< "2. Результаты по конкретным ТЕСТАМ\n"
 			<< "3. Результаты по конкретным ПОЛЬЗОВАТЕЛЯМ\n"
@@ -643,34 +816,74 @@ void Admin::look_statics() const
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var;
 			cin.ignore();
 			if (var < 1 || var > 5)    // проверка ввода
+			{
+				SetColor(12, 0);
 				cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+				Sleep(2000);
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
 		switch (var)
 		{
 		case 1:
+			tes.print_all_results();
+			system("pause");
+			break;
+		case 2:
 		{
 			system("cls");
-			cout << "ОБЩАЯ БАЗА ДАННЫХ РЕЗУЛЬТАТОВ ТЕСТОВ\n" << endl;
-			string log = "NICK";
-			/*auto it_2 = tes.get_base_results().end();
-			for (; it != it_2; ++it)
+			string cat;
+			shapka_start();
+			SetColor(12, 0);
+			cout << "РЕЗУЛЬТАТЫ ПО КОНКРЕТНЫМ ТЕСТАМ:\n" << endl;
+			SetColor(14, 0);
+			cout << "1. АЛГЕБРА\n" << "2. ГЕОМЕТРИЯ\n" << "3. КВАНТОВАЯ ФИЗИКА\n"
+				<< "4. МЕХАНИКА\n" << "5. ОРГАНИЧЕСКАЯ ХИМИЯ\n" << "6. НЕОРГАНИЧЕСКАЯ ХИМИЯ\n"
+				<< "7. Возврат в предыдущее меню\n" << endl;
+			int var;
+			bool v = true;
+			while (v)
 			{
-				cout << it->first << " " << it->second.front() << endl;
-			}*/
+				SetColor(15, 0);
+				cin >> var;
+				cin.ignore();
+				if (var < 1 || var > 7)    // проверка ввода
+				{
+					SetColor(12, 0);
+					cout << "НЕВЕРНО!!! ПОПРОБУЙТЕ ЕЩЕ РАЗ!!!" << endl;
+					Sleep(2000);
+					SetColor(15, 0);
+				}
+				else
+					v = false;
+			}
+			switch (var)
+			{
+			case 1: cat = "АЛГЕБРА"; tes.print_result_tests(cat); system("pause"); break;
+			case 2: cat = "ГЕОМЕТРИЯ"; tes.print_result_tests(cat); system("pause"); break;
+			case 3: cat = "КВАНТОВАЯ"; tes.print_result_tests(cat); system("pause"); break;
+			case 4: cat = "МЕХАНИКА"; tes.print_result_tests(cat); system("pause"); break;
+			case 5: cat = "ОРГАНИЧЕСКАЯ"; tes.print_result_tests(cat); system("pause"); break;
+			case 6: cat = "НЕОРГАНИЧЕСКАЯ"; tes.print_result_tests(cat); system("pause"); break;
+			default:;
+			}
 			break;
 		}
-		case 2:
-			break;
 		case 3:
+			tes.print_result_user(); 
+			system("pause"); 
 			break;
 		case 4:
+			tes.print_all_result_file();
 			break;
 		case 5:
+			menu_admin();
 			break;
 		default:;
 

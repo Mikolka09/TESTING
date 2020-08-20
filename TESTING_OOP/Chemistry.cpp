@@ -1,5 +1,22 @@
 #include "Chemistry.h"
 
+void Chemistry::shapka_start(string const& log)
+{
+	string S(40, '#');
+	gotoxy(30, 1);
+	SetColor(8, 0);
+	cout << S << endl;
+	gotoxy(37, 2);
+	SetColor(12, 0);
+	cout << "ÒÅÑÒÎÂÀß ÁÀÇÀ ÒÅÑÒÈĞÎÂÀÍÈÉ" << endl;
+	gotoxy(8, 2);
+	SetColor(10, 0);
+	cout << "ËÎÃÈÍ: " << log;
+	gotoxy(30, 3);
+	SetColor(8, 0);
+	cout << S << endl << endl;
+}
+
 //ìåíş ïî õèìèè
 void Chemistry::menu_chem_user(string const& log)
 {
@@ -12,7 +29,10 @@ void Chemistry::menu_chem_user(string const& log)
 		tes.load_results();
 		org.load_test_or();
 		system("cls");
+		shapka_start(log);
+		SetColor(12, 0);
 		cout << "ÁÀÇÀ ÒÅÑÒÎÂ ÏÎ ÕÈÌÈÈ äëÿ ÏÎËÜÇÎÂÀÒÅËß\n" << endl;
+		SetColor(14, 0);
 		cout << "ÊÀÒÅÃÎĞÈÈ ÒÅÑÒÎÂ ÏÎ ÕÈÌÈÈ:" << endl;
 		cout << "1. Ñäà÷à òåñòà ïî ÎĞÃÀÍÈ×ÅÑÊÎÉ\n" << "2. Ñäà÷à òåñòà ïî ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ\n"
 			<< "3. Âîçâğàò â ïğåäûäóùåå ìåíş" << endl;
@@ -20,10 +40,15 @@ void Chemistry::menu_chem_user(string const& log)
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var;
 			cin.ignore();
 			if (var < 1 || var > 3)    // ïğîâåğêà ââîäà
+			{
+				SetColor(12, 0);
 				cout << "ÍÅÂÅĞÍÎ!!! ÏÎÏĞÎÁÓÉÒÅ ÅÙÅ ĞÀÇ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -38,8 +63,10 @@ void Chemistry::menu_chem_user(string const& log)
 				//string cat = "ÀËÃÅÁĞÀ";
 				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == org.cat_or_)     //ïğîâåğêà åñòü ëè â áàçå ğåçóëüòàòîâ êàòåãîğèè
 				{
+					SetColor(12, 0);
 					cout << "Òåñò ïî ÎĞÃÀÍÈ×ÅÑÊÎÉ ïğîéäåí, âûáåğèòå äğóãîé ÒÅÑÒ!!!" << endl;
 					Sleep(2500);
+					SetColor(15, 0);
 				}
 
 				else
@@ -56,8 +83,10 @@ void Chemistry::menu_chem_user(string const& log)
 				//string cat = "ÃÅÎÌÅÒĞÈß";
 				if ((*tes.get_base_results().find(log)).second.front()->get_cat() == in.cat_in_)    //ïğîâåğêà åñòü ëè â áàçå ğåçóëüòàòîâ êàòåãîğèè
 				{
+					SetColor(12, 0);
 					cout << "Òåñò ïî ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ ïğîéäåí, âûáåğèòå äğóãîé ÒÅÑÒ!!!" << endl;
 					Sleep(2500);
+					SetColor(15, 0);
 				}
 				else
 					in.passing_test_in(log);
@@ -84,7 +113,9 @@ void Chemistry::menu_chem_admin()
 		org.load_test_or();
 		in.load_test_in();
 		system("cls");
+		SetColor(12, 0);
 		cout << "ÁÀÇÀ ÒÅÑÒÎÂ ÏÎ ÕÈÌÈÈ äëÿ ÀÄÌÈÍÈÑÒĞÀÒÎĞÀ\n" << endl;
+		SetColor(14, 0);
 		cout << "ÌÅÍŞ ÄÅÉÑÒÂÈÉ:" << endl;
 		cout << "1. Ñîçäàíèå òåñòîâ ïî ÎĞÃÀÍÈ×ÅÑÊÎÉ\n" << "2. Ñîçäàíèå òåñòîâ ïî ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ\n"
 			<< "3. Ğåäàêòèğîâàíèå òåñòîâ ïî ÎĞÃÀÍÈ×ÅÑÊÎÉ\n" << "4. Ğåäàêòèğîâàíèå òåñòîâ ïî ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ\n"
@@ -94,10 +125,15 @@ void Chemistry::menu_chem_admin()
 		bool v = true;
 		while (v)
 		{
+			SetColor(15, 0);
 			cin >> var;
 			cin.ignore();
-			if (var < 1 || var > 5)    // ïğîâåğêà ââîäà
+			if (var < 1 || var > 7)    // ïğîâåğêà ââîäà
+			{
+				SetColor(12, 0);
 				cout << "ÍÅÂÅĞÍÎ!!! ÏÎÏĞÎÁÓÉÒÅ ÅÙÅ ĞÀÇ!!!" << endl;
+				SetColor(15, 0);
+			}
 			else
 				v = false;
 		}
@@ -151,7 +187,10 @@ Organic& Organic::operator=(const Organic& ob)
 void Organic::passing_test_or(string const& log)
 {
 	system("cls");
+	gotoxy(4, 4);
+	SetColor(12, 0);
 	cout << "ÑÄÀ×À ÒÅÑÒÎÂ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ\n" << endl;
+	SetColor(15, 0);
 	Tested tes;
 	Tests ts;
 	string lg = log;
@@ -160,9 +199,12 @@ void Organic::passing_test_or(string const& log)
 	auto it = base_or_.begin();
 	for (; it != base_or_.end(); ++it)
 	{
+		system("cls");
 		cout << (*it);
 		cout << endl;
+		SetColor(14, 0);
 		cout << "Ââåäèòå íîìåğ îòâåòà: ";
+		SetColor(15, 0);
 		int nom;
 		cin >> nom;
 		if ((*it)->get_right_answer() == nom)            //ïğîâåğêà íà ïğàâèëüíîñòü îòâåòà
@@ -180,8 +222,11 @@ void Organic::passing_test_or(string const& log)
 	res->set_kol_bal(bal_u);
 	tes.get_res_base(res);
 	system("cls");
+	gotoxy(10, 10);
+	SetColor(12, 0);
 	cout << "ÒÅÑÒ ÏĞÎÉÄÅÍ!!!" << endl;
 	Sleep(2500);
+	SetColor(15, 0);
 }
 
 //ñîçäàíèå òåñòà ïî îğãàíè÷åñêîé
@@ -196,8 +241,11 @@ void Organic::creature_test_or()
 	while (p)
 	{
 		system("cls");
+		SetColor(12, 0);
 		cout << "ÑÎÇÄÀÍÈÅ ÒÅÑÒÀ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+		SetColor(14, 0);
 		cout << "Ââåäèòå íîìåğ òåñòà: ";
+		SetColor(15, 0);
 		cin >> idd;
 		if (base_or_.empty())
 		{
@@ -211,8 +259,10 @@ void Organic::creature_test_or()
 			{
 				if ((*it)->get_id() == idd)
 				{
+					SetColor(12, 0);
 					cout << "Òàêîé íîìåğ óæå çàíÿò, ïîïğîáóéòå äğóãîé!!!" << endl;
 					Sleep(2500);
+					SetColor(15, 0);
 					p = true;
 				}
 				else
@@ -226,8 +276,11 @@ void Organic::creature_test_or()
 	while (w)
 	{
 		system("cls");
+		SetColor(12, 0);
 		cout << "ÑÎÇÄÀÍÈÅ ÒÅÑÒÀ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
-		cout << "Ââåäèòå òåêñò âîïğîñà: " << endl;;
+		SetColor(14, 0);
+		cout << "Ââåäèòå òåêñò âîïğîñà: " << endl;
+		SetColor(15, 0);
 		char* str = new char;
 		cin.ignore();
 		cin.getline(str, 1200);
@@ -245,8 +298,10 @@ void Organic::creature_test_or()
 				string que = (*it)->get_question();
 				if (que == q)
 				{
+					SetColor(12, 0);
 					cout << "Òàêîé âîïğîñ óæå åñòü, ïîïğîáóéòå åùå ğàç!!!" << endl;
 					Sleep(2500);
+					SetColor(15, 0);
 					w = true;
 				}
 				else
@@ -257,25 +312,36 @@ void Organic::creature_test_or()
 	tes->set_question(q);
 	string an;
 	system("cls");
+	SetColor(12, 0);
 	cout << "ÑÎÇÄÀÍÈÅ ÒÅÑÒÀ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå âàğèàíòû îòâåòîâ ÷åğåç ïğîáåë: " << endl;
+	SetColor(15, 0);
 	char* buff1 = new char;
 	cin.getline(buff1, 1200);
 	an = buff1;
 	tes->set_answer(an);
 	int v = 0, b = 0;
 	system("cls");
+	SetColor(12, 0);
 	cout << "ÑÎÇÄÀÍÈÅ ÒÅÑÒÀ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå íîìåğ ïğàâèëüíîãî îòâåòà: ";
+	SetColor(15, 0);
 	cin >> v;
 	tes->set_right_answer(v);
 	cout << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå êîëè÷åñòâî áàëîâ çà îòâåò: ";
+	SetColor(15, 0);
 	cin >> b;
 	tes->set_balls(b);
 	base_or_.push_back(tes);
 	system("cls");
+	gotoxy(10, 10);
+	SetColor(12, 0);
 	cout << "ÍÎÂÛÉ ÒÅÑÒ ïî ÀËÃÅÁĞÅ ÑÎÇÄÀÍ!!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 	print_test_or();
 	save_test_or();
@@ -285,14 +351,19 @@ void Organic::creature_test_or()
 void Organic::edit_test_or()
 {
 	system("cls");
+	SetColor(12, 0);
 	cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÒÅÑÒÀ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå íîìåğ òåñòà: ";
+	SetColor(15, 0);
 	int idd = 0;
 	cin >> idd;
 	bool set = true;
 	if (base_or_.empty())
 	{
-		cout << "ÁÀÇÀ ÒÅÑÒÎÂ ÏÎ ÀËÃÅÁĞÅ ÏÓÑÒÀ!!!" << endl;
+		SetColor(12, 0);
+		cout << "ÁÀÇÀ ÒÅÑÒÎÂ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ ÏÓÑÒÀ!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 	}
 	else
@@ -302,7 +373,9 @@ void Organic::edit_test_or()
 		{
 			if ((*it)->get_id() != idd)
 			{
+				SetColor(12, 0);
 				cout << "Òàêîé íîìåğ òåñòà îòñóòñòâóåò!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				set = false;
 			}
@@ -317,17 +390,24 @@ void Organic::edit_test_or()
 			load_test_or();
 			system("cls");
 			int var;
+			SetColor(12, 0);
 			cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÒÅÑÒÎÂ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+			SetColor(14, 0);
 			cout << "1. Ğåäàêòèğîâàòü ÂÎÏĞÎÑ\n" << "2. Ğåäàêòèğîâàòü ÎÒÂÅÒÛ\n"
 				<< "3. Ğåäàêòèğîâàòü ÍÎÌÅĞ ÏĞÀÂÈËÜÍÎÃÎ ÎÒÂÅÒÀ\n"
 				<< "4. Ğåäàêòèğîâàòü ÁÀËËÛ\n" << "5. Âîçâğàò â ïğåäûäóùåå ìåíş\n" << endl;
 			bool v = true;
 			while (v)
 			{
+				SetColor(15, 0);
 				cin >> var;
 				cin.ignore();
 				if (var < 1 || var > 5)    // ïğîâåğêà ââîäà
+				{
+					SetColor(12, 0);
 					cout << "ÍÅÂÅĞÍÎ!!! ÏÎÏĞÎÁÓÉÒÅ ÅÙÅ ĞÀÇ!!!" << endl;
+					SetColor(15, 0);
+				}
 				else
 					v = false;
 			}
@@ -336,8 +416,11 @@ void Organic::edit_test_or()
 			case 1:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÂÎÏĞÎÑÀ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Ââåäèòå íîâûé òåêñò âîïğîñà: " << endl;
+				SetColor(15, 0);
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -350,7 +433,9 @@ void Organic::edit_test_or()
 						(*it)->set_question(q);
 				}
 				cout << endl;
-				cout << "ÂÎÏĞÎÑ ÇÀÌÅÍÅÍ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nÂÎÏĞÎÑ ÇÀÌÅÍÅÍ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_or();
 				break;
@@ -358,8 +443,11 @@ void Organic::edit_test_or()
 			case 2:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÎÒÂÅÒÎÂ ÍÀ ÂÎÏĞÎÑ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Ââåäèòå íîâûé òåêñò îòâåòîâ ÷åğåç ïğîáåë: " << endl;
+				SetColor(15, 0);
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -372,7 +460,9 @@ void Organic::edit_test_or()
 						(*it)->set_answer(q);
 				}
 				cout << endl;
-				cout << "ÎÒÂÅÒÛ ÇÀÌÅÍÅÍÛ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nÎÒÂÅÒÛ ÇÀÌÅÍÅÍÛ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_or();
 				break;
@@ -380,9 +470,13 @@ void Organic::edit_test_or()
 			case 3:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÍÎÌÅĞÀ ÏĞÀÂÈËÜÍÎÃÎ ÎÒÂÅÒÀ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Ââåäèòå íîâûé íîìåğ ïğàâèëüíîãî îòâåòà: " << endl;
+				SetColor(15, 0);
 				int an = 0;
+				cin >> an;
 				auto it = base_or_.begin();
 				for (; it != base_or_.end(); ++it)
 				{
@@ -390,7 +484,9 @@ void Organic::edit_test_or()
 						(*it)->set_right_answer(an);
 				}
 				cout << endl;
-				cout << "ÍÎÌÅĞ ÏĞÀÂÈËÜÍÎÃÎ ÎÒÂÅÒÀ ÇÀÌÅÍÅÍ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nÍÎÌÅĞ ÏĞÀÂÈËÜÍÎÃÎ ÎÒÂÅÒÀ ÇÀÌÅÍÅÍ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_or();
 				break;
@@ -398,9 +494,13 @@ void Organic::edit_test_or()
 			case 4:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÁÀËËÎÂ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Ââåäèòå íîâîå êîëè÷åñòâî áàëëîâ: " << endl;
+				SetColor(15, 0);
 				int bl = 0;
+				cin >> bl;
 				auto it = base_or_.begin();
 				for (; it != base_or_.end(); ++it)
 				{
@@ -408,7 +508,9 @@ void Organic::edit_test_or()
 						(*it)->set_balls(bl);
 				}
 				cout << endl;
-				cout << "ÁÀËËÛ ÇÀÌÅÍÅÍÛ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nÁÀËËÛ ÇÀÌÅÍÅÍÛ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_or();
 				break;
@@ -483,8 +585,7 @@ void Organic::load_test_or()
 			Tests* tes = new Tests;
 			char lc[50];
 			in >> lc;
-			int l_lc = strlen(lc) + 1;
-			char* buff = new char(l_lc + 1);
+			char* buff = new char[strlen(lc) + 1];
 			strcpy(buff, lc);
 			tes->set_category(buff);
 			int id;
@@ -493,14 +594,12 @@ void Organic::load_test_or()
 			tes->set_id(id);
 			char lq[1000];
 			in.getline(lq, 1000);
-			int l_lq = strlen(lq) + 1;
-			char* buff1 = new char(l_lq + 1);
+			char* buff1 = new char[strlen(lq) + 1];
 			strcpy(buff1, lq);
 			tes->set_question(buff1);
 			char la[1000];
 			in.getline(la, 1000);
-			int l_la = strlen(la) + 1;
-			char* buff2 = new char(l_lq + 1);
+			char* buff2 = new char[strlen(la) + 1];
 			strcpy(buff2, la);
 			tes->set_question(buff2);
 			int ra;
@@ -562,18 +661,27 @@ void Organic::print_test_or() const
 {
 	system("cls");
 	int idd = 0;
+	SetColor(12, 0);
 	cout << "ÏÅ×ÀÒÜ ÒÅÑÒÀ ÏÎ ÍÎÌÅĞÓ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå íîìåğ òåñòà: ";
+	SetColor(15, 0);
 	cin >> idd;
 	auto it = base_or_.begin();
 	system("cls");
+	SetColor(12, 0);
 	cout << "ÏÅ×ÀÒÜ ÒÅÑÒÀ ÏÎ ÍÎÌÅĞÓ:\n" << endl;
+	SetColor(15, 0);
 	for (; it != base_or_.end(); ++it)
 	{
 		if ((*it)->get_id() == idd)
 			cout << (*it);
 		else
-			cout << "ÒÅÑÒ ñ òàêèì íîìåğ ÎÒÑÓÒÑÒÂÓÅÒ!!!" << endl;
+		{
+			SetColor(12, 0);
+			cout << "\nÒÅÑÒ ñ òàêèì íîìåğ ÎÒÑÓÒÑÒÂÓÅÒ!!!" << endl;
+			Sleep(2500);
+		}
 	}
 	system("pause");
 }
@@ -585,7 +693,9 @@ void Organic::print_test_all_or() const
 	int idd = 0;
 	auto it = base_or_.begin();
 	system("cls");
+	SetColor(12, 0);
 	cout << "ÏÅ×ÀÒÜ ÂÑÅÕ ÒÅÑÒÎÂ ÏÎ ÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+	SetColor(15, 0);
 	for (; it != base_or_.end(); ++it)
 	{
 		cout << (*it);
@@ -616,7 +726,9 @@ Inorganic& Inorganic::operator=(const Inorganic& ob)
 void Inorganic::passing_test_in(string const& log)
 {
 	system("cls");
+	SetColor(12, 0);
 	cout << "ÑÄÀ×À ÒÅÑÒÎÂ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ\n" << endl;
+	SetColor(15, 0);
 	Tested tes;
 	Tests ts;
 	string lg = log;
@@ -625,9 +737,12 @@ void Inorganic::passing_test_in(string const& log)
 	auto it = base_in_.begin();
 	for (; it != base_in_.end(); ++it)
 	{
+		system("cls");
 		cout << (*it);
 		cout << endl;
+		SetColor(14, 0);
 		cout << "Ââåäèòå íîìåğ îòâåòà: ";
+		SetColor(15, 0);
 		int nom;
 		cin >> nom;
 		if ((*it)->get_right_answer() == nom)            //ïğîâåğêà íà ïğàâèëüíîñòü îòâåòà
@@ -645,7 +760,10 @@ void Inorganic::passing_test_in(string const& log)
 	res->set_kol_bal(bal_u);
 	tes.get_res_base(res);
 	system("cls");
+	gotoxy(10, 10);
+	SetColor(12, 0);
 	cout << "ÒÅÑÒ ÏĞÎÉÄÅÍ!!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 }
 
@@ -659,8 +777,11 @@ void Inorganic::creature_test_in()
 	while (p)
 	{
 		system("cls");
+		SetColor(12, 0);
 		cout << "ÑÎÇÄÀÍÈÅ ÒÅÑÒÀ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+		SetColor(14, 0);
 		cout << "Ââåäèòå íîìåğ òåñòà: ";
+		SetColor(15, 0);
 		cin >> idd;
 		if (base_in_.empty())
 		{
@@ -674,7 +795,9 @@ void Inorganic::creature_test_in()
 			{
 				if ((*it)->get_id() == idd)
 				{
-					cout << "Òàêîé íîìåğ óæå çàíÿò, ïîïğîáóéòå äğóãîé!!!" << endl;
+					SetColor(12, 0);
+					cout << "\nÒàêîé íîìåğ óæå çàíÿò, ïîïğîáóéòå äğóãîé!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 					p = true;
 				}
@@ -689,8 +812,11 @@ void Inorganic::creature_test_in()
 	while (w)
 	{
 		system("cls");
+		SetColor(12, 0);
 		cout << "ÑÎÇÄÀÍÈÅ ÒÅÑÒÀ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
-		cout << "Ââåäèòå òåêñò âîïğîñà: " << endl;;
+		SetColor(14, 0);
+		cout << "Ââåäèòå òåêñò âîïğîñà: " << endl;
+		SetColor(15, 0);
 		char* buff = new char;
 		cin.getline(buff, 1200);
 		q = buff;
@@ -707,7 +833,9 @@ void Inorganic::creature_test_in()
 				string que = (*it)->get_question();
 				if (que == q)
 				{
+					SetColor(12, 0);
 					cout << "Òàêîé âîïğîñ óæå åñòü, ïîïğîáóéòå åùå ğàç!!!" << endl;
+					SetColor(15, 0);
 					Sleep(2500);
 					w = true;
 				}
@@ -719,25 +847,36 @@ void Inorganic::creature_test_in()
 	tes->set_question(q);
 	string an;
 	system("cls");
+	SetColor(12, 0);
 	cout << "ÑÎÇÄÀÍÈÅ ÒÅÑÒÀ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå âàğèàíòû îòâåòîâ ÷åğåç ïğîáåë: " << endl;
+	SetColor(15, 0);
 	char* buff1 = new char;
 	cin.getline(buff1, 1200);
 	an = buff1;
 	tes->set_answer(an);
 	int v = 0, b = 0;
 	system("cls");
+	SetColor(12, 0);
 	cout << "ÑÎÇÄÀÍÈÅ ÒÅÑÒÀ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+	SetColor(16, 0);
 	cout << "Ââåäèòå íîìåğ ïğàâèëüíîãî îòâåòà: ";
+	SetColor(15, 0);
 	cin >> v;
 	tes->set_right_answer(v);
 	cout << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå êîëè÷åñòâî áàëîâ çà îòâåò: ";
+	SetColor(15, 0);
 	cin >> b;
 	tes->set_balls(b);
 	base_in_.push_back(tes);
 	system("cls");
+	SetColor(12, 0);
+	gotoxy(10, 10);
 	cout << "ÍÎÂÛÉ ÒÅÑÒ ïî ÃÅÎÌÅÒĞÈÈ ÑÎÇÄÀÍ!!!" << endl;
+	SetColor(15, 0);
 	Sleep(2500);
 	print_test_in();
 	save_test_in();
@@ -748,14 +887,19 @@ void Inorganic::creature_test_in()
 void Inorganic::edit_test_in()
 {
 	system("cls");
+	SetColor(12, 0);
 	cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÒÅÑÒÀ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå íîìåğ òåñòà: ";
+	SetColor(5, 0);
 	int idd = 0;
 	cin >> idd;
 	bool set = true;
 	if (base_in_.empty())
 	{
+		SetColor(12, 0);
 		cout << "ÁÀÇÀ ÒÅÑÒÎÂ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ ÏÓÑÒÀ!!!" << endl;
+		SetColor(15, 0);
 		Sleep(2500);
 	}
 	else
@@ -765,7 +909,9 @@ void Inorganic::edit_test_in()
 		{
 			if ((*it)->get_id() != idd)
 			{
+				SetColor(12, 0);
 				cout << "Òàêîé íîìåğ òåñòà îòñóòñòâóåò!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				set = false;
 			}
@@ -780,17 +926,24 @@ void Inorganic::edit_test_in()
 			load_test_in();
 			system("cls");
 			int var;
+			SetColor(12, 0);
 			cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÒÅÑÒÎÂ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+			SetColor(14, 0);
 			cout << "1. Ğåäàêòèğîâàòü ÂÎÏĞÎÑ\n" << "2. Ğåäàêòèğîâàòü ÎÒÂÅÒÛ\n"
 				<< "3. Ğåäàêòèğîâàòü ÍÎÌÅĞ ÏĞÀÂÈËÜÍÎÃÎ ÎÒÂÅÒÀ\n"
 				<< "4. Ğåäàêòèğîâàòü ÁÀËËÛ\n" << "5. Âîçâğàò â ïğåäûäóùåå ìåíş\n" << endl;
 			bool v = true;
 			while (v)
 			{
+				SetColor(15, 0);
 				cin >> var;
 				cin.ignore();
 				if (var < 1 || var > 5)    // ïğîâåğêà ââîäà
+				{
+					SetColor(12, 0);
 					cout << "ÍÅÂÅĞÍÎ!!! ÏÎÏĞÎÁÓÉÒÅ ÅÙÅ ĞÀÇ!!!" << endl;
+					SetColor(15, 0);
+				}
 				else
 					v = false;
 			}
@@ -799,8 +952,11 @@ void Inorganic::edit_test_in()
 			case 1:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÂÎÏĞÎÑÀ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Ââåäèòå íîâûé òåêñò âîïğîñà: " << endl;
+				SetColor(15, 0);
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -813,7 +969,9 @@ void Inorganic::edit_test_in()
 						(*it)->set_question(q);
 				}
 				cout << endl;
-				cout << "ÂÎÏĞÎÑ ÇÀÌÅÍÅÍ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nÂÎÏĞÎÑ ÇÀÌÅÍÅÍ!!!" << endl;
+				SetColor(14, 0);
 				Sleep(2500);
 				save_test_in();
 				break;
@@ -821,8 +979,11 @@ void Inorganic::edit_test_in()
 			case 2:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÎÒÂÅÒÎÂ ÍÀ ÂÎÏĞÎÑ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Ââåäèòå íîâûé òåêñò îòâåòîâ ÷åğåç ïğîáåë: " << endl;
+				SetColor(15, 0);
 				string q;
 				char* buff = new char;
 				cin.ignore();
@@ -835,7 +996,9 @@ void Inorganic::edit_test_in()
 						(*it)->set_answer(q);
 				}
 				cout << endl;
-				cout << "ÎÒÂÅÒÛ ÇÀÌÅÍÅÍÛ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nÎÒÂÅÒÛ ÇÀÌÅÍÅÍÛ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_in();
 				break;
@@ -843,9 +1006,13 @@ void Inorganic::edit_test_in()
 			case 3:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÍÎÌÅĞÀ ÏĞÀÂÈËÜÍÎÃÎ ÎÒÂÅÒÀ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Ââåäèòå íîâûé íîìåğ ïğàâèëüíîãî îòâåòà: " << endl;
+				SetColor(15, 0);
 				int an = 0;
+				cin >> an;
 				auto it = base_in_.begin();
 				for (; it != base_in_.end(); ++it)
 				{
@@ -853,7 +1020,9 @@ void Inorganic::edit_test_in()
 						(*it)->set_right_answer(an);
 				}
 				cout << endl;
-				cout << "ÍÎÌÅĞ ÏĞÀÂÈËÜÍÎÃÎ ÎÒÂÅÒÀ ÇÀÌÅÍÅÍ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nÍÎÌÅĞ ÏĞÀÂÈËÜÍÎÃÎ ÎÒÂÅÒÀ ÇÀÌÅÍÅÍ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_in();
 				break;
@@ -861,9 +1030,13 @@ void Inorganic::edit_test_in()
 			case 4:
 			{
 				system("cls");
+				SetColor(12, 0);
 				cout << "ĞÅÄÀÊÒÈĞÎÂÀÍÈÅ ÁÀËËÎÂ:\n" << endl;
+				SetColor(14, 0);
 				cout << "Ââåäèòå íîâîå êîëè÷åñòâî áàëëîâ: " << endl;
+				SetColor(15, 0);
 				int bl = 0;
+				cin >> bl;
 				auto it = base_in_.begin();
 				for (; it != base_in_.end(); ++it)
 				{
@@ -871,7 +1044,9 @@ void Inorganic::edit_test_in()
 						(*it)->set_balls(bl);
 				}
 				cout << endl;
-				cout << "ÁÀËËÛ ÇÀÌÅÍÅÍÛ!!!" << endl;
+				SetColor(12, 0);
+				cout << "\nÁÀËËÛ ÇÀÌÅÍÅÍÛ!!!" << endl;
+				SetColor(15, 0);
 				Sleep(2500);
 				save_test_in();
 				break;
@@ -947,8 +1122,7 @@ void Inorganic::load_test_in()
 			Tests* tes = new Tests;
 			char lc[50];
 			in >> lc;
-			int l_lc = strlen(lc) + 1;
-			char* buff = new char(l_lc + 1);
+			char* buff = new char[strlen(lc) + 1];
 			strcpy(buff, lc);
 			tes->set_category(buff);
 			int id;
@@ -957,14 +1131,12 @@ void Inorganic::load_test_in()
 			tes->set_id(id);
 			char lq[1000];
 			in.getline(lq, 1000);
-			int l_lq = strlen(lq) + 1;
-			char* buff1 = new char(l_lq + 1);
+			char* buff1 = new char[strlen(lq) + 1];
 			strcpy(buff1, lq);
 			tes->set_question(buff1);
 			char la[1000];
 			in.getline(la, 1000);
-			int l_la = strlen(la) + 1;
-			char* buff2 = new char(l_lq + 1);
+			char* buff2 = new char[strlen(la) + 1];
 			strcpy(buff2, la);
 			tes->set_question(buff2);
 			int ra;
@@ -1027,8 +1199,11 @@ void Inorganic::print_test_in() const
 {
 	system("cls");
 	int idd = 0;
+	SetColor(12, 0);
 	cout << "ÏÅ×ÀÒÜ ÒÅÑÒÀ ÏÎ ÍÎÌÅĞÓ:\n" << endl;
+	SetColor(14, 0);
 	cout << "Ââåäèòå íîìåğ òåñòà: ";
+	SetColor(15, 0);
 	cin >> idd;
 	auto it = base_in_.begin();
 	for (; it != base_in_.end(); ++it)
@@ -1036,7 +1211,12 @@ void Inorganic::print_test_in() const
 		if ((*it)->get_id() == idd)
 			cout << (*it);
 		else
-			cout << "ÒÅÑÒ ñ òàêèì íîìåğ ÎÒÑÓÒÑÒÂÓÅÒ!!!" << endl;
+		{
+			SetColor(12, 0);
+			cout << "\nÒÅÑÒ ñ òàêèì íîìåğ ÎÒÑÓÒÑÒÂÓÅÒ!!!" << endl;
+			SetColor(15, 0);
+			Sleep(2500);
+		}
 	}
 	system("pause");
 }
@@ -1044,11 +1224,12 @@ void Inorganic::print_test_in() const
 //ïå÷àòü íà ıêğàí âñåõ òåñòîâ ïî íåîğãàíè÷åñêîé
 void Inorganic::print_test_all_in() const
 {
-	system("cls");
 	int idd = 0;
 	auto it = base_in_.begin();
 	system("cls");
+	SetColor(12, 0);
 	cout << "ÏÅ×ÀÒÜ ÂÑÅÕ ÒÅÑÒÎÂ ÏÎ ÍÅÎĞÃÀÍÈ×ÅÑÊÎÉ:\n" << endl;
+	SetColor(15, 0);
 	for (; it != base_in_.end(); ++it)
 	{
 		cout << (*it);

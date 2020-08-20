@@ -27,19 +27,27 @@ void Tests::print_test() const
 
 ostream& operator<<(ostream& out, const Tests& ts)
 {
+	SetColor(14, 0);
 	out << right<<setw(4) << ts.id_ << "." << "  " << ts.question_ << endl << endl;
-	out << right << setw(50) << "Количество балов: " << ts.balls_ <<" "<<"балов" << endl;
+	SetColor(10, 0);
+	out << right << setw(80) << "Балы за тест: " << ts.balls_ << endl;
 	out << "\n" << endl;
+	SetColor(13, 0);
 	out << right << setw(4) << ts.answers_ << endl;
+	SetColor(15, 0);
 	return out;
 }
 
 ostream& operator<<(ostream& out, const Tests* ts)
 {
+	SetColor(14, 0);
 	out << right << setw(4) << ts->id_ << "." << "  " << ts->question_ << endl << endl;
-	out << right << setw(50) << "Количество балов: " << ts->balls_ << " " << "балов" << endl;
+	SetColor(10, 0);
+	out << right << setw(80) << "Балы за тест: " << ts->balls_ << endl;
 	out << "\n" << endl;
+	SetColor(13, 0);
 	out << right << setw(4) << ts->answers_ << endl;
+	SetColor(15, 0);
 	return out;
 }
 
