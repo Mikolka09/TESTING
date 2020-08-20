@@ -187,6 +187,7 @@ Organic& Organic::operator=(const Organic& ob)
 void Organic::passing_test_or(string const& log)
 {
 	system("cls");
+	load_test_or();
 	gotoxy(4, 4);
 	SetColor(12, 0);
 	cout << "ÑÄÀ×À ÒÅÑÒÎÂ ÏÎ ÎÐÃÀÍÈ×ÅÑÊÎÉ\n" << endl;
@@ -217,7 +218,7 @@ void Organic::passing_test_or(string const& log)
 	res->set_log(lg);
 	int size = base_or_.size();
 	res->set_cat(cat_or_);
-	res->set_kol_que((count_u / size) * 100);
+	res->set_kol_que(count_u * 100 / size);
 	res->set_kol_righ_ans(count_u);
 	res->set_kol_bal(bal_u);
 	tes.get_res_base(res);
@@ -601,15 +602,15 @@ void Organic::load_test_or()
 			in.getline(la, 1000);
 			char* buff2 = new char[strlen(la) + 1];
 			strcpy(buff2, la);
-			tes->set_question(buff2);
+			tes->set_answer(buff2);
 			int ra;
 			in >> ra;
 			in.get();
-			tes->set_id(ra);
+			tes->set_right_answer(ra);
 			int b;
 			in >> b;
 			in.get();
-			tes->set_id(b);
+			tes->set_balls(b);
 			base_or_.push_back(tes);
 			in.get();
 			if (in.eof())
@@ -726,6 +727,7 @@ Inorganic& Inorganic::operator=(const Inorganic& ob)
 void Inorganic::passing_test_in(string const& log)
 {
 	system("cls");
+	load_test_in();
 	SetColor(12, 0);
 	cout << "ÑÄÀ×À ÒÅÑÒÎÂ ÏÎ ÍÅÎÐÃÀÍÈ×ÅÑÊÎÉ\n" << endl;
 	SetColor(15, 0);
@@ -755,7 +757,7 @@ void Inorganic::passing_test_in(string const& log)
 	res->set_log(lg);
 	int size = base_in_.size();
 	res->set_cat(cat_in_);
-	res->set_kol_que((count_u / size) * 100);
+	res->set_kol_que(count_u * 100 / size);
 	res->set_kol_righ_ans(count_u);
 	res->set_kol_bal(bal_u);
 	tes.get_res_base(res);
@@ -1138,15 +1140,15 @@ void Inorganic::load_test_in()
 			in.getline(la, 1000);
 			char* buff2 = new char[strlen(la) + 1];
 			strcpy(buff2, la);
-			tes->set_question(buff2);
+			tes->set_answer(buff2);
 			int ra;
 			in >> ra;
 			in.get();
-			tes->set_id(ra);
+			tes->set_right_answer(ra);
 			int b;
 			in >> b;
 			in.get();
-			tes->set_id(b);
+			tes->set_balls(b);
 			base_in_.push_back(tes);
 			in.get();
 			if (in.eof())

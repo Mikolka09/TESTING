@@ -188,6 +188,7 @@ Quantum& Quantum ::operator=(const Quantum& ob)
 void Quantum::passing_test_quan(string const& log)
 {
 	system("cls");
+	load_test_quan();
 	SetColor(12, 0);
 	cout << "ÑÄÀ×À ÒÅÑÒÎÂ ÏÎ ÊÂÀÍÒÎÂÎÉ\n" << endl;
 	SetColor(15, 0);
@@ -217,7 +218,7 @@ void Quantum::passing_test_quan(string const& log)
 	res->set_log(lg);
 	int size = base_quan_.size();
 	res->set_cat(cat_q_);
-	res->set_kol_que((count_u / size) * 100);
+	res->set_kol_que(count_u * 100 / size);
 	res->set_kol_righ_ans(count_u);
 	res->set_kol_bal(bal_u);
 	tes.get_res_base(res);
@@ -601,15 +602,15 @@ void Quantum::load_test_quan()
 			in.getline(la, 1000);
 			char* buff2 = new char[strlen(la) + 1];
 			strcpy(buff2, la);
-			tes->set_question(buff2);
+			tes->set_answer(buff2);
 			int ra;
 			in >> ra;
 			in.get();
-			tes->set_id(ra);
+			tes->set_right_answer(ra);
 			int b;
 			in >> b;
 			in.get();
-			tes->set_id(b);
+			tes->set_balls(b);
 			base_quan_.push_back(tes);
 			in.get();
 			if (in.eof())
@@ -727,6 +728,7 @@ Mechanics& Mechanics::operator=(const Mechanics& ob)
 void Mechanics::passing_test_mech(string const& log)
 {
 	system("cls");
+	load_test_mech();
 	SetColor(12, 0);
 	cout << "ÑÄÀ×À ÒÅÑÒÎÂ ÏÎ ÌÅÕÀÍÈÊÅ\n" << endl;
 	SetColor(15, 0);
@@ -756,7 +758,7 @@ void Mechanics::passing_test_mech(string const& log)
 	res->set_log(lg);
 	int size = base_mech_.size();
 	res->set_cat(cat_m_);
-	res->set_kol_que((count_u / size) * 100);
+	res->set_kol_que(count_u * 100 / size);
 	res->set_kol_righ_ans(count_u);
 	res->set_kol_bal(bal_u);
 	tes.get_res_base(res);
@@ -1139,15 +1141,15 @@ void Mechanics::load_test_mech()
 			in.getline(la, 1000);
 			char* buff2 = new char[strlen(la) + 1];
 			strcpy(buff2, la);
-			tes->set_question(buff2);
+			tes->set_answer(buff2);
 			int ra;
 			in >> ra;
 			in.get();
-			tes->set_id(ra);
+			tes->set_right_answer(ra);
 			int b;
 			in >> b;
 			in.get();
-			tes->set_id(b);
+			tes->set_balls(b);
 			base_mech_.push_back(tes);
 			in.get();
 			if (in.eof())

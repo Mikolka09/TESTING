@@ -345,8 +345,7 @@ void Tested::menu_tested(string const& log)
 void Tested::print_result(string const& log)
 {
 	system("cls");
-	Tested tes;
-	tes.load_results();
+	load_results();
 	SetColor(10, 0);
 	string S(51, '#');
 	cout << endl;
@@ -374,18 +373,32 @@ void Tested::save_results()
 {
 	ofstream out("BaseResult.txt", ios::out);
 	Results* res = new Results;
-	while (true)
+	auto it = base_results_.begin();
+	for (; it != base_results_.end(); ++it)
 	{
-		res = result_.front();
-		out << "\n";
-		out << res->get_log() << endl;
-		out << res->get_cat() << endl;
-		out << res->get_kol_righ_ans() << endl;
-		out << res->get_kol_que() << endl;
-		out << res->get_kol_bal() << endl;;
-		result_.pop_front();
-		if (result_.empty())
-			break;
+		if ((*it).second.size() > 1)
+		{
+			auto it2 = (*it).second.begin();
+			for (; it2 != (*it).second.end(); ++it2)
+			{
+				out << "\n";
+				out << (*it2)->get_log() << endl;
+				out << (*it2)->get_cat() << endl;
+				out << (*it2)->get_kol_righ_ans() << endl;
+				out << (*it2)->get_kol_que() << endl;
+				out << (*it2)->get_kol_bal() << endl;;
+			}
+		}
+		else
+		{
+			res = (*it).second.front();
+			out << "\n";
+			out << res->get_log() << endl;
+			out << res->get_cat() << endl;
+			out << res->get_kol_righ_ans() << endl;
+			out << res->get_kol_que() << endl;
+			out << res->get_kol_bal() << endl;;
+		}
 	}
 	delete res;
 	out.close();
@@ -640,15 +653,17 @@ void Tested::load_base()
 //проверка и добавление нового результата 
 void Tested::get_res_base(Results*& res)
 {
-	string log = res->get_log();
+	load_results();
+	Results* ress = res;
+	string log = ress->get_log();
 	if (base_results_.count(log))
 	{
 		auto iter = base_results_.find(log);
-		(*iter).second.push_back(res);
+		(*iter).second.push_back(ress);
 	}
 	else
 	{
-		result_.push_back(res);
+		result_.push_back(ress);
 		base_results_.insert(make_pair(log, result_));
 	}
 	save_results();
