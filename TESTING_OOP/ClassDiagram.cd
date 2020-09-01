@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Admin" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAkAQAACIAAAAIIAQAAAQAAEAIAAAAAAAAgKIACCCQ=</HashCode>
+      <FileName>Admin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Chemistry" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAiAAAAAA=</HashCode>
+      <FileName>Chemistry.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Organic" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAQAQIAAAAAAAAChAABAAACAggAAAAAA=</HashCode>
+      <FileName>Chemistry.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Inorganic" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAQAASAAAAAIEAAQCAAIgAABAAAA=</HashCode>
+      <FileName>Chemistry.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Timer" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Functions.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Maths" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAgAAAACAACAAAAAA=</HashCode>
+      <FileName>Maths.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Algebra" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICCAAAAAAIABIAAAACAABAAAAAAAAAAAAAAgECAAAAA=</HashCode>
+      <FileName>Maths.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Geometry" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAEADAAAGAAACAACAAAAAAAAAQAAAAAgAAAAgAA=</HashCode>
+      <FileName>Maths.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Physics" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAICAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Physics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Quantum" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgCAAAAEAAAgAAAAAAAAAAAAEAIEEAAAAgAAAAAAQ=</HashCode>
+      <FileName>Physics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mechanics" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAEIIAAAAAAAAAAQAAAAAQAACABAAAAoIAAAAAA=</HashCode>
+      <FileName>Physics.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Results">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEAQABAhAAAAAAABgAEABAAESAEAAAEAAAAgCAAAAAA=</HashCode>
+      <FileName>Results.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tested" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQACAEIAVQAACiBAAYEgIBABggAAAgQBkSCACAAE=</HashCode>
+      <FileName>Tested.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Start">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Start.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tests" Collapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UQRAAAAAAAIAAAAAAABAAAQchAQAACAAAAAoAAAAQgA=</HashCode>
+      <FileName>Tests.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="User" Collapsed="true">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEBEAAAAAAAAAAgAAAAIAACAAAAIAAggAAoCZAAMAA=</HashCode>
+      <FileName>User.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ConsoleColor" Collapsed="true">
+    <Position X="10.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAnAAQAAQAAIgAAABAAAAAABAAAAAQAAAAACDAAAAA=</HashCode>
+      <FileName>Functions.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
